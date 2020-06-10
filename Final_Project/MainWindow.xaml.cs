@@ -17,26 +17,12 @@ using MySql.Data.MySqlClient;
 
 namespace Final_Project
 {
-	public class emad
-	{
-		public int age { get; set; }
-		public javad javad { get; set; }
-
-	}
-	public class javad
-	{
-		public int ag { get; set; }
-
-	}
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
-			emad emi = new emad() { age = 20 };
-			javad javi = new javad() { ag = 19 };
-			emi.javad = javi;
-			this.DataContext = emi;
+			
 		}
 	}
 }

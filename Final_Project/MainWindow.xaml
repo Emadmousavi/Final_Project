@@ -7,9 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-		<StackPanel>
-			<Label Content="{Binding age}"/>
-			<Label Content="{Binding javad.ag}"/>
-		</StackPanel>
+	    
+		
     </Grid>
 </Window>
