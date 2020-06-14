@@ -8,8 +8,14 @@
         Title="MainWindow" Height="570" Width="776.524"
 		ResizeMode="NoResize">
 	<Window.Resources>
-		
-		
+		<ControlTemplate x:Key="passwordbox" TargetType="{x:Type PasswordBox}">
+			<Border Background="{TemplateBinding Background}" 
+            x:Name="Bd" BorderBrush="DarkGray" Height="30"
+            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="17" >
+				<ScrollViewer x:Name="PART_ContentHost"/>
+			</Border>
+		</ControlTemplate>
+
 		<SolidColorBrush x:Key="RedBrush" Color="Red"/>
 
 		<SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
@@ -30,7 +36,7 @@
 							<Border 
                                 Name="Border"
                                 Margin="0,0,-4,0" 
-                                Background="#FF476C07"
+                                Background="Transparent"
                                 BorderBrush="{StaticResource  SolidBorderBrush}" 
                                 BorderThickness="1,1,1,1" 
                                 CornerRadius="2,12,0,0" >
@@ -45,7 +51,7 @@
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsSelected" Value="True">
 								<Setter Property="Panel.ZIndex" Value="100" />
-								<Setter TargetName="Border" Property="Background" Value="Transparent" />
+								<Setter TargetName="Border" Property="Background" Value="#FF476C07" />
 								<Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
 							</Trigger>
 							<Trigger Property="IsEnabled" Value="False">
@@ -75,7 +81,7 @@
 						<StackPanel>
 							<StackPanel Margin="0,15,0,6">
 								<TextBlock	Text="Full Name" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" />
-								<TextBox x:Name="txt1" Padding="8"  BorderBrush="Transparent" Foreground="White" LostFocus="txt1_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<TextBox x:Name="txt1" Padding="8"  BorderBrush="DarkGray" Foreground="White" LostFocus="txt1_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<TextBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</TextBox.Background>
@@ -90,7 +96,7 @@
 
 							<StackPanel Margin="0,0,0,6">
 								<TextBlock	Text="Email" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"  Margin="7,0,0,7"/>
-								<TextBox x:Name="txt2" Padding="8"  BorderBrush="Transparent" Foreground="White" LostFocus="txt2_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<TextBox x:Name="txt2" Padding="8"  BorderBrush="DarkGray" Foreground="White" LostFocus="txt2_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<TextBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</TextBox.Background>
@@ -105,7 +111,7 @@
 
 							<StackPanel Margin="0,0,0,6">
 								<TextBlock	Text="National Code" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"   Margin="7,0,0,7"/>
-								<TextBox x:Name="txt3" Padding="8" BorderBrush="Transparent" Foreground="White" LostFocus="txt3_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<TextBox x:Name="txt3" Padding="8" BorderBrush="DarkGray" Foreground="White" LostFocus="txt3_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<TextBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</TextBox.Background>
@@ -120,7 +126,7 @@
 
 							<StackPanel Margin="0,0,0,6">
 								<TextBlock	Text="Phone Number" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7"/>
-								<TextBox x:Name="txt4" Padding="8"  BorderBrush="Transparent" Foreground="White" LostFocus="txt4_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<TextBox x:Name="txt4" Padding="8"  BorderBrush="DarkGray" Foreground="White" LostFocus="txt4_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<TextBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</TextBox.Background>
@@ -135,22 +141,18 @@
 
 							<StackPanel Margin="0,0,0,6">
 								<TextBlock	Text="Password" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"  Margin="7,0,0,7"/>
-								<PasswordBox x:Name="txt5" Padding="8"  BorderBrush="Transparent" Foreground="White" LostFocus="txt5_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<PasswordBox x:Name="txt5" Template="{StaticResource passwordbox}" Padding="8"  BorderBrush="#FFC71111" Foreground="White" LostFocus="txt5_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<PasswordBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</PasswordBox.Background>
-									<PasswordBox.Resources>
-										<Style TargetType="Border">
-											<Setter Property="CornerRadius" Value="17"/>
-										</Style>
-									</PasswordBox.Resources>
+									
 								</PasswordBox>
 								<Label x:Name="lb5" Content="________________________________________________________________________________" Margin="0,-10,0,0" Foreground="Gray"/>
 							</StackPanel>
 
 							<StackPanel Margin="0,0,0,6">
-								<TextBlock	Text="Confirm Password" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"  Margin="7,0,0,7"/>
-								<PasswordBox x:Name="txt6" Padding="8"  BorderBrush="Transparent" Foreground="White" LostFocus="txt6_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<TextBlock	Text="Confirm Password" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"  Margin="7,0,0,7" />
+								<PasswordBox x:Name="txt6" Padding="8" Template="{StaticResource passwordbox}" Height="30" BorderBrush="DarkGray" Foreground="White" LostFocus="txt6_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<PasswordBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</PasswordBox.Background>
@@ -175,7 +177,7 @@
 						<StackPanel Margin="0,20">
 							<StackPanel Margin="0,0,0,6">
 								<TextBlock	Text="Email" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"  Margin="7,0,0,7"/>
-								<TextBox x:Name="txt7" Padding="8"  BorderBrush="Transparent" Foreground="White" LostFocus="txt7_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<TextBox x:Name="txt7" Padding="8"  BorderBrush="DarkGray" Foreground="White" LostFocus="txt7_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<TextBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</TextBox.Background>
@@ -190,7 +192,7 @@
 
 							<StackPanel Margin="0,20,0,6">
 								<TextBlock	Text="Password" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"  Margin="7,0,0,7"/>
-								<PasswordBox x:Name="txt8" Padding="8"  BorderBrush="Transparent" Foreground="White" LostFocus="txt8_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<PasswordBox x:Name="txt8" Padding="8" Template="{StaticResource passwordbox}" Height="30" BorderBrush="DarkGray" Foreground="White" LostFocus="txt8_LostFocus" FontFamily="Stegeo UI" FontSize="10">
 									<PasswordBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</PasswordBox.Background>
