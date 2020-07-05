@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Org.BouncyCastle.Math.EC;
 using PersianDate;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading;
 
 namespace Final_Project
 {
@@ -21,12 +24,35 @@ namespace Final_Project
 	/// </summary>
 	public partial class user_desktop : Window
 	{
-		
+		user_menu w;
+		bool open = false;
 		public user_desktop()
 		{
 			InitializeComponent();
-
+			DateTime startDate = DateTime.Today;
+			DateTime endDate = startDate.AddMonths(1);
+			calendar.DisplayDateEnd = endDate;
 			
 		}
+
+		private void menu_Click(object sender, RoutedEventArgs e)
+		{
+			
+			
+			if (open)
+			{
+				w.Close();
+				open = false;
+			}
+
+			else
+			{
+				w = new user_menu();
+				w.Show();
+				open = true;
+			}
+		}
+
+		
 	}
 }

@@ -14,6 +14,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -109,8 +124,25 @@
     <Compile Include="admin_desktop.xaml.cs">
       <DependentUpon>admin_desktop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="databaseDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>databaseDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="user_cart.xaml.cs">
+      <DependentUpon>user_cart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="user_desktop.xaml.cs">
       <DependentUpon>user_desktop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="user_menu.xaml.cs">
+      <DependentUpon>user_menu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="user_profile.xaml.cs">
+      <DependentUpon>user_profile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="user_shopping_list.xaml.cs">
+      <DependentUpon>user_shopping_list.xaml</DependentUpon>
     </Compile>
     <Page Include="admin_desktop.xaml">
       <SubType>Designer</SubType>
@@ -128,7 +160,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="user_cart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="user_desktop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="user_menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="user_profile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="user_shopping_list.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +199,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="databaseDataSet.xsc">
+      <DependentUpon>databaseDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="databaseDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>databaseDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="databaseDataSet.xss">
+      <DependentUpon>databaseDataSet.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -161,23 +220,73 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="-res1.jpg" />
-    <Resource Include="-res2.jpg" />
-    <Resource Include="-log2.jpg" />
-    <Resource Include="-log1.png" />
-    <Resource Include="-res3.jpg" />
+    <Resource Include="images\-res1.jpg" />
+    <Resource Include="images\-res2.jpg" />
+    <Resource Include="images\-log2.jpg" />
+    <Resource Include="images\-log1.png" />
+    <Resource Include="images\-res3.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="-res4.jpg" />
+    <Resource Include="images\-res4.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="cart.png" />
+    <Resource Include="images\cart.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="menu.png" />
+    <Resource Include="images\menu.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="plus.png" />
+    <Resource Include="images\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\plus2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\food1.png" />
+    <Resource Include="images\order.png" />
+    <Resource Include="images\order2.png" />
+    <Resource Include="images\total.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\food2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\total2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\menu.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\chat1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="database.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="database_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>database.mdf</DependentUpon>
+    </Content>
+    <Resource Include="images\res_menu.png" />
+    <Resource Include="images\user_profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

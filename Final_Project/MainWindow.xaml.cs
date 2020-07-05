@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Final_Project
 {
@@ -23,6 +25,7 @@ namespace Final_Project
 		public MainWindow()
 		{
 			InitializeComponent();
+		
 			
 		}
 

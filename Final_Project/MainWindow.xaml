@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Final_Project"
         mc:Ignorable="d"
         Title="MainWindow" Height="570" Width="776.524"
-		ResizeMode="NoResize">
+		ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 	<Window.Resources>
 		<ControlTemplate x:Key="passwordbox" TargetType="{x:Type PasswordBox}">
 			<Border Background="{TemplateBinding Background}" 
@@ -67,7 +67,7 @@
 	</Window.Resources>
 	<Grid>
 
-		<Image Source="-res2.jpg"  HorizontalAlignment="Center" Stretch="Fill"/>
+		<Image Source="images\-res2.jpg"  HorizontalAlignment="Center" Stretch="Fill"/>
 		<Border Padding="15">
 			<Grid>
 				<Grid.ColumnDefinitions>

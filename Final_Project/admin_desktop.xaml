@@ -5,8 +5,619 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Final_Project"
         mc:Ignorable="d"
-        Title="admin_desktop" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="admin_desktop" Height="700" Width="1000" WindowStartupLocation="CenterScreen">
+	<Window.Resources>
+		<Style
+    
+    TargetType="{x:Type TabItem}">
+			<Setter
+        Property="Template">
+				<Setter.Value>
+					<ControlTemplate
+                TargetType="{x:Type TabItem}">
+						<Border
+                    x:Name="Spacer"
+                    Width="Auto"
+                    Height="Auto"
+                    Padding="0 0 0 0"
+                    Margin="0 0 0 30"
+                    BorderBrush="Transparent"
+                    BorderThickness="0">
+							<Border
+                        x:Name="Border"
+                        Width="70"
+                        Height="70"
+                        Background="#FF322929"
+                        BorderBrush="DarkGray"
+                        BorderThickness="0,0,0,0"
+                        CornerRadius="6,6,0,0"
+                        Cursor="Hand"
+                        VerticalAlignment="Bottom">
+								<ContentPresenter
+                            x:Name="ContentSite"
+                            TextElement.FontSize="10pt"
+                            TextElement.FontFamily="Arial"
+                            TextElement.Foreground="Black"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            ContentSource="Header"
+                            Margin="8,3,8,3"
+                            Width="Auto"
+                            Height="Auto" />
+							</Border>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+	<Grid Background="#FF322929">
+
+		<TabControl TabStripPlacement="Left" Background="#FF0F0E0E" >
+			<TabItem>
+				<TabItem.Header>
+					<Image Source="images\profile.png" />
+				</TabItem.Header>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition Width="1.5*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.Background>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FFFFDCBA" Offset="0"/>
+							<GradientStop Color="#FF919191" Offset="1"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+
+					<Border Grid.Column="1" Margin="40,120,40,120" Padding="20" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+						<StackPanel>
+							<StackPanel Margin="0,0,0,40" >
+								<TextBlock	Text="Full Name" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox x:Name="txt1" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+									<TextBox.Background>
+										<SolidColorBrush Color="White" Opacity="0.5"/>
+									</TextBox.Background>
+									<TextBox.Resources>
+										<Style TargetType="Border">
+											<Setter Property="CornerRadius" Value="17"/>
+										</Style>
+									</TextBox.Resources>
+								</TextBox>
+							</StackPanel>
+							<StackPanel Margin="0,0,0,40">
+								<TextBlock	Text="Restaurant Region" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox x:Name="txt2" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+									<TextBox.Background>
+										<SolidColorBrush Color="White" Opacity="0.5"/>
+									</TextBox.Background>
+									<TextBox.Resources>
+										<Style TargetType="Border">
+											<Setter Property="CornerRadius" Value="17"/>
+										</Style>
+									</TextBox.Resources>
+								</TextBox>
+							</StackPanel>
+							<StackPanel Margin="0,0,0,40">
+								<TextBlock	Text="Restaurant Kind" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox x:Name="txt3" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+									<TextBox.Background>
+										<SolidColorBrush Color="White" Opacity="0.5"/>
+									</TextBox.Background>
+									<TextBox.Resources>
+										<Style TargetType="Border">
+											<Setter Property="CornerRadius" Value="17"/>
+										</Style>
+									</TextBox.Resources>
+								</TextBox>
+							</StackPanel>
+							<StackPanel Margin="0,0,0,40">
+								<TextBlock	Text="Restaurant Address" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox x:Name="txt4" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+									<TextBox.Background>
+										<SolidColorBrush Color="White" Opacity="0.5"/>
+									</TextBox.Background>
+									<TextBox.Resources>
+										<Style TargetType="Border">
+											<Setter Property="CornerRadius" Value="17"/>
+										</Style>
+									</TextBox.Resources>
+								</TextBox>
+							</StackPanel>
+						</StackPanel>
+					</Border>
+					<Border BorderBrush="Gray" BorderThickness="2" Margin="30" Padding="10" CornerRadius="20">
+						<StackPanel>
+							<Rectangle Height="497">
+								<Rectangle.Fill>
+									<ImageBrush ImageSource="images\res_menu.png"/>
+								</Rectangle.Fill>
+							</Rectangle>
+							<Button Content="Upload Menu" Margin="50,0" Height="35" Background="#FFDCC4AD" />
+						</StackPanel>
+					</Border>
+					<Button Content="click" HorizontalAlignment="Left" Width="100" Height="50" Click="Button_Click_1" VerticalAlignment="Bottom"/>
+				</Grid>
+			</TabItem>
+			<TabItem>
+				<TabItem.Header>
+					<Image Source="images\food2.png" />
+				</TabItem.Header>
+				<Grid>
+					<Grid.Background>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FFFFDCBA" Offset="0"/>
+							<GradientStop Color="#FF919191" Offset="1"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+
+					<ScrollViewer>
+						<Border BorderBrush="Gray" BorderThickness="3" Grid.Row="2" Padding="65" Margin="3,2,10,10">
+							<StackPanel x:Name="main_stack">
+								<WrapPanel Name="wrap1" HorizontalAlignment="Center">
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack1" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el1" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb1" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time1" Content="Saturday" HorizontalAlignment="Center" />
+											<Label Content="3" HorizontalContentAlignment="Left" Margin="10,-15" Foreground="#FF7C0707" FontSize="15"/>
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png" />
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack2" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el2" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb2" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time2" Content="Saturday" HorizontalAlignment="Center" />
+											<Label Content="3" HorizontalContentAlignment="Left" Margin="10,-15" Foreground="#FF7C0707" FontSize="15"/>
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png" />
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack3" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el3" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb3" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time3" Content="Saturday" HorizontalAlignment="Center" />
+											<Label Content="3" HorizontalContentAlignment="Left" Margin="10,-15" Foreground="#FF7C0707" FontSize="15"/>
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png" />
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+								</WrapPanel>
+								<WrapPanel Name="wrap2" HorizontalAlignment="Center">
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack4" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el4" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb4" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time4" Content="Saturday" HorizontalAlignment="Center" />
+											<Label Content="3" HorizontalContentAlignment="Left" Margin="10,-15" Foreground="#FF7C0707" FontSize="15"/>
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png" />
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack5" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el5" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb5" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time5" Content="Saturday" HorizontalAlignment="Center" />
+											<Label Content="3" HorizontalContentAlignment="Left" Margin="10,-15" Foreground="#FF7C0707" FontSize="15"/>
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png" />
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack6" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el6" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb6" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time6" Content="Saturday" HorizontalAlignment="Center" />
+											<Label Content="3" HorizontalContentAlignment="Left" Margin="10,-15" Foreground="#FF7C0707" FontSize="15"/>
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png" />
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+								</WrapPanel>
+							</StackPanel>
+						</Border>
+					</ScrollViewer>
+				</Grid>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<Image Source="images\order.png" />
+				</TabItem.Header>
+				<Grid>
+					<Grid.Background>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FFFFDCBA" Offset="0"/>
+							<GradientStop Color="#FF919191" Offset="1"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<Border BorderBrush="#FF322929" Margin="40" BorderThickness="2">
+						<StackPanel Background="#FFBDBDBD">
+							<Label Content="Not Piad" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF6B93AE"   Width="375" Height="52"  FontSize="20"/>
+						</StackPanel>
+					</Border>
+
+					<Border BorderBrush="#FF322929" Margin="40" Grid.Column="1" BorderThickness="2">
+						<StackPanel Background="#FFBDBDBD">
+							<Label Content="Ready" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF6B93AE"   Width="375" Height="52"  FontSize="20"/>
+						</StackPanel>
+					</Border>
+				</Grid>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<Image Source="images\menu.jpeg" />
+				</TabItem.Header>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="2.8*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.Background>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FFFFDCBA" Offset="0"/>
+							<GradientStop Color="#FF919191" Offset="1"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+
+					<Border Grid.Column="1" BorderBrush="Gray" BorderThickness="3" Grid.Row="2" Padding="10" Margin="3,0,10,10">
+						<ScrollViewer >
+							<StackPanel x:Name="main_stack21" Margin="0,70,10,0">
+								<WrapPanel Name="wrap21" HorizontalAlignment="Center">
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack21" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el21" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb21" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time21" Content="Saturday" HorizontalAlignment="Center" />
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png"/>
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack22" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el22" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb22" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time22" Content="Saturday" HorizontalAlignment="Center" />
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png"/>
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack23" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el23" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb23" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time23" Content="Saturday" HorizontalAlignment="Center" />
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png"/>
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+								</WrapPanel>
+								<WrapPanel Name="wrap22" HorizontalAlignment="Center">
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack24" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el24" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb24" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time24" Content="Saturday" HorizontalAlignment="Center" />
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png"/>
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack25" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el25" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb25" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time25" Content="Saturday" HorizontalAlignment="Center" />
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png"/>
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+									<Border BorderBrush="Gray" BorderThickness="4" CornerRadius="9"  Width="170" Height="220" Margin="30,15,0,25">
+										<StackPanel x:Name="stack26" Background="#FFB28E6A"  Height="210">
+											<Ellipse x:Name="el26" Width="100" Height="100" Margin="10">
+												<Ellipse.Fill>
+													<ImageBrush ImageSource="images\-res1.jpg"/>
+												</Ellipse.Fill>
+											</Ellipse>
+											<Label Name="lb26" Content="Name Of Food" HorizontalAlignment="Center" />
+											<Label Name="time26" Content="Saturday" HorizontalAlignment="Center" />
+											<WrapPanel Margin="0,5,0,0" Height="40">
+												<Button Margin="7,8,0,8">
+													<Image Source="images\plus.png"/>
+												</Button>
+												<Button Margin="5,8,5,8">
+													<Button.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="60"/>
+														</Style>
+													</Button.Resources>
+													<Image Source="images\minus.png"/>
+												</Button>
+												<Label Content="Price Fo Food"  VerticalAlignment="Center"/>
+											</WrapPanel>
+										</StackPanel>
+									</Border>
+								</WrapPanel>
+							</StackPanel>
+					     </ScrollViewer>
+					</Border>
+
+					<StackPanel>
+						<Border BorderBrush="Gray" BorderThickness="5" Height="520" Width="200" VerticalAlignment="Top" Margin="0,20,0,20" CornerRadius="6">
+							<StackPanel Background="#FFB28E6A" Margin="0,0,0,-2">
+								<Ellipse  Width="100" Height="100" Margin="10">
+									<Ellipse.Fill>
+										<ImageBrush ImageSource="images\-res1.jpg"/>
+									</Ellipse.Fill>
+								</Ellipse>
+								<TextBox  Text="Name Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,10"/>
+								<TextBox  Text="Made Cost Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,10"/>
+								<TextBox  Text="information" HorizontalAlignment="Center"  Height="110" Width="150" Padding="5" Margin="0,10,0,0"/>
+								<StackPanel Margin="0,30,0,0">
+									<TextBlock Text="Kind Of Food" HorizontalAlignment="Center" FontSize="20" Margin="0,5,0,10" FontFamily="Segoe Marker"/>
+									<StackPanel Orientation="Horizontal">
+										<TextBlock Text="Hamburger" FontSize="14" Margin="8,10,0,0" />
+										<CheckBox x:Name="hamburger" Margin="4,14,0,15" />
+										<TextBlock Text="traditional" FontSize="14" Margin="7,10,0,0" />
+										<CheckBox x:Name="traditional" Margin="4,14,0,0" />
+									</StackPanel>
+									<StackPanel Orientation="Horizontal">
+										<TextBlock Text="Sandwitch" FontSize="14" Margin="10,10,0,0" />
+										<CheckBox x:Name="sandwitch" Margin="10,14,0,15"  />
+										<TextBlock Text="Pizza" FontSize="14" Margin="30,10,0,0" />
+										<CheckBox x:Name="pizza" Margin="10,14,0,15"  />
+									</StackPanel>
+								</StackPanel>
+							</StackPanel>
+						</Border>
+						<Button Content="Upload Image" Height="30" Width="120" FontSize="15" Background="#FFCD8F51" Margin="0,0,0,20" Click="Button_Click"/>
+						<Button Content="Add" Height="30" Width="120" FontSize="15" Background="#FFCD8F51"/>
+					</StackPanel>
+
+				</Grid>
+			</TabItem>
+
+
+			<TabItem >
+				<TabItem.Header>
+					<Image Source="images\total2.png"/>
+				</TabItem.Header>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="0.5*"/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<Grid.Background>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FFFFDCBA" Offset="0"/>
+							<GradientStop Color="#FF919191" Offset="1"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+					<Label Content="Accounting" HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center"/>
+					<Border Margin="15" Grid.Row="1" BorderBrush="#FF322929" BorderThickness="2">
+						<StackPanel  Background="#FFE6A76A" Orientation="Horizontal" Margin="-2,-2,2,2">
+							<Label Content="Daily profit rate" VerticalContentAlignment="Center" FontSize="40" Height="157"/>
+							<Label Content="100$" VerticalContentAlignment="Center" FontSize="40" Height="157" Margin="470,0,0,0"/>
+						</StackPanel>
+					</Border>
+					<Border Margin="15" Grid.Row="2" BorderBrush="#FF322929" BorderThickness="2">
+						<StackPanel  Background="#FFE6A76A" Orientation="Horizontal">
+							<Label Content="Daily sales" VerticalContentAlignment="Center" FontSize="40" Height="157"/>
+							<Label Content="100$" VerticalContentAlignment="Center" FontSize="40" Height="157" Margin="570,0,0,0"/>
+						</StackPanel>
+					</Border>
+					<Border Margin="15" Grid.Row="3" BorderBrush="#FF322929" BorderThickness="2">
+						<StackPanel  Background="#FFE6A76A" Orientation="Horizontal">
+							<Label Content="Daily Sold Food Numbers" VerticalContentAlignment="Center" FontSize="40" Height="157"/>
+							<Label Content="100$" VerticalContentAlignment="Center" FontSize="40" Height="157" Margin="300,0,0,0"/>
+						</StackPanel>
+					</Border>
+				</Grid>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<Image Source="images\chat1.png" Width="70" Margin="-7,0,0,0"/>
+				</TabItem.Header>
+				<Grid>
+					<Grid.Background>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FFFFDCBA" Offset="0"/>
+							<GradientStop Color="#FF919191" Offset="1"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+				</Grid>
+			</TabItem>
+
+		</TabControl>
+
+	</Grid>
 </Window>
