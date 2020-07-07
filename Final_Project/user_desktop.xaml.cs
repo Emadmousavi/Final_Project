@@ -32,6 +32,7 @@ namespace Final_Project
 			DateTime startDate = DateTime.Today;
 			DateTime endDate = startDate.AddMonths(1);
 			calendar.DisplayDateEnd = endDate;
+			user_name.Text = Current_user.FullName;
 			
 		}
 

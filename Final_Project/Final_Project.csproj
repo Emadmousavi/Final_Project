@@ -257,9 +257,6 @@
     <Resource Include="images\menu.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\minus.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\profile.png" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +270,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>database.mdf</DependentUpon>
     </Content>
+    <Resource Include="images\exit.png" />
+    <Resource Include="min.png" />
+    <Resource Include="images\minus.png" />
     <Resource Include="images\res_menu.png" />
     <Resource Include="images\user_profile.png" />
   </ItemGroup>
@@ -287,6 +287,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="food_menu_images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

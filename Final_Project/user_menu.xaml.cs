@@ -26,7 +26,14 @@ namespace Final_Project
 
 		private void profile_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			MessageBox.Show("salam");
+			MainWindow w = new MainWindow();
+			w.Show();
+			this.Close();
+		}
+
+		private void Quit_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+
 		}
 	}
 }

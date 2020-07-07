@@ -13,5 +13,6 @@
 		<Label Name="profile" Content="Profile" MouseDown="profile_MouseDown" HorizontalContentAlignment="Center" Margin="10,100,10,10" FontSize="25" FontFamily="IRMehr" />
 		<Label Name="cart" Content="Cart" MouseDown="profile_MouseDown" HorizontalContentAlignment="Center" Margin="0,170,5,10" FontSize="25" FontFamily="IRMehr" />
 		<Label Name="shopping_list" Content="Shopping list" MouseDown="profile_MouseDown" HorizontalContentAlignment="Center" Margin="0,240,5,10" FontSize="25" FontFamily="IRMehr" />
+		<Label Name="Quit" Content="Quit" MouseDown="Quit_MouseDown" HorizontalContentAlignment="Center" Margin="0,310,5,10" FontSize="25" FontFamily="IRMehr" />
 	</Grid>
 </Window>

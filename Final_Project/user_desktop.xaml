@@ -29,7 +29,7 @@
 			<RowDefinition Height="10*"/>
 		</Grid.RowDefinitions>
 
-		<StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" Background="#FFFBCEA1">
+		<StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" Background="#FFFBCEA1" >
 
 			<TextBlock VerticalAlignment="Center" Margin="10" FontSize="18" FontFamily="Segoe Marker" Foreground="#FFC7680E">
 				Emi <LineBreak/>Food
@@ -45,11 +45,14 @@
 					</ControlTemplate>
 				</Button.Template>
 			</Button>
-			<TextBlock Text="Seyed Emad Mousavi" VerticalAlignment="Center" Width="Auto" FontSize="20" Margin="620,0,0,0" Foreground="#FFD38C0E" FontFamily="Segoe Marker"/>
-			<Button x:Name="menu" Width="40" Height="40" Margin="40,0" Click="menu_Click">
+			<TextBlock x:Name="user_name" Text="Seyed Emad Mousavi" VerticalAlignment="Center" Width="Auto" FontSize="20" Margin="660,0,0,0" Foreground="#FFD38C0E" FontFamily="Segoe Marker"/>
+
+		</StackPanel>
+		<Canvas HorizontalAlignment="Right" Grid.Column="2" Margin="0,10,10,0" Width="51">
+			<Button x:Name="menu" Width="40" Height="40" Margin="0,0" Click="menu_Click" HorizontalAlignment="Right">
 				<Image Source="images\menu.png" Stretch="Fill"/>
 			</Button>
-		</StackPanel>
+		</Canvas>
 		<Border BorderBrush="Transparent" BorderThickness="2"  Grid.Row="2" Grid.Column="1" Padding="6" Background="Transparent" Margin="0,10">
 			<StackPanel>
 				<Border BorderBrush="Gray" BorderThickness="2" Background="#FFB28E6A" Margin="0,-7">
