@@ -20,72 +20,10 @@
 		</Grid.ColumnDefinitions>
 		<ScrollViewer Grid.Column="1">
 			<Border BorderBrush="#FF686464" BorderThickness="2" CornerRadius="20" Margin="20" Padding="20">
-				<StackPanel>
-					<StackPanel Orientation="Horizontal" Height="200">
-						<Border BorderBrush="#FF686464" BorderThickness="2" CornerRadius="20" Width="480" Margin="14">
-							<StackPanel>
-								<Label Content="Price of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="Ingridient of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="kind of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="chef introduction" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-							</StackPanel>
-						</Border>
-						<StackPanel Margin="0,40,0,0">
-							<Ellipse Width="100" Height="100">
-								<Ellipse.Fill>
-									<ImageBrush ImageSource="images\-res1.jpg"/>
-								</Ellipse.Fill>
-							</Ellipse>
-							<StackPanel Orientation="Horizontal">
-								<Label Content="+" FontSize="35" Foreground="#FFC14F25" Margin="5,-10,20,0"/>
-								<Label Content="-" FontSize="35" Foreground="#FFC14F25" FontWeight="Bold" Margin="0,-10,0,0"/>
-							</StackPanel>
-						</StackPanel>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" Height="200">
-						<Border BorderBrush="#FF686464" BorderThickness="2" CornerRadius="20" Width="480" Margin="14">
-							<StackPanel>
-								<Label Content="Price of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="Ingridient of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="kind of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="chef introduction" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-							</StackPanel>
-						</Border>
-						<StackPanel Margin="0,40,0,0">
-							<Ellipse Width="100" Height="100">
-								<Ellipse.Fill>
-									<ImageBrush ImageSource="images\-res1.jpg"/>
-								</Ellipse.Fill>
-							</Ellipse>
-							<StackPanel Orientation="Horizontal">
-								<Label Content="+" FontSize="35" Foreground="#FFC14F25" Margin="5,-10,20,0"/>
-								<Label Content="-" FontSize="35" Foreground="#FFC14F25" FontWeight="Bold" Margin="0,-10,0,0"/>
-							</StackPanel>
-						</StackPanel>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" Height="200">
-						<Border BorderBrush="#FF686464" BorderThickness="2" CornerRadius="20" Width="480" Margin="14">
-							<StackPanel>
-								<Label Content="Price of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="Ingridient of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="kind of food" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-								<Label Content="chef introduction" FontSize="15" HorizontalContentAlignment="Right" Margin="30,5"/>
-							</StackPanel>
-						</Border>
-						<StackPanel Margin="0,40,0,0">
-							<Ellipse Width="100" Height="100">
-								<Ellipse.Fill>
-									<ImageBrush ImageSource="images\-res1.jpg"/>
-								</Ellipse.Fill>
-							</Ellipse>
-							<StackPanel Orientation="Horizontal">
-								<Label Content="+" FontSize="35" Foreground="#FFC14F25" Margin="5,-10,20,0"/>
-								<Label Content="-" FontSize="35" Foreground="#FFC14F25" FontWeight="Bold" Margin="0,-10,0,0"/>
-							</StackPanel>
-						</StackPanel>
-					</StackPanel>
+				<StackPanel x:Name="main_stack">
+					
 				</StackPanel>
-				
+
 			</Border>
 		</ScrollViewer>
 		<Border BorderBrush="#FF686464" BorderThickness="2" Margin="20" CornerRadius="20" Padding="10">
@@ -96,5 +34,18 @@
 				<Button Content="Submit" FontSize="15" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="40,10"/>
 			</Grid>
 		</Border>
-    </Grid>
+		<Button x:Name="exit_btn" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,5" Width="82" Grid.Column="1" Height="78" Background="Transparent" BorderBrush="Transparent" Click="exit_btn_Click">
+			<Button.Template>
+				<ControlTemplate>
+					<Grid>
+						<Ellipse>
+							<Ellipse.Fill>
+								<ImageBrush ImageSource="images\exit.png"/>
+							</Ellipse.Fill>
+						</Ellipse>
+					</Grid>
+				</ControlTemplate>
+			</Button.Template>
+		</Button>
+	</Grid>
 </Window>

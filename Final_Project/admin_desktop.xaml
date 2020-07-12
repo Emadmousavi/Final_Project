@@ -223,23 +223,23 @@
 										<ImageBrush ImageSource="images\-res1.jpg"/>
 									</Ellipse.Fill>
 								</Ellipse>
-								<TextBox x:Name="Name_Food"  Text="Name Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5"/>
-								<TextBox x:Name="Cost_Food" Text="Made Cost Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5"/>
-								<TextBox x:Name="Information_Food"  Text="information" HorizontalAlignment="Center"  Height="110" Width="150" Padding="5" Margin="0,5"/>
-								<TextBox x:Name="Date_Food" Text="Date of Food" HorizontalAlignment="Center"  Height="30" Width="150" Padding="5" Margin="0,5"/>
+								<TextBox x:Name="Name_Food"  Text="Name Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Name_Food_PreviewTextInput" MaxLength="20"/>
+								<TextBox x:Name="Cost_Food" Text="Made Cost Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Cost_Food_PreviewTextInput" MaxLength="4"/>
+								<TextBox x:Name="Information_Food"  Text="information" HorizontalAlignment="Center"  Height="110" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Information_Food_PreviewTextInput"/>
+								<TextBox x:Name="Date_Food" Text="Date of Food" HorizontalAlignment="Center"  Height="30" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Date_Food_PreviewTextInput" MaxLength="10"/>
 								<StackPanel Margin="0,15,0,0">
 									<TextBlock Text="Kind Of Food" HorizontalAlignment="Center" FontSize="20" Margin="0,5,0,10" FontFamily="Segoe Marker"/>
 									<StackPanel Orientation="Horizontal">
 										<TextBlock Text="Hamburger" FontSize="14" Margin="8,10,0,0" />
-										<CheckBox x:Name="hamburger" Margin="4,14,0,15" />
+										<CheckBox x:Name="hamburger" Margin="4,14,0,15" Checked="hamburger_Checked"/>
 										<TextBlock Text="traditional" FontSize="14" Margin="7,10,0,0" />
-										<CheckBox x:Name="traditional" Margin="4,14,0,0" />
+										<CheckBox x:Name="traditional" Margin="4,14,0,0" Checked="traditional_Checked"/>
 									</StackPanel>
 									<StackPanel Orientation="Horizontal">
 										<TextBlock Text="Sandwitch" FontSize="14" Margin="10,10,0,0" />
-										<CheckBox x:Name="sandwitch" Margin="10,14,0,15"  />
+										<CheckBox x:Name="sandwitch" Margin="10,14,0,15" Checked="sandwitch_Checked" />
 										<TextBlock Text="Pizza" FontSize="14" Margin="30,10,0,0" />
-										<CheckBox x:Name="pizza" Margin="10,14,0,15"  />
+										<CheckBox x:Name="pizza" Margin="10,14,0,15" Checked="pizza_Checked" />
 									</StackPanel>
 								</StackPanel>
 							</StackPanel>

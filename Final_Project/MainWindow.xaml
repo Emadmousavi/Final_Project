@@ -91,12 +91,15 @@
 										</Style>
 									</TextBox.Resources>
 								</TextBox>
+								<Button x:Name="full_btn" Height="20" Background="Transparent" BorderBrush="Transparent" Margin="204,-30,5,0" Visibility="Hidden">
+									
+								</Button>
 								<Label x:Name="lb1" Content="________________________________________________________________________________" Margin="0,-10,0,0" Foreground="Gray"/>
 							</StackPanel>
 
 							<StackPanel Margin="0,0,0,6">
 								<TextBlock	Text="Email" FontSize="10" Foreground="#FFF0BE82" FontWeight="Normal" FontFamily="Stegeo UI"  Margin="7,0,0,7"/>
-								<TextBox x:Name="email" Padding="8"  BorderBrush="DarkGray" Foreground="White" LostFocus="email_LostFocus" FontFamily="Stegeo UI" FontSize="10">
+								<TextBox x:Name="email" Padding="8"  BorderBrush="DarkGray" Foreground="White" LostFocus="email_LostFocus" FontFamily="Stegeo UI" FontSize="10" >
 									<TextBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</TextBox.Background>
@@ -106,6 +109,9 @@
 										</Style>
 									</TextBox.Resources>
 								</TextBox>
+								<Button x:Name="email_btn" Height="20" Background="Transparent" BorderBrush="Transparent" Margin="204,-30,5,0" Visibility="Hidden">
+									
+								</Button>
 								<Label x:Name="lb2" Content="________________________________________________________________________________" Margin="0,-10,0,0" Foreground="Gray"/>
 							</StackPanel>
 
@@ -121,6 +127,9 @@
 										</Style>
 									</TextBox.Resources>
 								</TextBox>
+								<Button x:Name="nationalCode_btn" Height="20" Background="Transparent" BorderBrush="Transparent" Margin="204,-30,5,0" Visibility="Hidden">
+									
+								</Button>
 								<Label x:Name="lb3" Content="________________________________________________________________________________" Margin="0,-10,0,0" Foreground="Gray"/>
 							</StackPanel>
 
@@ -136,6 +145,9 @@
 										</Style>
 									</TextBox.Resources>
 								</TextBox>
+								<Button x:Name="phoneNumber_btn" Height="20" Background="Transparent" BorderBrush="Transparent" Margin="204,-30,5,0" Visibility="Hidden">
+									
+								</Button>
 								<Label x:Name="lb4" Content="________________________________________________________________________________" Margin="0,-10,0,0" Foreground="Gray"/>
 							</StackPanel>
 
@@ -145,8 +157,11 @@
 									<PasswordBox.Background>
 										<SolidColorBrush Color="Gray" Opacity="0.3"/>
 									</PasswordBox.Background>
-									
+
 								</PasswordBox>
+								<Button x:Name="password_btn" Height="20" Background="Transparent" BorderBrush="Transparent" Margin="204,-30,5,0" Visibility="Hidden">
+									
+								</Button>
 								<Label x:Name="lb5" Content="________________________________________________________________________________" Margin="0,-10,0,0" Foreground="Gray"/>
 							</StackPanel>
 
@@ -162,6 +177,9 @@
 										</Style>
 									</PasswordBox.Resources>
 								</PasswordBox>
+								<Button x:Name="confirm_btn" Height="20" Background="Transparent" BorderBrush="Transparent" Margin="204,-30,5,0" Visibility="Hidden">
+									
+								</Button>
 								<Label  x:Name="lb6" Content="________________________________________________________________________________" Margin="0,-10,0,0" Foreground="Gray"/>
 							</StackPanel>
 							<Button x:Name="sign_up" Content="Sign up" Width="75" Height="28" Margin="-30,0,0,0" Background="#FF476C07" Foreground="White" Click="sign_up_Click">

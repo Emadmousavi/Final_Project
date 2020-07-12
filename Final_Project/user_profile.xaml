@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Final_Project"
         mc:Ignorable="d"
-        Title="user_profile" Height="700" Width="1000">
+        Title="user_profile" Height="700" Width="1000" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
 	<Grid>
 		<Grid.Background>
 			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -22,13 +22,13 @@
 			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
 
-		<StackPanel Margin="199,36,393,333" Grid.ColumnSpan="2" Grid.RowSpan="2">
-			<Ellipse  Width="400" Height="200" Margin="0,0,-200,0" >
+		<StackPanel Margin="400,36,393,333" Grid.ColumnSpan="2" Grid.RowSpan="2">
+			<Ellipse x:Name="profile_image" Width="200" Height="200" Margin="0,0,0,0" HorizontalAlignment="Center">
 				<Ellipse.Fill>
-					<ImageBrush ImageSource="images\user_profile.png" Stretch="Uniform"/>
+					<ImageBrush ImageSource="images\profile1.png" Stretch="Uniform"/>
 				</Ellipse.Fill>
 			</Ellipse>
-			<Button Content="Upload Image" Height="30" Width="120" FontSize="15" Background="#FFCD8F51"  Margin="200,20,0,20"/>
+			<Button x:Name="upload_image" Content="Upload Image" Height="30" Width="120" FontSize="15" Background="#FFCD8F51"  Margin="10,25,0,20" Click="upload_image_Click"/>
 		</StackPanel>
 
 		<Border BorderBrush="Gray" BorderThickness="2" Grid.Row="1" Margin="50,118,50,121" Padding="10" CornerRadius="10">
@@ -39,7 +39,7 @@
 				</Grid.RowDefinitions>
 				<StackPanel >
 					<TextBlock	Text="Full Name" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-					<TextBox x:Name="txt1" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+					<TextBox x:Name="FullName_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -52,7 +52,7 @@
 				</StackPanel>
 				<StackPanel Grid.Row="1">
 					<TextBlock	Text="E-mail" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,10,0,7" Background="#00000000" />
-					<TextBox x:Name="txt12" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+					<TextBox x:Name="E_mail_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -75,7 +75,7 @@
 				</Grid.RowDefinitions>
 				<StackPanel >
 					<TextBlock	Text="Phone Number" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-					<TextBox x:Name="txt21" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+					<TextBox x:Name="PhoneNumber_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -88,7 +88,7 @@
 				</StackPanel>
 				<StackPanel Grid.Row="1">
 					<TextBlock	Text="Password" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,10,0,7" Background="#00000000" />
-					<TextBox x:Name="txt22" Padding="8"  BorderBrush="DarkGray" Foreground="White"  FontFamily="Stegeo UI" FontSize="10">
+					<TextBox x:Name="Password_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -101,5 +101,18 @@
 				</StackPanel>
 			</Grid>
 		</Border>
+		<Button x:Name="exit_btn" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.ColumnSpan="2" Background="Transparent" Height="100"  Margin="446,0,462,0" Width="92" BorderBrush="Transparent" Click="exit_btn_Click">
+			<Button.Template>
+				<ControlTemplate>
+					<Grid>
+						<Ellipse>
+							<Ellipse.Fill>
+								<ImageBrush ImageSource="images\exit.png"/>
+							</Ellipse.Fill>
+						</Ellipse>
+					</Grid>
+				</ControlTemplate>
+			</Button.Template>
+		</Button>
 	</Grid>
 </Window>

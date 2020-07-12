@@ -17,15 +17,23 @@ using System.Data.SqlClient;
 using Org.BouncyCastle.Asn1.X509;
 using System.Runtime.CompilerServices;
 using System.IO;
+using System.Text.RegularExpressions;
+using Renci.SshNet.Messages;
 
 namespace Final_Project
 {
 	public static class menu
 	{
+		public static string RemoveWhitespace(this string input)
+		{
+			return new string(input.ToCharArray()
+				.Where(c => !Char.IsWhiteSpace(c))
+				.ToArray());
+		}
 		public static string uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
 		public static int counter=3;
 		public static WrapPanel main_wrap;
-		public static WrapPanel construct_food(string Name_Food, string Cost_Food, string Information_Food, string Date_Food)
+		public static WrapPanel construct_food(string Name_Food, string Cost_Food, string Information_Food, string Date_Food, string Ur_Food, string Kind_Food)
 		{
 			if (counter == 3)
 			{
@@ -42,7 +50,7 @@ namespace Final_Project
 			border.Height = 220;
 			border.Margin = new Thickness(30, 15, 0, 25);
 			StackPanel stackPanel = new StackPanel();
-			stackPanel.Name = Name_Food;
+			stackPanel.Name = RemoveWhitespace(Name_Food);
 			var bc = new BrushConverter();
 			stackPanel.Background = (Brush)bc.ConvertFrom("#FFB28E6A");
 			stackPanel.Height = 210;
@@ -57,7 +65,7 @@ namespace Final_Project
 			ellipse.Fill = ellipse_image;
 			Label label = new Label();
 			label.Name = "food_name";
-			label.Content = Name_Food;
+			label.Content = RemoveWhitespace(Name_Food);
 			label.HorizontalAlignment = HorizontalAlignment.Center;
 			Label label2 = new Label();
 			label2.Name = "Date";
@@ -71,32 +79,18 @@ namespace Final_Project
 			wrapPanel.Margin = new Thickness(0, 5, 0, 0);
 			wrapPanel.Height = 40;
 			wrapPanel.Width = 160;
-			Button button1 = new Button();
-			button1.Name = "plus";
-			button1.Margin = new Thickness(7, 8, 0, 8);
-			var brush = new ImageBrush();
-			brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\plus.png"));
-			brush.Stretch = Stretch.Uniform;
-			button1.Background = brush;
-			button1.Height = 25;
-			button1.Width = 25;
-			Button button2 = new Button();
-			button2.Name = "minus";
-			button2.Margin = new Thickness(5, 8, 5, 8);
-		    brush = new ImageBrush();
-			brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\min.png"));
-			brush.Stretch = Stretch.Uniform;
-			button2.Background = brush;
-			button2.Height = 25;
-			button2.Width = 25;
+			Label label4 = new Label();
+			label4.Content = "Price Of Food";
+			label4.HorizontalAlignment = HorizontalAlignment.Left;
+			label4.FontSize = 10;
 			Label label3 = new Label();
 			label3.Name = "food_price";
-			label3.Content = Cost_Food;
+			label3.Content = Cost_Food+"$";
 			label3.HorizontalAlignment = HorizontalAlignment.Right;
 			label3.HorizontalContentAlignment = HorizontalAlignment.Right;
 			label3.VerticalAlignment = VerticalAlignment.Center;
-			wrapPanel.Children.Add(button1);
-			wrapPanel.Children.Add(button2);
+			label3.Margin = new Thickness(50, 0, 0, 0);
+			wrapPanel.Children.Add(label4);
 			wrapPanel.Children.Add(label3);
 			stackPanel.Children.Add(wrapPanel);
 			border.Child = stackPanel;
@@ -107,12 +101,40 @@ namespace Final_Project
 	}
 	public static class List
 	{
-		public static string uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
-		public static int counter = 6;
-		public static WrapPanel main_wrap;
-		public static WrapPanel construct_food(string Name_Food, string Cost_Food, string Information_Food, string Date_Food)
+		public static string RemoveWhitespace(this string input)
 		{
-			if (counter == 6)
+			return new string(input.ToCharArray()
+				.Where(c => !Char.IsWhiteSpace(c))
+				.ToArray());
+		}
+		public static string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
+
+		public static void limit(object sender, TextCompositionEventArgs e)
+		{
+			Regex regex = new Regex("[^0-9]+");
+			e.Handled = regex.IsMatch(e.Text);
+		}
+
+		public static void Is_NUmber_changed(object sender, KeyboardFocusChangedEventArgs e)
+		{
+			
+			TextBox txt = e.Source as TextBox;
+			SqlConnection sqlConnection = new SqlConnection(connection_string);
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("update Food_Menu set Number_Food=@Number_Temp where Name_Food=@F", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@F", txt.Name);
+			sqlCommand.Parameters.AddWithValue("@Number_Temp", txt.Text);
+			sqlCommand.ExecuteNonQuery();
+			sqlConnection.Close();
+			sqlCommand.Dispose();
+		}
+
+		public static string uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+		public static int counter = 3;
+		public static WrapPanel main_wrap;
+		public static WrapPanel construct_food(string Name_Food, string Cost_Food, string Information_Food, string Date_Food, string Uri_Food, string Kind_Food,string Number_Food)
+		{
+			if (counter == 3)
 			{
 				counter = 0;
 				main_wrap = new WrapPanel();
@@ -127,7 +149,7 @@ namespace Final_Project
 			border.Height = 220;
 			border.Margin = new Thickness(30, 15, 0, 25);
 			StackPanel stackPanel = new StackPanel();
-			stackPanel.Name = Name_Food;
+			stackPanel.Name = "_" + RemoveWhitespace(Name_Food);
 			var bc = new BrushConverter();
 			stackPanel.Background = (Brush)bc.ConvertFrom("#FFB28E6A");
 			stackPanel.Height = 210;
@@ -142,55 +164,39 @@ namespace Final_Project
 			ellipse.Fill = ellipse_image;
 			Label label = new Label();
 			label.Name = "food_name";
-			label.Content = Name_Food;
+			label.Content = RemoveWhitespace(Name_Food);
 			label.HorizontalAlignment = HorizontalAlignment.Center;
 			Label label2 = new Label();
 			label2.Name = "Date";
 			label2.Content = Date_Food;
 			label2.HorizontalAlignment = HorizontalAlignment.Center;
-			Label label3 = new Label();
-			label3.Name = "Number";
-			label3.Content = "1";
-			label3.Margin = new Thickness(10, -15,10,-15);
-			label3.HorizontalContentAlignment = HorizontalAlignment.Left;
-			label3.FontSize = 15;
 			var b = new BrushConverter();
-			label3.Foreground = (Brush)b.ConvertFrom("#FF7C0707");
 			stackPanel.Children.Add(ellipse);
 			stackPanel.Children.Add(label);
 			stackPanel.Children.Add(label2);
-			stackPanel.Children.Add(label3);
 			WrapPanel wrapPanel = new WrapPanel();
 			wrapPanel.Name = "wrappanel";
 			wrapPanel.Margin = new Thickness(0, 5, 0, 0);
 			wrapPanel.Height = 40;
 			wrapPanel.Width = 160;
-			Button button1 = new Button();
-			button1.Name = "plus";
-			button1.Margin = new Thickness(7, 8, 0, 8);
-			var brush = new ImageBrush();
-			brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\plus.png"));
-			brush.Stretch = Stretch.Uniform;
-			button1.Background = brush;
-			button1.Height = 25;
-			button1.Width = 25;
-			Button button2 = new Button();
-			button2.Name = "minus";
-			button2.Margin = new Thickness(5, 8, 5, 8);
-			brush = new ImageBrush();
-			brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\min.png"));
-			brush.Stretch = Stretch.Uniform;
-			button2.Background = brush;
-			button2.Height = 25;
-			button2.Width = 25;
+			TextBox textBox = new TextBox();
+			textBox.Name = RemoveWhitespace(Name_Food);
+			textBox.Text = Number_Food;
+			textBox.FontSize = 10;
+			textBox.Margin = new Thickness(15, 5, 10, 13);
+			textBox.MaxLength = 2;
+			textBox.PreviewTextInput += new TextCompositionEventHandler(List.limit);
+			textBox.LostKeyboardFocus += new KeyboardFocusChangedEventHandler(Is_NUmber_changed);
+
 			Label label4 = new Label();
 			label4.Name = "food_price";
-			label4.Content = Cost_Food;
+			label4.Content = Cost_Food+"$";
 			label4.HorizontalAlignment = HorizontalAlignment.Right;
 			label4.HorizontalContentAlignment = HorizontalAlignment.Right;
+			label4.VerticalContentAlignment = VerticalAlignment.Center;
 			label4.VerticalAlignment = VerticalAlignment.Center;
-			wrapPanel.Children.Add(button1);
-			wrapPanel.Children.Add(button2);
+			label4.Margin = new Thickness(70, 0, 0, 10);
+			wrapPanel.Children.Add(textBox);
 			wrapPanel.Children.Add(label4);
 			stackPanel.Children.Add(wrapPanel);
 			border.Child = stackPanel;
@@ -201,14 +207,70 @@ namespace Final_Project
 	}
 	public partial class admin_desktop : Window
 	{
+		
 		string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
+		public bool check_add_menu_condition()
+		{
+			if (hamburger.IsChecked == false && pizza.IsChecked == false && sandwitch.IsChecked == false && traditional.IsChecked == false)
+			{
+				return false;
+			}
 
+			if (Name_Food.Text == "Name Of Food" || Name_Food.Text == "")
+			{
+				return false;
+			}
+
+			if (Cost_Food.Text == "Made Cost Of Food" || Name_Food.Text == "")
+			{
+				return false;
+			}
+
+			if (Date_Food.Text == "Date Of Food" || Name_Food.Text == "")
+			{
+				return false;
+			}
+
+			if (Information_Food.Text == "information" || Name_Food.Text == "")
+			{
+				return false;
+			}
+
+			return true;
+		}
 		public admin_desktop()
 		{
 			InitializeComponent();
-			
-		}
+			menu.counter = 3;
+			List.counter = 3;
+			SqlConnection sqlConnection = new SqlConnection(connection_string);
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select * from Food_Menu", sqlConnection);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			while (sqlDataReader.Read())
+			{
+				if (menu.counter == 3)
+				{
+					main_stack21.Children.Add(menu.construct_food("_" + sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(),  sqlDataReader.GetValue(5).ToString()));
+					main_stack.Children.Add(List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(), sqlDataReader.GetValue(6).ToString()));
+					menu.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+					List.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
 
+				}
+
+				else
+				{
+					menu.construct_food("_" + sqlDataReader.GetValue(0).ToString(),  sqlDataReader.GetValue(1).ToString(),  sqlDataReader.GetValue(2).ToString(),  sqlDataReader.GetValue(3).ToString(),  sqlDataReader.GetValue(4).ToString(),  sqlDataReader.GetValue(5).ToString());
+					List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(), sqlDataReader.GetValue(6).ToString());
+					menu.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+					List.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+				}
+			}
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+		}
+		
 		private void upload_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog open = new OpenFileDialog();
@@ -232,53 +294,128 @@ namespace Final_Project
 
 		private void add_Click(object sender, RoutedEventArgs e)
 		{
+			if (!check_add_menu_condition())
+			{
+				MessageBox.Show("Some Food Fields are incompelete To Add in Menu");
+				return;
+			}
+			if (Name_Food.Text.Contains(" "))
+			{
+				MessageBox.Show("Food Name Can't contain whitespace");
+				return;
+			}
+			if (!Regex.IsMatch(Date_Food.Text,@"\d\d/\d\d/\d\d\d\d"))
+			{
+				MessageBox.Show(@"Date format must be like DD/MM/YYYY");
+				return;
+			}
+			bool Is_added = false;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("INSERT INTO Food_Menu (Name_Food, Cost_Food, Information_Food,Date_Food,Uri_Food) VALUES (@Name_Food,@Cost_Food,@Information_Food,@Date_Food,@Uri_Food)", sqlConnection);
-			sqlCommand.Parameters.AddWithValue("@Name_Food", Name_Food.Text);
-			sqlCommand.Parameters.AddWithValue("@Cost_Food", Cost_Food.Text);
-			sqlCommand.Parameters.AddWithValue("@Information_Food", Information_Food.Text);
-			sqlCommand.Parameters.AddWithValue("@Date_Food", Date_Food.Text);
-			sqlCommand.Parameters.AddWithValue("@Uri_Food", menu.uploaded_image_uri);
-			sqlCommand.ExecuteNonQuery();
+			SqlCommand sqlCommand = new SqlCommand("select Name_Food from Food_Menu", sqlConnection);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			while (sqlDataReader.Read())
+			{
+				if (Name_Food.Text == sqlDataReader.GetValue(0).ToString())
+				{
+					MessageBox.Show("Item with same Name Has been already added to Menu");
+					Is_added = true;
+					sqlConnection.Close();
+					sqlCommand.Dispose();
+					sqlDataReader.Close();
+					break;
+				}
+			}
 			sqlConnection.Close();
 			sqlCommand.Dispose();
-			if (menu.counter == 3)
-			{
-				main_stack21.Children.Add(menu.construct_food("_"+Name_Food.Text, "_" + Cost_Food.Text, "_" + Information_Food.Text, "_" + Date_Food.Text));
-				main_stack.Children.Add(List.construct_food(Name_Food.Text, Cost_Food.Text, Information_Food.Text, Date_Food.Text));
-				menu.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
-				List.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
-				var brush = new ImageBrush();
-				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg"));
-				uploaded_image.Fill = brush;
-				Name_Food.Text = "Name Of Food";
-				Cost_Food.Text = "Cost Of Food";
-				Information_Food.Text = "Information Of Food";
-				Date_Food.Text = "Date Of Food";
-			}
+			sqlDataReader.Close();
 
-			else
+			if (!Is_added)
 			{
-				menu.construct_food("_" + Name_Food.Text, "_" + Cost_Food.Text, "_" + Information_Food.Text, "_" + Date_Food.Text);
-				List.construct_food(Name_Food.Text, Cost_Food.Text, Information_Food.Text, Date_Food.Text);
-				menu.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
-				List.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
-				var brush = new ImageBrush();
-				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg"));
-				uploaded_image.Fill = brush;
-				Name_Food.Text = "Name Of Food";
-				Cost_Food.Text = "Cost Of Food";
-				Information_Food.Text = "Information Of Food";
-				Date_Food.Text = "Date Of Food";
-			}
+				sqlConnection = new SqlConnection(connection_string);
+				sqlConnection.Open();
+				sqlCommand = new SqlCommand("INSERT INTO Food_Menu (Name_Food, Cost_Food, Information_Food,Date_Food,Uri_Food,Kind_Food,Number_Food) VALUES (@Name_Food,@Cost_Food,@Information_Food,@Date_Food,@Uri_Food,@Kind_Food,@Number_Food)", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@Name_Food", Name_Food.Text);
+				sqlCommand.Parameters.AddWithValue("@Cost_Food", Cost_Food.Text);
+				sqlCommand.Parameters.AddWithValue("@Information_Food", Information_Food.Text);
+				string date1 = Date_Food.Text.Substring(0, 2);
+				string date2 = Date_Food.Text.Substring(3, 2);
+				string date3 = Date_Food.Text.Substring(6, 4);
+				date1 = date1.StartsWith("0") ? date1.Substring(1, 1) : date1;
+				date2 = date2.StartsWith("0") ? date2.Substring(1, 1) : date2;
+				Date_Food.Text= date1 +"/"+ date2 + "/" + date3;
+				sqlCommand.Parameters.AddWithValue("@Date_Food", Date_Food.Text);
+				sqlCommand.Parameters.AddWithValue("@Uri_Food", menu.uploaded_image_uri);
+				sqlCommand.Parameters.AddWithValue("@Number_Food", 1);
+				if (hamburger.IsChecked == true)
+				{
+					sqlCommand.Parameters.AddWithValue("@Kind_Food", "hamburger");
+				}
+				else if (pizza.IsChecked == true)
+				{
+					sqlCommand.Parameters.AddWithValue("@Kind_Food", "pizza");
+
+				}
+				else if (sandwitch.IsChecked == true)
+				{
+					sqlCommand.Parameters.AddWithValue("@Kind_Food", "sandwitch");
+
+				}
+				else if (traditional.IsChecked == true)
+				{
+					sqlCommand.Parameters.AddWithValue("@Kind_Food", "traditional");
+
+				}
+				sqlCommand.ExecuteNonQuery();
+				sqlConnection.Close();
+				sqlCommand.Dispose();
+				sqlConnection = new SqlConnection(connection_string);
+				sqlConnection.Open();
+				sqlCommand = new SqlCommand("select * from Food_Menu where Name_Food=@Name_Food", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@Name_Food", Name_Food.Text);
+				sqlDataReader = sqlCommand.ExecuteReader();
+				sqlDataReader.Read();
+				if (menu.counter == 3)
+					{
+						main_stack21.Children.Add(menu.construct_food("_" + sqlDataReader.GetValue(0).ToString(),sqlDataReader.GetValue(1).ToString(),  sqlDataReader.GetValue(2).ToString(),  sqlDataReader.GetValue(3).ToString(),  sqlDataReader.GetValue(4).ToString(),  sqlDataReader.GetValue(5).ToString()));
+						main_stack.Children.Add(List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(),"1"));
+						menu.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+						List.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+						var brush = new ImageBrush();
+						brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg"));
+						uploaded_image.Fill = brush;
+						Name_Food.Text = "Name Of Food";
+						Cost_Food.Text = "Cost Of Food";
+						Information_Food.Text = "Information Of Food";
+						Date_Food.Text = "Date Of Food";
+					}
+
+					else
+					{
+						menu.construct_food("_" + sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(),  sqlDataReader.GetValue(2).ToString(),  sqlDataReader.GetValue(3).ToString(),  sqlDataReader.GetValue(4).ToString(),  sqlDataReader.GetValue(5).ToString());
+						List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(),"1");
+						menu.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+						List.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
+						var brush = new ImageBrush();
+						brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg"));
+						uploaded_image.Fill = brush;
+						Name_Food.Text = "Name Of Food";
+						Cost_Food.Text = "Cost Of Food";
+						Information_Food.Text = "Information Of Food";
+						Date_Food.Text = "Date Of Food";
+					}
+				}
+				sqlConnection.Close();
+				sqlCommand.Dispose();
+				sqlDataReader.Close();
+			
 		}
 
 		private void exit_Selected(object sender, RoutedEventArgs e)
 		{
-			MainWindow w = new MainWindow();
-			MessageBox.Show("you exited successfully");
-			w.Show();
+			MainWindow we = new MainWindow();
+			MessageBox.Show("You Exited Successfully");
+			we.Show();
 			this.Close();
 		}
 
@@ -299,5 +436,50 @@ namespace Final_Project
 				}
 			}
 		}
+
+		private void hamburger_Checked(object sender, RoutedEventArgs e)
+		{
+			traditional.IsChecked = sandwitch.IsChecked = pizza.IsChecked = false;
+		}
+
+		private void traditional_Checked(object sender, RoutedEventArgs e)
+		{
+			hamburger.IsChecked  = sandwitch.IsChecked = pizza.IsChecked = false;
+		}
+
+		private void sandwitch_Checked(object sender, RoutedEventArgs e)
+		{
+			hamburger.IsChecked = traditional.IsChecked = pizza.IsChecked = false;
+		}
+
+		private void pizza_Checked(object sender, RoutedEventArgs e)
+		{
+			hamburger.IsChecked = traditional.IsChecked = sandwitch.IsChecked = false;
+		}
+
+		private void Name_Food_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex regex = new Regex("[^A-Za-z]+");
+			e.Handled = regex.IsMatch(e.Text);
+		}
+
+		private void Cost_Food_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex regex = new Regex("[^0-9]");
+			e.Handled = regex.IsMatch(e.Text);
+		}
+
+		private void Information_Food_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			
+		}
+
+		private void Date_Food_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			Regex regex = new Regex(@"[^0-9/]");
+			e.Handled = regex.IsMatch(e.Text);
+		}
+
+		
 	}
 }

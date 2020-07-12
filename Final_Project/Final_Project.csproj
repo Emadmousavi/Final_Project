@@ -270,6 +270,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>database.mdf</DependentUpon>
     </Content>
+    <Resource Include="images\warning.png" />
+    <Resource Include="images\tick.png" />
+    <Resource Include="images\profile1.png" />
     <Resource Include="images\exit.png" />
     <Resource Include="min.png" />
     <Resource Include="images\minus.png" />
