@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Final_Project"
-        mc:Ignorable="d"
+		mc:Ignorable="d"
         Title="user_cart" Height="700" Width="1000"
 		ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" >
 	<Window.Background>
@@ -16,22 +16,30 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="2.5*"/>
+			<ColumnDefinition Width="2.0*"/>
 		</Grid.ColumnDefinitions>
 		<ScrollViewer Grid.Column="1">
 			<Border BorderBrush="#FF686464" BorderThickness="2" CornerRadius="20" Margin="20" Padding="20">
 				<StackPanel x:Name="main_stack">
-					
+
 				</StackPanel>
 
 			</Border>
 		</ScrollViewer>
-		<Border BorderBrush="#FF686464" BorderThickness="2" Margin="20" CornerRadius="20" Padding="10">
+		<Border BorderBrush="#FF686464" BorderThickness="2" Margin="20"  Padding="10">
 			<Grid>
-				<StackPanel Height="610">
-
-				</StackPanel>
-				<Button Content="Submit" FontSize="15" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="40,10"/>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="281*"/>
+					<RowDefinition Height="37*"/>
+				</Grid.RowDefinitions>
+				<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,73">
+					<StackPanel x:Name="receipt" Margin="0,0,0,73"/>
+				</ScrollViewer>
+				<InkCanvas x:Name="signiture" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,0,129,0" Height="120" Width="130" Grid.RowSpan="2" LostMouseCapture="signiture_LostMouseCapture"/>
+				<Label Content="Payment" Margin="158,516,10,10" FontWeight="Bold" FontSize="13"/>
+				<RadioButton x:Name="online_pay" Content="online" Margin="158,552,0,47" Grid.RowSpan="2" HorizontalAlignment="Left" Width="60" Checked="online_pay_Checked"/>
+				<RadioButton x:Name="cash_pay" Content="cash" Margin="158,10,0,42" Grid.Row="1" Checked="cash_pay_Checked"/>
+				<Button Name="Submit" Content="Submit" FontSize="15" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="158,0,10,2" Click="Submit_Click" Height="40" Grid.Row="1"/>
 			</Grid>
 		</Border>
 		<Button x:Name="exit_btn" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,5" Width="82" Grid.Column="1" Height="78" Background="Transparent" BorderBrush="Transparent" Click="exit_btn_Click">

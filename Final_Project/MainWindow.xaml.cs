@@ -38,18 +38,18 @@ namespace Final_Project
 		public MainWindow()
 		{
 	       InitializeComponent();
-	      //SqlConnection sqlConnection = new SqlConnection(connection_string);
-	      //sqlConnection.Open();
-	      //SqlCommand sqlCommand = new SqlCommand("delete from Users", sqlConnection);
-	      //sqlCommand.ExecuteNonQuery();
-	      //sqlCommand.Dispose();
-	      //sqlCommand = new SqlCommand("delete from Search_Table", sqlConnection);
-	      //sqlCommand.ExecuteNonQuery();
-	      //sqlCommand.Dispose();
-	      //sqlCommand = new SqlCommand("delete from Food_Menu", sqlConnection);
-	      //sqlCommand.ExecuteNonQuery();
-	      //sqlCommand.Dispose();
-	      //sqlConnection.Close();
+			//SqlConnection sqlConnection = new SqlConnection(connection_string);
+			//sqlConnection.Open();
+			//SqlCommand sqlCommand = new SqlCommand("delete from Receipt", sqlConnection);
+			//sqlCommand.ExecuteNonQuery();
+			//sqlCommand.Dispose();
+			//sqlCommand = new SqlCommand("delete from Food_Menu", sqlConnection);
+			//sqlCommand.Dispose();
+			//sqlCommand = new SqlCommand("delete from Search_Table", sqlConnection);
+			//sqlCommand.ExecuteNonQuery();
+			//sqlCommand.ExecuteNonQuery();
+			//sqlCommand.Dispose();
+			//sqlConnection.Close();
 
 		}
 		public bool code(string str)
@@ -371,12 +371,13 @@ namespace Final_Project
 				MessageBox.Show("You Signed Up Successfully");
 				SqlConnection sqlConnection = new SqlConnection(connection_string);
 				sqlConnection.Open();
-				SqlCommand sqlCommand = new SqlCommand("INSERT INTO Users (FullName, E_mail, NationalCode,PhoneNumber,_Password) VALUES (@FullName,@E_mail,@NationalCode,@PhoneNumber,@_Password)", sqlConnection);
+				SqlCommand sqlCommand = new SqlCommand("INSERT INTO Users (FullName, E_mail, NationalCode,PhoneNumber,_Password,Cart) VALUES (@FullName,@E_mail,@NationalCode,@PhoneNumber,@_Password,@Cart)", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@FullName", fullName.Text);
 				sqlCommand.Parameters.AddWithValue("@E_mail", email.Text);
 				sqlCommand.Parameters.AddWithValue("@NationalCode", nationalCode.Text);
 				sqlCommand.Parameters.AddWithValue("@PhoneNumber", phoneNumber.Text);
 				sqlCommand.Parameters.AddWithValue("@_Password", password.Password);
+				sqlCommand.Parameters.AddWithValue("@Cart", "");
 				sqlCommand.ExecuteNonQuery();
 			}
 

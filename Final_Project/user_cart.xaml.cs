@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
@@ -14,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
+
 namespace Final_Project
 {
 	/// <summary>
@@ -21,43 +24,121 @@ namespace Final_Project
 	/// </summary>
 	public partial class user_cart : Window
 	{
-		public static void btn_click(object sender, RoutedEventArgs e)
+		 Window creatingForm;
+		public  Window setCreatingForm
+		{
+			get { return creatingForm; }
+			set { creatingForm = value; }
+		}
+		public static void lable_plus_click(object sender, RoutedEventArgs e)
 		{
 			string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
-			Button btn = e.Source as Button;
-			WrapPanel wp = btn.Parent as WrapPanel;
-			StackPanel st = wp.Parent as StackPanel;
+			Label lb = e.Source as Label;
+			StackPanel st = lb.Parent as StackPanel;
+			StackPanel st1 = st.Parent as StackPanel;
+			StackPanel st2 = st1.Parent as StackPanel;
+			StackPanel st3 = st2.Parent as StackPanel;
+			Border br = st3.Parent as Border;
+			ScrollViewer sc = br.Parent as ScrollViewer;
+			Grid grid = sc.Parent as Grid;
+			Window window = grid.Parent as Window;
+
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("update Users set Cart +=@Cart where  FullName=@FullName", sqlConnection);
-			sqlCommand.Parameters.AddWithValue("@Cart", "," + st.Name);
+			SqlCommand sqlCommand = new SqlCommand("select Number_Food from Food_Menu where Name_Food=@Name_Food", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7));
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			int current_Food_number = int.Parse(sqlDataReader.GetValue(0).ToString());
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+
+			if (current_Food_number >= 1)
+			{
+				sqlCommand = new SqlCommand("update Users set Cart +=@Cart where  FullName=@FullName", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@Cart", "," + ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7));
+				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+				int number = int.Parse(((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content.ToString().Substring(9));
+				number++;
+				((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content = "Number : " + number.ToString();
+				sqlCommand = new SqlCommand("update Food_Menu set Number_Food =@Number_Food where Name_Food=@Name_Food", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@Number_Food", current_Food_number - 1);
+				sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7));
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+				sqlConnection.Close();
+			}
+
+			else
+			{
+				MessageBox.Show("You Can't Order More Than Amount of Food in Menu");
+			}
+			user_cart w = new user_cart();
+			w.Show();
+			window.Close();
+			
+
+		}
+
+		public static void lable_minus_click(object sender, RoutedEventArgs e)
+		{
+			string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
+			Label lb = e.Source as Label;
+			StackPanel st = lb.Parent as StackPanel;
+			StackPanel st1 = st.Parent as StackPanel;
+			StackPanel st2 = st1.Parent as StackPanel;
+			StackPanel st3 = st2.Parent as StackPanel;
+			Border br = st3.Parent as Border;
+			ScrollViewer sc = br.Parent as ScrollViewer;
+			Grid grid = sc.Parent as Grid;
+			Window window = grid.Parent as Window;
+
+			SqlConnection sqlConnection = new SqlConnection(connection_string);
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select Cart from Users where FullName=@FullName", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			string cart = sqlDataReader.GetValue(0).ToString();
+			string Food_name = ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7);
+			int food_index = cart.IndexOf(Food_name);
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlCommand = new SqlCommand("update Users set Cart=@Cart where FullName=@FullName", sqlConnection);
+			int endIndex = cart.Length - Food_name.Length != food_index ? Food_name.Length + 1 : Food_name.Length;
+			sqlCommand.Parameters.AddWithValue("@Cart",cart.Remove(food_index, endIndex));
 			sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
 			sqlCommand.ExecuteNonQuery();
 			sqlCommand.Dispose();
-			sqlConnection.Close();
-		}
-
-		public static void stack_click(object sender, RoutedEventArgs e)
-		{
-			string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
-			Button btn = e.Source as Button;
-			WrapPanel wp = btn.Parent as WrapPanel;
-			StackPanel st = wp.Parent as StackPanel;
-			int number = int.Parse((((TextBlock)st.Children[3]).Text));
+			int number = int.Parse(((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content.ToString().Substring(9));
 			number--;
-			((TextBlock)st.Children[3]).Text = number.ToString();
-			SqlConnection sqlConnection = new SqlConnection(connection_string);
-			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("update Food_Menu set Number_Food=@Number_Food where Name_Food=@Name_Food or Name_Food=@Name_Food1 or Name_Food=@Name_Food2", sqlConnection);
-			sqlCommand.Parameters.AddWithValue("@Number_Food", number.ToString());
-			sqlCommand.Parameters.AddWithValue("@Name_Food", st.Name);
-			sqlCommand.Parameters.AddWithValue("@Name_Food1", "_" + st.Name);
-			sqlCommand.Parameters.AddWithValue("@Name_Food2", st.Name.Substring(1));
+			((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content = "Number : "+number.ToString();
+			sqlCommand = new SqlCommand("select Number_Food from Food_Menu where Name_Food=@Name_Food", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7));
+			sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			int current_Food_number = int.Parse(sqlDataReader.GetValue(0).ToString());
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlCommand = new SqlCommand("update Food_Menu set Number_Food =@Number_Food where Name_Food=@Name_Food", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Number_Food", current_Food_number + 1);
+			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7));
 			sqlCommand.ExecuteNonQuery();
 			sqlCommand.Dispose();
 			sqlConnection.Close();
+			if (number == 0)
+			{
+				st2.Children.Clear();
+				st2.Height = 0;
+			}
+			user_cart w = new user_cart();
+			w.Show();
+			window.Close();
 
 		}
+
 
 		public class Food_Item
 		{
@@ -74,6 +155,106 @@ namespace Final_Project
 		string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
 		public static class Cart
 		{
+			public static bool signed = false;
+			public static StackPanel Total_Price()
+			{
+				SqlConnection sqlConnection = new SqlConnection(" Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30");
+				sqlConnection.Open();
+				SqlCommand sqlCommand = new SqlCommand("select Name_Food,Cost_Food,Number_Food from Receipt",sqlConnection);
+				SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+				List<Food_Item> Food = new List<Food_Item>();
+				while (sqlDataReader.Read())
+				{
+					Food_Item a = new Food_Item();
+					a.Name_Food = sqlDataReader.GetValue(0).ToString();
+					a.Cost_Food = sqlDataReader.GetValue(1).ToString();
+					a.Number_Food = sqlDataReader.GetValue(2).ToString();
+					Food.Add(a);
+				}
+				sqlDataReader.Close();
+				sqlCommand.Dispose();
+				StackPanel stackPanel = new StackPanel();
+				Grid grid = new Grid();
+				ColumnDefinition c1 = new ColumnDefinition();
+				c1.Width = new GridLength(2.5, GridUnitType.Star);
+				ColumnDefinition c2 = new ColumnDefinition();
+				c2.Width = new GridLength(1, GridUnitType.Star);
+				grid.ColumnDefinitions.Add(c1);
+				grid.ColumnDefinitions.Add(c2);
+				Label lable1 = new Label();
+				lable1.Content = "Toal Cost";
+				lable1.FontWeight = FontWeights.Bold;
+				lable1.FontStyle = FontStyles.Italic;
+				lable1.FontSize = 16;
+				lable1.Margin = new Thickness(0, 0, 10, 0);
+				Grid.SetColumn(lable1, 0);
+				Label lable2 = new Label();
+				int total = Food.Select(a => (int.Parse(a.Cost_Food) * int.Parse(a.Number_Food))).Sum(x => x);
+				lable2.Content = total.ToString() + "$";
+				lable2.FontSize = 16;
+				lable2.FontWeight = FontWeights.Bold;
+				lable2.FontStyle = FontStyles.Italic;
+				lable2.Margin = new Thickness(10, 0, 10, 0);
+				Grid.SetColumn(lable2, 1);
+				grid.Children.Add(lable2);
+				grid.Children.Add(lable1);
+				grid.Margin = new Thickness(0, 10, 0, 0);
+				stackPanel.Children.Add(grid);
+				return stackPanel;
+
+			}
+			public static StackPanel receipt(string Name_Food,string Cost_Food, List<string> cart)
+			{
+				StackPanel stackpanel = new StackPanel();
+				Label lable1 = new Label();
+				lable1.Content = Name_Food;
+				lable1.FontSize = 20;
+				lable1.FontWeight = FontWeights.Bold;
+				lable1.FontStyle = FontStyles.Italic;
+				Grid grid = new Grid();
+				ColumnDefinition c1 = new ColumnDefinition();
+				c1.Width = new GridLength(2.5, GridUnitType.Star);
+				ColumnDefinition c2 = new ColumnDefinition();
+				c2.Width = new GridLength(1, GridUnitType.Star);
+				grid.ColumnDefinitions.Add(c1);
+				grid.ColumnDefinitions.Add(c2);
+				Label lable2 = new Label();
+				lable2.Content = (int.Parse(Cost_Food)* (int)cart.Where(x => x == Name_Food).Count()).ToString() + "$";
+				lable2.FontSize = 15;
+				lable2.Margin = new Thickness(10, 0, 10, 0);
+				Grid.SetColumn(lable2, 1);
+				Label lable3 = new Label();
+				lable3.Content = ((int)cart.Where(x => x == Name_Food).Count()).ToString();
+				lable3.FontSize = 15;
+				lable3.Margin = new Thickness(10, 0, 10, 0);
+				Grid.SetColumn(lable3, 0);
+				grid.Children.Add(lable3);
+				grid.Children.Add(lable2);
+				Label lable4 = new Label();
+				lable4.Content = "_______________________________________________________________________________";
+				lable4.Margin = new Thickness(0, -7, 0, 0);
+				lable4.FontSize = 15;
+				lable4.Margin = new Thickness(10, 0, 10, 0);
+				stackpanel.Children.Add(lable1);
+				stackpanel.Children.Add(grid);
+				stackpanel.Children.Add(lable4);
+				SqlConnection sqlConnection = new SqlConnection("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30");
+				sqlConnection.Open();
+				SqlCommand sqlCommand = new SqlCommand(" if not exists (select * from Receipt where Name_Food=@Name_Food) INSERT INTO Receipt (Name_Food, Cost_Food,Number_Food) VALUES (@Name_Food,@Cost_Food,@Number_Food)", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@Name_Food",Name_Food);
+				sqlCommand.Parameters.AddWithValue("@Cost_Food", Cost_Food);
+				sqlCommand.Parameters.AddWithValue("@Number_Food", (int)cart.Where(x => x == Name_Food).Count());
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+				sqlCommand = new SqlCommand("update Receipt set Number_Food=@Number_Food where Name_Food=@Name_Food", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@Name_Food", Name_Food);
+				sqlCommand.Parameters.AddWithValue("@Number_Food", (int)cart.Where(x => x == Name_Food).Count());
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+				sqlConnection.Close();
+				return stackpanel;
+
+			}
 			public static StackPanel Construct(string Name_Food, string Cost_Food, string Information_Food, string Date_Food, string Uri_Food, string Kind_Food, string Number_Food,List<string> cart)
 			{
 				StackPanel stackPanel = new StackPanel();
@@ -82,10 +263,10 @@ namespace Final_Project
 				Border border = new Border();
 				border.BorderThickness = new Thickness(2, 2, 2, 2);
 				border.CornerRadius = new CornerRadius(20, 20, 20, 20);
-				border.Width = 480;
+				border.Width = 392;
 				border.Margin = new Thickness(14, 14, 14, 14);
 				var bc = new BrushConverter();
-				border.BorderBrush = (Brush)bc.ConvertFrom("#FF686464");
+				border.BorderBrush = (System.Windows.Media.Brush)bc.ConvertFrom("#FF686464");
 				StackPanel stack = new StackPanel();
 				Label lable1 = new Label();
 				lable1.Content = "Price : ";
@@ -142,15 +323,17 @@ namespace Final_Project
 				stack3.Orientation = Orientation.Horizontal;
 				Label lable4 = new Label();
 				lable4.Content = "+";
+				lable4.MouseDown += new MouseButtonEventHandler(lable_plus_click);
 				lable4.FontSize = 35;
 				bc = new BrushConverter();
-				lable4.Foreground = (Brush)bc.ConvertFrom("#FFC14F25");
+				lable4.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFC14F25");
 				lable4.Margin = new Thickness(15, -10, 5, 0);
 				Label lable5 = new Label();
 				lable5.Content = "-";
+				lable5.MouseDown += new MouseButtonEventHandler(lable_minus_click);
 				lable5.FontSize = 35;
 				bc = new BrushConverter();
-				lable5.Foreground = (Brush)bc.ConvertFrom("#FFC14F25");
+				lable5.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFC14F25");
 				lable5.Margin = new Thickness(5, -10, 5, 0);
 				stack3.Children.Add(lable4);
 				stack3.Children.Add(lable5);
@@ -165,9 +348,14 @@ namespace Final_Project
 		public user_cart()
 		{
 			InitializeComponent();
+			Cart.signed = false;
+			bool receipt_empty = true;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("select Cart from Users where FullName=@FullName", sqlConnection);
+			SqlCommand sqlCommand = new SqlCommand("delete from Receipt", sqlConnection);
+			sqlCommand.ExecuteNonQuery();
+			sqlCommand.Dispose();
+			sqlCommand = new SqlCommand("select Cart from Users where FullName=@FullName", sqlConnection);
 			sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
 			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 			sqlDataReader.Read();
@@ -191,11 +379,18 @@ namespace Final_Project
 			}
 			foreach (var item in Food_List.Where(x => cart.Contains(x.Name_Food)))
 			{
+				receipt_empty = false;
 				main_stack.Children.Add(Cart.Construct(item.Name_Food,item.Cost_Food,item.Information_Food,item.Date_Food,item.Uri_Food,item.Kind_Food,item.Number_Food,cart));
+				receipt.Children.Add(Cart.receipt(item.Name_Food, item.Cost_Food, cart));
+			}
+			if (!receipt_empty)
+			{
+				receipt.Children.Add(Cart.Total_Price());
 			}
 			sqlDataReader.Close();
 			sqlCommand.Dispose();
 			sqlConnection.Close();
+
 		}
 
 		private void exit_btn_Click(object sender, RoutedEventArgs e)
@@ -203,6 +398,50 @@ namespace Final_Project
 			user_desktop w = new user_desktop();
 			w.Show();
 			this.Close();
+		}
+
+		private void Submit_Click(object sender, RoutedEventArgs e)
+		{
+			if (Cart.signed && (online_pay.IsChecked==true || cash_pay.IsChecked==true) && receipt.Children.Count!=0)
+			{
+				MessageBox.Show("order is submited");
+				if (cash_pay.IsChecked == true)
+				{
+					MessageBox.Show("Thank you for your Buy your order will be delivered soon");
+
+				}
+				if (online_pay.IsChecked == true)
+				{
+					string total_price = ((Label)((Grid)(Cart.Total_Price().Children[0])).Children[0]).Content.ToString();
+					MessageBox.Show($"{total_price}  was deducted from your account");
+					MessageBox.Show("Thank you for your Buy your order will be delivered soon");
+				}
+			}
+
+			else if(online_pay.IsChecked == false && cash_pay.IsChecked == false)
+				MessageBox.Show("you have choose payment way");
+			else if (receipt.Children.Count == 0)
+				MessageBox.Show("Nothing to Buy");
+			else
+				MessageBox.Show("you have to sign before submit");
+
+
+		}
+
+		private void signiture_LostMouseCapture(object sender, MouseEventArgs e)
+		{
+			Cart.signed = true;
+
+		}
+
+		private void online_pay_Checked(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void cash_pay_Checked(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

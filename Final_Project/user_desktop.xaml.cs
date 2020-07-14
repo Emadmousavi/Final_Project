@@ -61,7 +61,7 @@ namespace Final_Project
 			StackPanel st = wp.Parent as StackPanel;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("update Users set Cart +=@Cart where  FullName=@FullName", sqlConnection);
+			SqlCommand sqlCommand = new SqlCommand("update Users set Cart +=@Cart where FullName=@FullName", sqlConnection);
 			sqlCommand.Parameters.AddWithValue("@Cart",","+ st.Name);
 			sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
 			sqlCommand.ExecuteNonQuery();
@@ -75,19 +75,30 @@ namespace Final_Project
 			Button btn = e.Source as Button;
 			WrapPanel wp = btn.Parent as WrapPanel;
 			StackPanel st = wp.Parent as StackPanel;
+			Border border = st.Parent as Border;
 			int number = int.Parse((((TextBlock)st.Children[3]).Text));
-			number--;	
-			((TextBlock)st.Children[3]).Text = number.ToString();
-			SqlConnection sqlConnection = new SqlConnection(connection_string);
-			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("update Food_Menu set Number_Food=@Number_Food where Name_Food=@Name_Food or Name_Food=@Name_Food1 or Name_Food=@Name_Food2", sqlConnection);
-			sqlCommand.Parameters.AddWithValue("@Number_Food", number.ToString());
-			sqlCommand.Parameters.AddWithValue("@Name_Food", st.Name);
-			sqlCommand.Parameters.AddWithValue("@Name_Food1", "_"+st.Name);
-			sqlCommand.Parameters.AddWithValue("@Name_Food2",st.Name.Substring(1));
-			sqlCommand.ExecuteNonQuery();
-			sqlCommand.Dispose();
-			sqlConnection.Close();
+			if (number >= 1)
+			{
+				number--;
+				((TextBlock)st.Children[3]).Text = number.ToString();
+				SqlConnection sqlConnection = new SqlConnection(connection_string);
+				sqlConnection.Open();
+				SqlCommand sqlCommand = new SqlCommand("update Food_Menu set Number_Food=@Number_Food where Name_Food=@Name_Food or Name_Food=@Name_Food1 or Name_Food=@Name_Food2", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@Number_Food", number.ToString());
+				sqlCommand.Parameters.AddWithValue("@Name_Food", st.Name);
+				sqlCommand.Parameters.AddWithValue("@Name_Food1", "_" + st.Name);
+				sqlCommand.Parameters.AddWithValue("@Name_Food2", st.Name.Substring(1));
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+				sqlConnection.Close();
+			}
+			if (number == 0)
+			{
+				border.Visibility = Visibility.Hidden;
+				border.Width = 0;
+				border.Height = 0;
+			}
+
 
 		}
 
@@ -174,6 +185,10 @@ namespace Final_Project
 			wrapPanel.Children.Add(label4);
 			stackPanel.Children.Add(wrapPanel);
 			border.Child = stackPanel;
+			if (int.Parse(Number_Food) == 0)
+			{
+				border.Visibility = Visibility.Hidden;
+			}
 			main_wrap.Children.Add(border);
 			counter++;
 			return main_wrap;
@@ -234,8 +249,9 @@ namespace Final_Project
 					User_List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(), sqlDataReader.GetValue(6).ToString());
 				}
 			}
-			sqlConnection.Close();
 			sqlCommand.Dispose();
+			sqlConnection.Close();
+			
 		}
 
 		private void menu_Click(object sender, RoutedEventArgs e)
