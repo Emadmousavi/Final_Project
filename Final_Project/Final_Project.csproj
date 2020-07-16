@@ -144,6 +144,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>databaseDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Edit_Window.xaml.cs">
+      <DependentUpon>Edit_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="user_cart.xaml.cs">
       <DependentUpon>user_cart.xaml</DependentUpon>
     </Compile>
@@ -159,7 +162,14 @@
     <Compile Include="user_shopping_list.xaml.cs">
       <DependentUpon>user_shopping_list.xaml</DependentUpon>
     </Compile>
+    <Compile Include="warning_message.xaml.cs">
+      <DependentUpon>warning_message.xaml</DependentUpon>
+    </Compile>
     <Page Include="admin_desktop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Edit_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="user_shopping_list.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="warning_message.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -285,6 +299,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>database.mdf</DependentUpon>
     </Content>
+    <Resource Include="images\refresh.png" />
+    <Resource Include="images\cancel.png" />
+    <Resource Include="images\save.png" />
+    <Resource Include="images\test10.jpg" />
+    <Resource Include="images\test11.jpg" />
+    <Resource Include="images\test12.jpg" />
+    <Resource Include="images\test13.jpg" />
+    <Resource Include="images\test7.jpg" />
+    <Resource Include="images\test8.jpg" />
+    <Resource Include="images\test9.jpeg" />
+    <Resource Include="images\test3.jpg" />
+    <Resource Include="images\test4.jpg" />
     <Resource Include="images\test.jpg" />
     <Resource Include="images\test2.jpg" />
     <Resource Include="images\pizza.jpg" />

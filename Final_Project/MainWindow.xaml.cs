@@ -20,39 +20,9 @@ using System.Data.SqlClient;
 
 namespace Final_Project
 {
-	public static class Current_user
+	public static class check_conditions
 	{
-		public static string FullName;
-		public static string E_mail;
-		public static string NationalCode;
-		public static string PhoneNumber;
-		public static string Password;
-		public static string image_uri;
-		public static string cart;
-		public static string shopping_list;
-		public static int admin_login_counter=0;
-	}
-	public partial class MainWindow : Window
-	{
-		string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
-		public MainWindow()
-		{
-	       InitializeComponent();
-			//SqlConnection sqlConnection = new SqlConnection(connection_string);
-			//sqlConnection.Open();
-			//SqlCommand sqlCommand = new SqlCommand("delete from Receipt", sqlConnection);
-			//sqlCommand.ExecuteNonQuery();
-			//sqlCommand.Dispose();
-			//sqlCommand = new SqlCommand("delete from Food_Menu", sqlConnection);
-			//sqlCommand.Dispose();
-			//sqlCommand = new SqlCommand("delete from Search_Table", sqlConnection);
-			//sqlCommand.ExecuteNonQuery();
-			//sqlCommand.ExecuteNonQuery();
-			//sqlCommand.Dispose();
-			//sqlConnection.Close();
-
-		}
-		public bool code(string str)
+		public static bool code(string str)
 		{
 
 			int myInt;
@@ -108,13 +78,50 @@ namespace Final_Project
 			}
 			return false;
 		}
-	
-	    public bool email_check(string email)
+
+		public static bool email_check(string email)
 		{
 			string pattern = @"[a-zA-Z0-9]*@[a-zA-Z0-9]*\.[a-zA-Z0-9]*";
 			Regex re = new Regex(pattern);
 			return re.IsMatch(email);
 		}
+	}
+
+	public static class Current_user
+	{
+		public static string FullName;
+		public static string E_mail;
+		public static string NationalCode;
+		public static string PhoneNumber;
+		public static string Password;
+		public static string image_uri;
+		public static string cart;
+		public static string shopping_list;
+		public static int admin_login_counter=0;
+	}
+	public partial class MainWindow : Window
+	{
+		string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
+		public MainWindow()
+		{
+	       InitializeComponent();
+			SqlConnection s = new SqlConnection(connection_string);
+			s.Close();
+			//SqlConnection sqlConnection = new SqlConnection(connection_string);
+			//sqlConnection.Open();
+			//SqlCommand sqlCommand = new SqlCommand("delete from Receipt", sqlConnection);
+			//sqlCommand.ExecuteNonQuery();
+			//sqlCommand.Dispose();
+			//sqlCommand = new SqlCommand("delete from Food_Menu", sqlConnection);
+			//sqlCommand.Dispose();
+			//sqlCommand = new SqlCommand("delete from Search_Table", sqlConnection);
+			//sqlCommand.ExecuteNonQuery();
+			//sqlCommand.ExecuteNonQuery();
+			//sqlCommand.Dispose();
+			//sqlConnection.Close();
+
+		}
+	
 		private void fullName_LostFocus(object sender, RoutedEventArgs e)
 		{
 			bool Is_added = false;
@@ -186,7 +193,7 @@ namespace Final_Project
 			sqlDataReader.Close();
 
 
-			if (email_check(email.Text) && !Is_added)
+			if (check_conditions.email_check(email.Text) && !Is_added)
 			{
 				lb2.Foreground = Brushes.Green;
 				var brush = new ImageBrush();
@@ -247,7 +254,7 @@ namespace Final_Project
 		{
 			try
 			{
-				if (code(nationalCode.Text))
+				if (check_conditions.code(nationalCode.Text))
 				{
 					lb3.Foreground = Brushes.Green;
 					var brush = new ImageBrush();
@@ -371,13 +378,15 @@ namespace Final_Project
 				MessageBox.Show("You Signed Up Successfully");
 				SqlConnection sqlConnection = new SqlConnection(connection_string);
 				sqlConnection.Open();
-				SqlCommand sqlCommand = new SqlCommand("INSERT INTO Users (FullName, E_mail, NationalCode,PhoneNumber,_Password,Cart) VALUES (@FullName,@E_mail,@NationalCode,@PhoneNumber,@_Password,@Cart)", sqlConnection);
+				SqlCommand sqlCommand = new SqlCommand("INSERT INTO Users (FullName, E_mail, NationalCode,PhoneNumber,_Password,Cart,Order_Number,Orders) VALUES (@FullName,@E_mail,@NationalCode,@PhoneNumber,@_Password,@Cart,@Order_Number,@Orders)", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@FullName", fullName.Text);
 				sqlCommand.Parameters.AddWithValue("@E_mail", email.Text);
 				sqlCommand.Parameters.AddWithValue("@NationalCode", nationalCode.Text);
 				sqlCommand.Parameters.AddWithValue("@PhoneNumber", phoneNumber.Text);
 				sqlCommand.Parameters.AddWithValue("@_Password", password.Password);
 				sqlCommand.Parameters.AddWithValue("@Cart", "");
+				sqlCommand.Parameters.AddWithValue("@Order_Number", "0");
+				sqlCommand.Parameters.AddWithValue("@Orders", "");
 				sqlCommand.ExecuteNonQuery();
 			}
 
@@ -426,7 +435,7 @@ namespace Final_Project
 			SqlDataReader sqlDataReader;
 			SqlCommand sqlCommand;
 			sqlConnection.Open();
-			if (email_check(sign_in_email.Text))
+			if (check_conditions.email_check(sign_in_email.Text))
 			{
 				sqlCommand = new SqlCommand("select * from Users where E_mail=@E_mail and _Password=@_Password", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@E_mail", sign_in_email.Text);

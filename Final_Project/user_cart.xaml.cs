@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
@@ -182,6 +184,8 @@ namespace Final_Project
 				grid.ColumnDefinitions.Add(c1);
 				grid.ColumnDefinitions.Add(c2);
 				Label lable1 = new Label();
+				var bc = new BrushConverter();
+				lable1.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable1.Content = "Toal Cost";
 				lable1.FontWeight = FontWeights.Bold;
 				lable1.FontStyle = FontStyles.Italic;
@@ -189,6 +193,8 @@ namespace Final_Project
 				lable1.Margin = new Thickness(0, 0, 10, 0);
 				Grid.SetColumn(lable1, 0);
 				Label lable2 = new Label();
+				bc = new BrushConverter();
+				lable2.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				int total = Food.Select(a => (int.Parse(a.Cost_Food) * int.Parse(a.Number_Food))).Sum(x => x);
 				lable2.Content = total.ToString() + "$";
 				lable2.FontSize = 16;
@@ -207,6 +213,8 @@ namespace Final_Project
 			{
 				StackPanel stackpanel = new StackPanel();
 				Label lable1 = new Label();
+				var bc = new BrushConverter();
+				lable1.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable1.Content = Name_Food;
 				lable1.FontSize = 20;
 				lable1.FontWeight = FontWeights.Bold;
@@ -219,11 +227,15 @@ namespace Final_Project
 				grid.ColumnDefinitions.Add(c1);
 				grid.ColumnDefinitions.Add(c2);
 				Label lable2 = new Label();
+				bc = new BrushConverter();
+				lable2.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable2.Content = (int.Parse(Cost_Food)* (int)cart.Where(x => x == Name_Food).Count()).ToString() + "$";
 				lable2.FontSize = 15;
 				lable2.Margin = new Thickness(10, 0, 10, 0);
 				Grid.SetColumn(lable2, 1);
 				Label lable3 = new Label();
+				bc = new BrushConverter();
+				lable3.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable3.Content = ((int)cart.Where(x => x == Name_Food).Count()).ToString();
 				lable3.FontSize = 15;
 				lable3.Margin = new Thickness(10, 0, 10, 0);
@@ -231,6 +243,8 @@ namespace Final_Project
 				grid.Children.Add(lable3);
 				grid.Children.Add(lable2);
 				Label lable4 = new Label();
+				bc = new BrushConverter();
+				lable4.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable4.Content = "_______________________________________________________________________________";
 				lable4.Margin = new Thickness(0, -7, 0, 0);
 				lable4.FontSize = 15;
@@ -266,9 +280,11 @@ namespace Final_Project
 				border.Width = 392;
 				border.Margin = new Thickness(14, 14, 14, 14);
 				var bc = new BrushConverter();
-				border.BorderBrush = (System.Windows.Media.Brush)bc.ConvertFrom("#FF686464");
+				border.BorderBrush = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				StackPanel stack = new StackPanel();
 				Label lable1 = new Label();
+				bc = new BrushConverter();
+				lable1.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable1.Content = "Price : ";
 				lable1.FontWeight = FontWeights.Bold;
 				lable1.FontStyle = FontStyles.Italic;
@@ -278,6 +294,8 @@ namespace Final_Project
 				lable1.HorizontalContentAlignment = HorizontalAlignment.Left;
 				lable1.Margin = new Thickness(30, 5, 30, 5);
 				Label lable2 = new Label();
+				bc = new BrushConverter();
+				lable2.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable2.Margin = new Thickness(-8, 0, 0, 0);
 				lable2.Content = "Ingridient : ";
 				lable2.FontWeight = FontWeights.Bold;
@@ -287,6 +305,8 @@ namespace Final_Project
 				lable2.HorizontalContentAlignment = HorizontalAlignment.Left;
 				lable2.Margin = new Thickness(30, 5, 30, 5);
 				Label lable3 = new Label();
+				bc = new BrushConverter();
+				lable3.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable3.Margin = new Thickness(-18, 0, 0, 0);
 				lable3.Content = "Name : ";
 				lable3.FontWeight = FontWeights.Bold;
@@ -297,6 +317,8 @@ namespace Final_Project
 				lable3.FontSize = 15;
 				lable3.HorizontalContentAlignment = HorizontalAlignment.Left;
 				Label lable6 = new Label();
+				bc = new BrushConverter();
+				lable6.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable6.Margin = new Thickness(-18, 0, 0, 0);
 				lable6.Content = "Number : ";
 				lable6.FontWeight = FontWeights.Bold;
@@ -322,19 +344,23 @@ namespace Final_Project
 				StackPanel stack3 = new StackPanel();
 				stack3.Orientation = Orientation.Horizontal;
 				Label lable4 = new Label();
+				bc = new BrushConverter();
+				lable4.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable4.Content = "+";
 				lable4.MouseDown += new MouseButtonEventHandler(lable_plus_click);
-				lable4.FontSize = 35;
+				lable4.FontSize = 25;
 				bc = new BrushConverter();
-				lable4.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFC14F25");
-				lable4.Margin = new Thickness(15, -10, 5, 0);
+				lable4.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
+				lable4.Margin = new Thickness(15, -10, 0, 0);
 				Label lable5 = new Label();
+				bc = new BrushConverter();
+				lable5.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
 				lable5.Content = "-";
 				lable5.MouseDown += new MouseButtonEventHandler(lable_minus_click);
-				lable5.FontSize = 35;
+				lable5.FontSize = 30;
 				bc = new BrushConverter();
-				lable5.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFC14F25");
-				lable5.Margin = new Thickness(5, -10, 5, 0);
+				lable5.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
+				lable5.Margin = new Thickness(0, -10, 5, 0);
 				stack3.Children.Add(lable4);
 				stack3.Children.Add(lable5);
 				stack2.Children.Add(ellipse);
@@ -385,6 +411,7 @@ namespace Final_Project
 			}
 			if (!receipt_empty)
 			{
+				Customer_Name_cart.Content = "Customer : " + Current_user.FullName;
 				receipt.Children.Add(Cart.Total_Price());
 			}
 			sqlDataReader.Close();
@@ -402,12 +429,25 @@ namespace Final_Project
 
 		private void Submit_Click(object sender, RoutedEventArgs e)
 		{
-			if (Cart.signed && (online_pay.IsChecked==true || cash_pay.IsChecked==true) && receipt.Children.Count!=0)
+			if (Cart.signed && (online_pay.IsChecked == true || cash_pay.IsChecked == true) && receipt.Children.Count != 0)
 			{
 				MessageBox.Show("order is submited");
 				if (cash_pay.IsChecked == true)
 				{
 					MessageBox.Show("Thank you for your Buy your order will be delivered soon");
+					PrintDialog printDialog = new PrintDialog();
+					if (printDialog.ShowDialog() == true)
+					{
+						StackPanel st = new StackPanel();
+						foreach (UIElement item in receipt.Children)
+						{
+							st.Children.Add(item);
+						}
+						st.Children.Add(discount);
+						st.Children.Add(signiture);
+						printDialog.PrintVisual(st, "Stack panel description");
+					
+					}
 
 				}
 				if (online_pay.IsChecked == true)
@@ -415,7 +455,74 @@ namespace Final_Project
 					string total_price = ((Label)((Grid)(Cart.Total_Price().Children[0])).Children[0]).Content.ToString();
 					MessageBox.Show($"{total_price}  was deducted from your account");
 					MessageBox.Show("Thank you for your Buy your order will be delivered soon");
+					PrintDialog printDialog = new PrintDialog();
+					if (printDialog.ShowDialog() == true)
+					{
+						//StackPanel st = new StackPanel();
+						//foreach (UIElement item in receipt.Children)
+						//{
+						//	st.Children.Add(item);
+						//}
+						//st.Children.Add(discount);
+						//st.Children.Add(signiture);
+						printDialog.PrintVisual(factor, "Stack panel description");
+
+					}
 				}
+				SqlConnection sqlConnection = new SqlConnection(" Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30");
+				sqlConnection.Open();
+				SqlCommand sqlCommand = new SqlCommand("update Users set Order_Number=Order_Number+1 where FullName=@FullName", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+				sqlCommand = new SqlCommand("select Order_Number from Users where FullName=@FullName", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+				sqlDataReader.Read();
+				int order_num=int.Parse(sqlDataReader.GetValue(0).ToString());
+				sqlDataReader.Close();
+				sqlCommand.Dispose();
+				sqlCommand = new SqlCommand("select * from Receipt", sqlConnection);
+				sqlDataReader = sqlCommand.ExecuteReader();
+				List<Food_Item> order = new List<Food_Item>();
+				string Name_Food = "";
+				string Cost_Food = "";
+				string Number_Food = "";
+				while (sqlDataReader.Read())
+				{
+					Food_Item a = new Food_Item();
+					a.Name_Food = sqlDataReader.GetValue(0).ToString();
+					a.Cost_Food = sqlDataReader.GetValue(1).ToString();
+					a.Number_Food = sqlDataReader.GetValue(2).ToString();
+					order.Add(a);
+				}
+				foreach (var item in order)
+				{
+					Name_Food += item.Name_Food+",";
+					Cost_Food += item.Cost_Food + ",";
+					Number_Food += item.Number_Food + ",";
+
+				}
+				Name_Food = Name_Food.Substring(0, Name_Food.Length - 1);
+				Cost_Food = Cost_Food.Substring(0, Cost_Food.Length - 1);
+				Number_Food = Number_Food.Substring(0, Number_Food.Length - 1);
+				sqlDataReader.Close();
+				sqlCommand.Dispose();
+				sqlCommand = new SqlCommand("update Users set Orders+=@Orders where FullName=@FullName ", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				sqlCommand.Parameters.AddWithValue("@Orders", order_num.ToString() + ":" + Name_Food + ":" + Cost_Food + ":" + Number_Food + "/");
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+				sqlCommand = new SqlCommand("update Users set Cart=@Cart where FullName=@FullName ", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				sqlCommand.Parameters.AddWithValue("@Cart", ",");
+				sqlCommand.ExecuteNonQuery();
+				sqlConnection.Close();
+				receipt.Children.Clear();
+				main_stack.Children.Clear();
+				signiture.Strokes.Clear();
+				online_pay.IsChecked = cash_pay.IsChecked = false;
+
 			}
 
 			else if(online_pay.IsChecked == false && cash_pay.IsChecked == false)
@@ -424,7 +531,7 @@ namespace Final_Project
 				MessageBox.Show("Nothing to Buy");
 			else
 				MessageBox.Show("you have to sign before submit");
-
+			
 
 		}
 
@@ -440,6 +547,11 @@ namespace Final_Project
 		}
 
 		private void cash_pay_Checked(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Apply_Click(object sender, RoutedEventArgs e)
 		{
 
 		}

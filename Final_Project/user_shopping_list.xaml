@@ -7,7 +7,27 @@
         mc:Ignorable="d"
         Title="user_shopping_list" Height="700" Width="1000"
 		ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
-    <Grid>
-	
-    </Grid>
+	<Grid >
+		<Grid.Background>
+			<ImageBrush ImageSource="images\test8.jpg"/>
+		</Grid.Background>
+		<Border Padding="30">
+			<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,184">
+				<StackPanel x:Name="List"/>
+			</ScrollViewer>
+		</Border>
+		<Button x:Name="exit_btn" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,0" Width="78" Height="82" Background="Transparent" BorderBrush="Transparent" Click="exit_btn_Click" >
+			<Button.Template>
+				<ControlTemplate>
+					<Grid>
+						<Ellipse>
+							<Ellipse.Fill>
+								<ImageBrush ImageSource="images\exit.png"/>
+							</Ellipse.Fill>
+						</Ellipse>
+					</Grid>
+				</ControlTemplate>
+			</Button.Template>
+		</Button>
+	</Grid>
 </Window>

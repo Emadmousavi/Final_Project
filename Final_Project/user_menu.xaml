@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:Final_Project"
         mc:Ignorable="d"
         Height="445" Width="110"
-		ResizeMode="NoResize" Top="225" Left="1351"
+		ResizeMode="NoResize" Top="225" Left="1350"
 		x:Name="w1" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
-	<Border BorderBrush="#FF4B4848" BorderThickness="2,0,0,2" CornerRadius="0,0,0,20" Background="#FFFBCEA1">
+	<Border BorderBrush="#FF4B4848" BorderThickness="2,0,0,2" CornerRadius="0,0,0,20" Background="#FF5F3B30">
 		<Grid >
-			<Label Name="profile" Content="Profile" MouseDown="profile_MouseDown" HorizontalContentAlignment="Center" Margin="10,56,10,10" FontSize="25" FontFamily="IRMehr" />
-			<Label Name="cart" Content="Cart" MouseDown="cart_MouseDown" HorizontalContentAlignment="Center" Margin="0,124,5,10" FontSize="25" FontFamily="IRMehr" />
-			<Label Name="shopping_list" Content="Shopping&#10;     list" MouseDown="shopping_list_MouseDown" HorizontalContentAlignment="Center" Margin="0,194,5,152" FontSize="25" FontFamily="IRMehr" />
-			<Label Name="Quit" Content="Quit" MouseDown="Quit_MouseDown" HorizontalContentAlignment="Center" Margin="0,322,5,10" FontSize="25" FontFamily="IRMehr" />
+			<Label Name="profile" Content="Profile" MouseDown="profile_MouseDown" HorizontalContentAlignment="Center" Margin="10,56,10,10" FontSize="25" FontFamily="IRMehr" Foreground="#FFFFBD29" />
+			<Label Name="cart" Content="Cart" MouseDown="cart_MouseDown" HorizontalContentAlignment="Center" Margin="0,124,5,10" FontSize="25" FontFamily="IRMehr" Foreground="#FFFFBD29" />
+			<Label Name="shopping_list" Content="Shopping&#10;     list" MouseDown="shopping_list_MouseDown" HorizontalContentAlignment="Center" Margin="0,194,5,152" FontSize="25" FontFamily="IRMehr" Foreground="#FFFFBD29" />
+			<Label Name="Quit" Content="Quit" MouseDown="Quit_MouseDown" HorizontalContentAlignment="Center" Margin="0,322,5,10" FontSize="25" FontFamily="IRMehr" Foreground="#FFFFBD29" />
 		</Grid>
 	</Border>
 </Window>

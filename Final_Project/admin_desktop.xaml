@@ -53,29 +53,26 @@
 	</Window.Resources>
 	<Grid Background="#FF322929">
 
-		<TabControl TabStripPlacement="Left" Background="#FF0F0E0E" >
+		<TabControl SelectedIndex="3" TabStripPlacement="Left" Background="#FF40230E" >
 			<TabItem ToolTip="Profile">
 				<TabItem.Header>
 					<Image Source="images\profile.png" />
 				</TabItem.Header>
-				
+
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition/>
 						<ColumnDefinition Width="1.5*"/>
 					</Grid.ColumnDefinitions>
 					<Grid.Background>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFFFDCBA" Offset="0"/>
-							<GradientStop Color="#FF919191" Offset="1"/>
-						</LinearGradientBrush>
+						<ImageBrush ImageSource="images\test13.jpg" Opacity="0.6"/>
 					</Grid.Background>
 
-					<Border Grid.Column="1" Margin="40,120,40,120" Padding="20" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+					<Border Grid.Column="1" Margin="40,120,40,120" Padding="20" BorderBrush="#FFFFE4B6" BorderThickness="2" CornerRadius="20">
 						<StackPanel>
 							<StackPanel Margin="0,0,0,40" >
-								<TextBlock	Text="Full Name" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-								<TextBox  x:Name="txt1" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
+								<TextBlock	Text="Full Name" FontSize="15" Foreground="#FFEAEAF4" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox Text="Emad Mousavi"  x:Name="txt1" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Tw Cen MT" FontSize="15">
 									<TextBox.Background>
 										<SolidColorBrush Color="White" Opacity="0.5"/>
 									</TextBox.Background>
@@ -87,8 +84,8 @@
 								</TextBox>
 							</StackPanel>
 							<StackPanel Margin="0,0,0,40">
-								<TextBlock	Text="Restaurant Region" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-								<TextBox x:Name="txt2" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
+								<TextBlock	Text="Restaurant Region" FontSize="15" Foreground="#FFFFE4B6" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox Text="Tehran" x:Name="txt2" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Tw Cen MT" FontSize="15">
 									<TextBox.Background>
 										<SolidColorBrush Color="White" Opacity="0.5"/>
 									</TextBox.Background>
@@ -100,8 +97,8 @@
 								</TextBox>
 							</StackPanel>
 							<StackPanel Margin="0,0,0,40">
-								<TextBlock	Text="Restaurant Kind" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-								<TextBox x:Name="txt3" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
+								<TextBlock	Text="Restaurant Kind" FontSize="15" Foreground="#FFFFE4B6" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox Text="FastFood - Traditional" x:Name="txt3" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Tw Cen MT" FontSize="15">
 									<TextBox.Background>
 										<SolidColorBrush Color="White" Opacity="0.5"/>
 									</TextBox.Background>
@@ -113,8 +110,8 @@
 								</TextBox>
 							</StackPanel>
 							<StackPanel Margin="0,0,0,40">
-								<TextBlock	Text="Restaurant Address" FontSize="15" Foreground="Black" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-								<TextBox x:Name="txt4" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
+								<TextBlock	Text="Restaurant Address" FontSize="15" Foreground="#FFFFE4B6" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+								<TextBox Text="Saadat Abad - Alavi Avenue" x:Name="txt4" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Tw Cen MT" FontSize="15">
 									<TextBox.Background>
 										<SolidColorBrush Color="White" Opacity="0.5"/>
 									</TextBox.Background>
@@ -127,14 +124,14 @@
 							</StackPanel>
 						</StackPanel>
 					</Border>
-					<Border BorderBrush="Gray" BorderThickness="2" Margin="30" Padding="10" CornerRadius="20">
+					<Border BorderBrush="#FFFFE4B6" BorderThickness="0" Margin="30,58,30,83" Padding="10" CornerRadius="20">
 						<StackPanel>
-							<Rectangle x:Name="restaurant_menu" Height="480">
+							<Rectangle x:Name="restaurant_menu" Height="442">
 								<Rectangle.Fill>
 									<ImageBrush ImageSource="images\res_menu.png"/>
 								</Rectangle.Fill>
 							</Rectangle>
-							<Button x:Name="Upload_Menu_image" Content="Upload Menu" Margin="50,30" Height="35" Background="#FFDCC4AD" Click="Upload_Menu_image_Click" />
+							<Button x:Name="Upload_Menu_image" Content="Upload Menu" Margin="50,0" Height="35" Background="#FFDCC4AD" Click="Upload_Menu_image_Click" FontSize="20" FontFamily="IRFarnaz" />
 						</StackPanel>
 					</Border>
 				</Grid>
@@ -145,47 +142,31 @@
 				</TabItem.Header>
 				<Grid>
 					<Grid.Background>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFFFDCBA" Offset="0"/>
-							<GradientStop Color="#FF919191" Offset="1"/>
-						</LinearGradientBrush>
+						<ImageBrush ImageSource="images\test13.jpg"/>
+
 					</Grid.Background>
 
 					<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
 						<Border BorderBrush="Gray" BorderThickness="3" Grid.Row="2" Padding="65" Margin="3,2,10,10">
 							<StackPanel x:Name="main_stack">
-								
+
 							</StackPanel>
 						</Border>
 					</ScrollViewer>
 				</Grid>
 			</TabItem>
 
-			<TabItem ToolTip="Orders Condition">
+			<TabItem ToolTip="Orders Condition" >
 				<TabItem.Header>
 					<Image Source="images\order.png" />
 				</TabItem.Header>
 				<Grid>
 					<Grid.Background>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFFFDCBA" Offset="0"/>
-							<GradientStop Color="#FF919191" Offset="1"/>
-						</LinearGradientBrush>
+						<ImageBrush ImageSource="images\test4.jpg"/>
 					</Grid.Background>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
+					<Border Padding="20">
+						<StackPanel x:Name="Orders">
 
-					<Border BorderBrush="#FF322929" Margin="40" BorderThickness="2">
-						<StackPanel Background="#FFBDBDBD">
-							<Label Content="Not Piad" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF6B93AE"   Width="375" Height="52"  FontSize="20"/>
-						</StackPanel>
-					</Border>
-
-					<Border BorderBrush="#FF322929" Margin="40" Grid.Column="1" BorderThickness="2">
-						<StackPanel Background="#FFBDBDBD">
-							<Label Content="Ready" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF6B93AE"   Width="375" Height="52"  FontSize="20"/>
 						</StackPanel>
 					</Border>
 				</Grid>
@@ -201,23 +182,33 @@
 						<ColumnDefinition Width="2.8*"/>
 					</Grid.ColumnDefinitions>
 					<Grid.Background>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFFFDCBA" Offset="0"/>
-							<GradientStop Color="#FF919191" Offset="1"/>
-						</LinearGradientBrush>
-					</Grid.Background>
+						<ImageBrush ImageSource="images\test13.jpg" />
 
+					</Grid.Background>
+					<Button x:Name="refresh_btn" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Background="Transparent" Height="47"   Width="46" BorderBrush="Transparent" Margin="601,0,26,20" Grid.Column="1" Click="refresh_btn_Click">
+						<Button.Template>
+							<ControlTemplate>
+								<Grid>
+									<Ellipse>
+										<Ellipse.Fill>
+											<ImageBrush ImageSource="images\refresh.png"/>
+										</Ellipse.Fill>
+									</Ellipse>
+								</Grid>
+							</ControlTemplate>
+						</Button.Template>
+					</Button>
 					<Border Grid.Column="1" BorderBrush="Gray" BorderThickness="3" Grid.Row="2" Padding="10" Margin="3,0,10,10">
-						<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+						<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,64">
 							<StackPanel x:Name="main_stack21" Margin="0,70,10,0">
-								
+
 							</StackPanel>
-					     </ScrollViewer>
+						</ScrollViewer>
 					</Border>
 
 					<StackPanel>
 						<Border BorderBrush="Gray" BorderThickness="5" Height="520" Width="200" VerticalAlignment="Top" Margin="0,20,0,20" CornerRadius="6">
-							<StackPanel Background="#FFB28E6A" Margin="0,0,0,-2">
+							<StackPanel Background="#FF68491E" Margin="0,0,0,-2">
 								<Ellipse x:Name="uploaded_image" Width="100" Height="100" Margin="10">
 									<Ellipse.Fill>
 										<ImageBrush ImageSource="images\-res1.jpg"/>
@@ -228,24 +219,24 @@
 								<TextBox x:Name="Information_Food"  Text="information" HorizontalAlignment="Center"  Height="110" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Information_Food_PreviewTextInput" TextWrapping="WrapWithOverflow"/>
 								<TextBox x:Name="Date_Food" Text="Date of Food" HorizontalAlignment="Center"  Height="30" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Date_Food_PreviewTextInput" MaxLength="10" TextWrapping="WrapWithOverflow"/>
 								<StackPanel Margin="0,15,0,0">
-									<TextBlock Text="Kind Of Food" HorizontalAlignment="Center" FontSize="20" Margin="0,5,0,10" FontFamily="Segoe Marker"/>
+									<TextBlock Text="Kind Of Food" HorizontalAlignment="Center" FontSize="20" Margin="0,5,0,10" FontFamily="Segoe Marker" Foreground="#FFFFE8B0"/>
 									<StackPanel Orientation="Horizontal">
-										<TextBlock Text="Hamburger" FontSize="14" Margin="8,10,0,0" />
+										<TextBlock Text="Hamburger" FontSize="14" Margin="8,10,0,0" Foreground="#FFFFE8B0" />
 										<CheckBox x:Name="hamburger" Margin="4,14,0,15" Checked="hamburger_Checked"/>
-										<TextBlock Text="traditional" FontSize="14" Margin="7,10,0,0" />
+										<TextBlock Text="traditional" FontSize="14" Margin="7,10,0,0" Foreground="#FFFFE8B0" />
 										<CheckBox x:Name="traditional" Margin="4,14,0,0" Checked="traditional_Checked"/>
 									</StackPanel>
 									<StackPanel Orientation="Horizontal">
-										<TextBlock Text="Sandwitch" FontSize="14" Margin="10,10,0,0" />
+										<TextBlock Text="Sandwitch" FontSize="14" Margin="10,10,0,0" Foreground="#FFFFE8B0" />
 										<CheckBox x:Name="sandwitch" Margin="10,14,0,15" Checked="sandwitch_Checked" />
-										<TextBlock Text="Pizza" FontSize="14" Margin="30,10,0,0" />
+										<TextBlock Text="Pizza" FontSize="14" Margin="30,10,0,0" Foreground="#FFFFE8B0" />
 										<CheckBox x:Name="pizza" Margin="10,14,0,15" Checked="pizza_Checked" />
 									</StackPanel>
 								</StackPanel>
 							</StackPanel>
 						</Border>
-						<Button x:Name="upload" Content="Upload Image" Height="30" Width="120" FontSize="15" Background="#FFCD8F51" Margin="0,0,0,20" Click="upload_Click"/>
-						<Button x:Name="add" Content="Add" Height="30" Width="120" FontSize="15" Background="#FFCD8F51" Click="add_Click"/>
+						<Button  BorderBrush="#FF040404" BorderThickness="1.6" x:Name="upload" Content="Upload Image" Height="40" Width="120" FontSize="20" Background="#FFF7E680" Margin="60,0,61,20" Click="upload_Click" FontFamily="IRFarnaz"/>
+						<Button BorderBrush="#FF040404" BorderThickness="1.6" x:Name="add" Content="Add" Height="32" Width="120" FontSize="20" Background="#FFF7E680" Click="add_Click" FontFamily="IRFarnaz" RenderTransformOrigin="0.517,0.283" Margin="60,0,61,0" VerticalContentAlignment="Center"/>
 					</StackPanel>
 
 				</Grid>
@@ -257,37 +248,28 @@
 					<Image Source="images\total2.png"/>
 				</TabItem.Header>
 				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="0.5*"/>
-						<RowDefinition/>
-						<RowDefinition/>
-						<RowDefinition/>
-					</Grid.RowDefinitions>
 					<Grid.Background>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFFFDCBA" Offset="0"/>
-							<GradientStop Color="#FF919191" Offset="1"/>
-						</LinearGradientBrush>
+						<ImageBrush ImageSource="images\test4.jpg"/>
+
 					</Grid.Background>
-					<Label Content="Accounting" HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center"/>
-					<Border Margin="15" Grid.Row="1" BorderBrush="#FF322929" BorderThickness="2">
-						<StackPanel  Background="#FFE6A76A" Orientation="Horizontal" Margin="-2,-2,2,2">
-							<Label Content="Daily profit rate" VerticalContentAlignment="Center" FontSize="40" Height="157"/>
-							<Label Content="100$" VerticalContentAlignment="Center" FontSize="40" Height="157" Margin="470,0,0,0"/>
+					<StackPanel>
+						<Label Content="Accounting" HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center"  Foreground="Wheat" Margin="20"/>
+						<StackPanel Orientation="Horizontal" Margin="20">
+							<Label Content="Daily Sales" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
+							<Label Content="Price"  Foreground="Wheat" FontSize="30" Margin="560,0,0,0"/>
 						</StackPanel>
-					</Border>
-					<Border Margin="15" Grid.Row="2" BorderBrush="#FF322929" BorderThickness="2">
-						<StackPanel  Background="#FFE6A76A" Orientation="Horizontal">
-							<Label Content="Daily sales" VerticalContentAlignment="Center" FontSize="40" Height="157"/>
-							<Label Content="100$" VerticalContentAlignment="Center" FontSize="40" Height="157" Margin="570,0,0,0"/>
+						<Label Content="________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"  Foreground="White" Margin="48,0,80,0"/>
+						<StackPanel Orientation="Horizontal" Margin="20">
+							<Label Content="Daily Profit" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
+							<Label Content="Price"  Foreground="Wheat" FontSize="30" Margin="560,0,0,0"/>
 						</StackPanel>
-					</Border>
-					<Border Margin="15" Grid.Row="3" BorderBrush="#FF322929" BorderThickness="2">
-						<StackPanel  Background="#FFE6A76A" Orientation="Horizontal">
-							<Label Content="Daily Sold Food Numbers" VerticalContentAlignment="Center" FontSize="40" Height="157"/>
-							<Label Content="100$" VerticalContentAlignment="Center" FontSize="40" Height="157" Margin="300,0,0,0"/>
+						<Label Content="________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"  Foreground="White" Margin="48,0,80,0"/>
+						<StackPanel Orientation="Horizontal" Margin="20">
+							<Label Content="Total Profit" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
+							<Label Content="Price"  Foreground="Wheat" FontSize="30" Margin="560,0,0,0"/>
 						</StackPanel>
-					</Border>
+						<Label Content="________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"  Foreground="White" Margin="48,0,80,0"/>
+					</StackPanel>
 				</Grid>
 			</TabItem>
 
@@ -310,10 +292,7 @@
 				</TabItem.Header>
 				<Grid>
 					<Grid.Background>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFFFDCBA" Offset="0"/>
-							<GradientStop Color="#FF919191" Offset="1"/>
-						</LinearGradientBrush>
+						<ImageBrush ImageSource="images\test3.jpg"/>
 					</Grid.Background>
 				</Grid>
 			</TabItem>

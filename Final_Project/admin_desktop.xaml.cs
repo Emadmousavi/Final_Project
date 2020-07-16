@@ -24,6 +24,22 @@ namespace Final_Project
 {
 	public static class menu
 	{
+		private static void ellipse_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			Ellipse ellipse = e.Source as Ellipse;
+			StackPanel st = ellipse.Parent as StackPanel;
+			SqlConnection sqlConnection = new SqlConnection(" Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30");
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select * from Food_Menu where Name_Food =@Name_Food", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)st.Children[1]).Content.ToString().Substring(1));
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			Edit_Window w = new Edit_Window(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString());
+			w.Show();
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+		}
 		public static string RemoveWhitespace(this string input)
 		{
 			return new string(input.ToCharArray()
@@ -33,7 +49,7 @@ namespace Final_Project
 		public static string uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
 		public static int counter=3;
 		public static WrapPanel main_wrap;
-		public static WrapPanel construct_food(string Name_Food, string Cost_Food, string Information_Food, string Date_Food, string Ur_Food, string Kind_Food)
+		public static WrapPanel construct_food(string Name_Food, string Cost_Food, string Information_Food, string Date_Food, string Uri_Food, string Kind_Food)
 		{
 			if (counter == 3)
 			{
@@ -52,22 +68,27 @@ namespace Final_Project
 			StackPanel stackPanel = new StackPanel();
 			stackPanel.Name = RemoveWhitespace(Name_Food);
 			var bc = new BrushConverter();
-			stackPanel.Background = (Brush)bc.ConvertFrom("#FFB28E6A");
+			stackPanel.Background = (Brush)bc.ConvertFrom("#FF68491E");
 			stackPanel.Height = 210;
 			stackPanel.Width = 163;
 			Ellipse ellipse = new Ellipse();
+			ellipse.MouseUp += ellipse_MouseUp;
 			ellipse.Name = "ellipse";
 			ellipse.Width = 100;
 			ellipse.Height = 100;
 			ellipse.Margin = new Thickness(10, 10, 10, 10);
 			ImageBrush ellipse_image = new ImageBrush();
-			ellipse_image.ImageSource = new BitmapImage(new Uri(uploaded_image_uri));
+			ellipse_image.ImageSource = new BitmapImage(new Uri(Uri_Food));
 			ellipse.Fill = ellipse_image;
 			Label label = new Label();
+			bc = new BrushConverter();
+			label.Foreground = (Brush)bc.ConvertFrom("#FFFFDC89");
 			label.Name = "food_name";
 			label.Content = RemoveWhitespace(Name_Food);
 			label.HorizontalAlignment = HorizontalAlignment.Center;
 			Label label2 = new Label();
+			bc = new BrushConverter();
+			label2.Foreground = (Brush)bc.ConvertFrom("#FFFFDC89");
 			label2.Name = "Date";
 			label2.Content = Date_Food;
 			label2.HorizontalAlignment = HorizontalAlignment.Center;
@@ -80,10 +101,14 @@ namespace Final_Project
 			wrapPanel.Height = 40;
 			wrapPanel.Width = 160;
 			Label label4 = new Label();
+			bc = new BrushConverter();
+			label4.Foreground = (Brush)bc.ConvertFrom("#FFFFDC89");
 			label4.Content = "Price Of Food";
 			label4.HorizontalAlignment = HorizontalAlignment.Left;
 			label4.FontSize = 10;
 			Label label3 = new Label();
+			bc = new BrushConverter();
+			label3.Foreground = (Brush)bc.ConvertFrom("#FFFFDC89");
 			label3.Name = "food_price";
 			label3.Content = Cost_Food+"$";
 			label3.HorizontalAlignment = HorizontalAlignment.Right;
@@ -101,6 +126,22 @@ namespace Final_Project
 	}
 	public static class List
 	{
+		private static void ellipse_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			Ellipse ellipse = e.Source as Ellipse;
+			StackPanel st = ellipse.Parent as StackPanel;
+			SqlConnection sqlConnection = new SqlConnection(" Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30");
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select * from Food_Menu where Name_Food =@Name_Food", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Name_Food",((Label)st.Children[1]).Content.ToString());
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			Edit_Window w = new Edit_Window(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString());
+			w.Show();
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+		}
 		public static string RemoveWhitespace(this string input)
 		{
 			return new string(input.ToCharArray()
@@ -151,22 +192,27 @@ namespace Final_Project
 			StackPanel stackPanel = new StackPanel();
 			stackPanel.Name = "_" + RemoveWhitespace(Name_Food);
 			var bc = new BrushConverter();
-			stackPanel.Background = (Brush)bc.ConvertFrom("#FFB28E6A");
+			stackPanel.Background = (Brush)bc.ConvertFrom("#FF68491E");
 			stackPanel.Height = 210;
 			stackPanel.Width = 163;
 			Ellipse ellipse = new Ellipse();
+			ellipse.MouseUp += ellipse_MouseUp;
 			ellipse.Name = "ellipse";
 			ellipse.Width = 100;
 			ellipse.Height = 100;
 			ellipse.Margin = new Thickness(10, 10, 10, 10);
 			ImageBrush ellipse_image = new ImageBrush();
-			ellipse_image.ImageSource = new BitmapImage(new Uri(uploaded_image_uri));
+			ellipse_image.ImageSource = new BitmapImage(new Uri(Uri_Food));
 			ellipse.Fill = ellipse_image;
 			Label label = new Label();
+			bc = new BrushConverter();
+			label.Foreground = (Brush)bc.ConvertFrom("#FFFFDC89");
 			label.Name = "food_name";
 			label.Content = RemoveWhitespace(Name_Food);
 			label.HorizontalAlignment = HorizontalAlignment.Center;
 			Label label2 = new Label();
+			bc = new BrushConverter();
+			label2.Foreground = (Brush)bc.ConvertFrom("#FFFFDC89");
 			label2.Name = "Date";
 			label2.Content = Date_Food;
 			label2.HorizontalAlignment = HorizontalAlignment.Center;
@@ -189,6 +235,8 @@ namespace Final_Project
 			textBox.LostKeyboardFocus += new KeyboardFocusChangedEventHandler(Is_NUmber_changed);
 
 			Label label4 = new Label();
+			bc = new BrushConverter();
+			label4.Foreground = (Brush)bc.ConvertFrom("#FFFFDC89");
 			label4.Name = "food_price";
 			label4.Content = Cost_Food+"$";
 			label4.HorizontalAlignment = HorizontalAlignment.Right;
@@ -241,6 +289,20 @@ namespace Final_Project
 		public admin_desktop()
 		{
 			InitializeComponent();
+
+			//SqlConnection sqlConnection = new SqlConnection(connection_string);
+			//sqlConnection.Open();
+			//SqlCommand sqlCommand = new SqlCommand("update Food_Menu set Name_Food=@Name_Food ,Cost_Food=@Cost_Food ,Date_Food=@Date_Food ,Information_Food=@Information_Food  where Name_Food =@Name_Food1", sqlConnection);
+			//sqlCommand.Parameters.AddWithValue("@Name_Food", Name_txt.Text);
+			//sqlCommand.Parameters.AddWithValue("@Name_Food1", Name_Food);
+			//sqlCommand.Parameters.AddWithValue("@Cost_Food", Cost_txt.Text);
+			//sqlCommand.Parameters.AddWithValue("@Date_Food", Date_txt.Text);
+			//sqlCommand.Parameters.AddWithValue("@Information_Food", Information_txt.Text);
+			//sqlCommand.ExecuteNonQuery();
+			//sqlCommand.Dispose();
+			//sqlConnection.Close();
+
+
 			menu.counter = 3;
 			List.counter = 3;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
@@ -480,6 +542,11 @@ namespace Final_Project
 			e.Handled = regex.IsMatch(e.Text);
 		}
 
-		
+		private void refresh_btn_Click(object sender, RoutedEventArgs e)
+		{
+			admin_desktop w = new admin_desktop();
+			w.Show();
+			this.Close();
+		}
 	}
 }

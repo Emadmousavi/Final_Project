@@ -40,18 +40,6 @@ namespace Final_Project
 
 	public static class User_List
 	{
-		public static string GetParents(Object element, int parentLevel)
-		{
-			string returnValue = String.Format("[{0}] {1}", parentLevel, element.GetType());
-			if (element is FrameworkElement)
-			{
-				if (((FrameworkElement)element).Parent != null)
-					returnValue += String.Format("{0}{1}",
-						Environment.NewLine, GetParents(((FrameworkElement)element).Parent, parentLevel + 1));
-			}
-			return returnValue;
-		}
-
 		public static void btn_click(object sender, RoutedEventArgs e)
 		{
 			string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
@@ -130,7 +118,7 @@ namespace Final_Project
 			stackPanel.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(stack_click));
 			stackPanel.Name = RemoveWhitespace(Name_Food);
 			var bc = new BrushConverter();
-			stackPanel.Background = (Brush)bc.ConvertFrom("#FFB28E6A");
+			stackPanel.Background = (Brush)bc.ConvertFrom("#FFB26A7A");
 			stackPanel.Height = 210;
 			stackPanel.Width = 163;
 			Ellipse ellipse = new Ellipse();
@@ -241,12 +229,14 @@ namespace Final_Project
 			{
 				if (User_List.counter == 2)
 				{
+					if(sqlDataReader.GetValue(6).ToString()!="0")
 					Main_stack.Children.Add(User_List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(), sqlDataReader.GetValue(6).ToString()));
 				}
 
 				else
 				{
-					User_List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(), sqlDataReader.GetValue(6).ToString());
+					if (sqlDataReader.GetValue(6).ToString() != "0")
+						User_List.construct_food(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString(), sqlDataReader.GetValue(5).ToString(), sqlDataReader.GetValue(6).ToString());
 				}
 			}
 			sqlCommand.Dispose();
