@@ -162,9 +162,6 @@
     <Compile Include="user_shopping_list.xaml.cs">
       <DependentUpon>user_shopping_list.xaml</DependentUpon>
     </Compile>
-    <Compile Include="warning_message.xaml.cs">
-      <DependentUpon>warning_message.xaml</DependentUpon>
-    </Compile>
     <Page Include="admin_desktop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,10 +199,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="user_shopping_list.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="warning_message.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

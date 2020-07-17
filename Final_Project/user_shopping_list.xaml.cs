@@ -68,14 +68,14 @@ namespace Final_Project
 				Label lable2 = new Label();
 				br = new BrushConverter();
 				lable2.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FF3A250D");
-				lable2.Content = (int.Parse(item.Order_Cost) * int.Parse(item.Order_Food_Number.ToString())) + "$";
+				lable2.Content = (double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number.ToString())) + "$";
 				lable2.FontSize = 15;
 				lable2.Margin = new Thickness(10, 0, 10, 0);
 				Grid.SetColumn(lable2, 1);
 				Label lable3 = new Label();
 				br = new BrushConverter();
 				lable3.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FF3A250D");
-				lable3.Content = int.Parse(item.Order_Food_Number.ToString());
+				lable3.Content = double.Parse(item.Order_Food_Number.ToString());
 				lable3.FontSize = 15;
 				lable3.Margin = new Thickness(10, 0, 10, 0);
 				Grid.SetColumn(lable3, 0);
@@ -111,10 +111,10 @@ namespace Final_Project
 			Label lable6 = new Label();
 			bc = new BrushConverter();
 			lable6.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FF3A250D");
-			int total_cost=0;
+			double total_cost =0;
 			foreach (var item in obj.properties)
 			{
-				total_cost += int.Parse(item.Order_Cost) * int.Parse(item.Order_Food_Number);
+				total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number);
 			}
 			lable6.Content = total_cost.ToString();
 			lable6.FontSize = 15;

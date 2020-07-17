@@ -102,6 +102,14 @@ namespace Final_Project
 	public partial class MainWindow : Window
 	{
 		string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
+		bool FullName_Is_added = false;
+		bool Email_Is_added = false;
+		bool FullName_eror = false;
+		bool Email_error = false;
+		bool Phone_eror = false;
+		bool NationalCode_eror = false;
+		bool Password_eror = false;
+		bool Confirm_eror = false;
 		public MainWindow()
 		{
 	       InitializeComponent();
@@ -124,7 +132,8 @@ namespace Final_Project
 	
 		private void fullName_LostFocus(object sender, RoutedEventArgs e)
 		{
-			bool Is_added = false;
+			FullName_Is_added = false;
+			FullName_eror = false;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
 			SqlCommand sqlCommand = new SqlCommand("select FullName from Users", sqlConnection);
@@ -133,7 +142,7 @@ namespace Final_Project
 			{
 				if (fullName.Text == sqlDataReader.GetValue(0).ToString())
 				{
-					Is_added = true;
+					FullName_Is_added = true;
 					sqlConnection.Close();
 					sqlCommand.Dispose();
 					sqlDataReader.Close();
@@ -145,7 +154,7 @@ namespace Final_Project
 			sqlDataReader.Close();
 
 
-			if (Regex.IsMatch(fullName.Text, "^[a-zA-Z][a-zA-Z\\s]*$") && !Is_added)
+			if (Regex.IsMatch(fullName.Text, "^[a-zA-Z][a-zA-Z\\s]*$") && !FullName_Is_added)
 			{
 				lb1.Foreground = Brushes.Green;
 				var brush = new ImageBrush();
@@ -160,11 +169,14 @@ namespace Final_Project
 			}
 			else
 			{
+				full_btn.Visibility = Visibility.Visible;
 				lb1.Foreground = Brushes.Red;
 				var brush = new ImageBrush();
 				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\warning.png"));
 				full_btn.Background = brush;
-				full_btn.Visibility = Visibility.Visible;
+				FullName_eror = true;
+
+
 
 			}
 
@@ -172,7 +184,8 @@ namespace Final_Project
 
 		private void email_LostFocus(object sender, RoutedEventArgs e)
 		{
-			bool Is_added = false;
+			Email_Is_added = false;
+			Email_error = false;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
 			SqlCommand sqlCommand = new SqlCommand("select E_mail from Users", sqlConnection);
@@ -181,7 +194,7 @@ namespace Final_Project
 			{
 				if (email.Text == sqlDataReader.GetValue(0).ToString())
 				{
-					Is_added = true;
+					Email_Is_added = true;
 					sqlConnection.Close();
 					sqlCommand.Dispose();
 					sqlDataReader.Close();
@@ -193,7 +206,7 @@ namespace Final_Project
 			sqlDataReader.Close();
 
 
-			if (check_conditions.email_check(email.Text) && !Is_added)
+			if (check_conditions.email_check(email.Text) && !Email_Is_added)
 			{
 				lb2.Foreground = Brushes.Green;
 				var brush = new ImageBrush();
@@ -208,6 +221,8 @@ namespace Final_Project
 				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\warning.png"));
 				email_btn.Background = brush;
 				email_btn.Visibility = Visibility.Visible;
+				Email_error = true;
+
 
 			}
 			if (email.Text == "")
@@ -219,7 +234,7 @@ namespace Final_Project
 
 		private void phoneNumber_LostFocus(object sender, RoutedEventArgs e)
 		{
-
+			Phone_eror = false;
 			if (Regex.IsMatch(phoneNumber.Text, "^09[0-9]{9}") || Regex.IsMatch(phoneNumber.Text, "^9[0-9]{9}") || Regex.IsMatch(phoneNumber.Text, "^\\+9809[0-9]{9}") || Regex.IsMatch(phoneNumber.Text, "^00989[0-9]{9}"))
 			{
 				lb4.Foreground = Brushes.Green;
@@ -237,6 +252,8 @@ namespace Final_Project
 				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\warning.png"));
 				phoneNumber_btn.Background = brush;
 				phoneNumber_btn.Visibility = Visibility.Visible;
+				Phone_eror = true;
+
 
 				if (phoneNumber.Text == "")
 				{
@@ -252,6 +269,7 @@ namespace Final_Project
 
 		private void nationalCode_LostFocus(object sender, RoutedEventArgs e)
 		{
+			NationalCode_eror = false;
 			try
 			{
 				if (check_conditions.code(nationalCode.Text))
@@ -272,6 +290,9 @@ namespace Final_Project
 				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\warning.png"));
 				nationalCode_btn.Background = brush;
 				nationalCode_btn.Visibility = Visibility.Visible;
+				NationalCode_eror = true;
+
+
 
 				if (nationalCode.Text == "")
 				{
@@ -286,6 +307,7 @@ namespace Final_Project
 
 		private void password_LostFocus(object sender, RoutedEventArgs e)
 		{
+			Password_eror = false;
 			string str1 = @"[a-zA-Z]+[0-9]+[\.\-\\_\!\@\#\$\%\^\&\*]+";
 			string str2 = @"[0-9]+[a-zA-Z]+[\.\-\\_\!\@\#\$\%\^\&\*]+";
 			string str3 = @"[\.\-\\_\!\@\#\$\%\^\&\*]+[0-9]+[a-zA-Z]+";
@@ -308,6 +330,8 @@ namespace Final_Project
 				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\warning.png"));
 				password_btn.Background = brush;
 				password_btn.Visibility = Visibility.Visible;
+				Password_eror = true;
+
 
 			}
 			if (password.Password == "")
@@ -322,6 +346,7 @@ namespace Final_Project
 
 		private void confirmPass_LostFocus(object sender, RoutedEventArgs e)
 		{
+			Confirm_eror = false;
 			if (confirmPass.Password == password.Password && password.Password != "")
 			{
 				lb6.Foreground = Brushes.Green;
@@ -338,6 +363,8 @@ namespace Final_Project
 				brush.ImageSource = new BitmapImage(new Uri(@"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\warning.png"));
 				confirm_btn.Background = brush;
 				confirm_btn.Visibility = Visibility.Visible;
+				Confirm_eror = true;
+
 
 
 			}
@@ -477,7 +504,108 @@ namespace Final_Project
 			sqlConnection.Close();
 		}
 
-		
+		private void full_btn_MouseEnter(object sender, MouseEventArgs e)
+		{
+			
+			if (FullName_eror)
+			{
+				FullName_br.Visibility = Visibility.Visible;
+				if (FullName_Is_added)
+				{
+					FullName_lb.Content = "This Name is already used";
+				}
+				else
+					FullName_lb.Content = "Wrong Name format";
+			}
+		}
+
+		private void full_btn_MouseLeave(object sender, MouseEventArgs e)
+		{
+			FullName_br.Visibility = Visibility.Hidden;
+
+		}
+
+		private void email_btn_MouseEnter(object sender, MouseEventArgs e)
+		{
+			if (Email_error)
+			{
+				Email_br.Visibility = Visibility.Visible;
+				if (Email_Is_added)
+				{
+					Email_lb.Content = "This Email is already used";
+				}
+				else
+					Email_lb.Content = "Wrong Email format";
+			}
+		}
+
+		private void email_btn_MouseLeave(object sender, MouseEventArgs e)
+		{
+			Email_br.Visibility = Visibility.Hidden;
+
+		}
+
+		private void nationalCode_btn_MouseEnter(object sender, MouseEventArgs e)
+		{
+			if (NationalCode_eror)
+			{
+				NationalCode_br.Visibility = Visibility.Visible;
+				NationalCode_lb.Content = "Not valid";
+			}
+		}
+
+		private void nationalCode_btn_MouseLeave(object sender, MouseEventArgs e)
+		{
+			NationalCode_br.Visibility = Visibility.Hidden;
+
+		}
+
+		private void phoneNumber_btn_MouseEnter(object sender, MouseEventArgs e)
+		{
+			if (Phone_eror)
+			{
+				Phone_br.Visibility = Visibility.Visible;
+				Phone_lb.Content = "This is not valid Phone Number";
+			}
+		}
+
+		private void phoneNumber_btn_MouseLeave(object sender, MouseEventArgs e)
+		{
+			Phone_br.Visibility = Visibility.Hidden;
+
+		}
+
+		private void password_btn_MouseEnter(object sender, MouseEventArgs e)
+		{
+			if (Password_eror)
+			{
+				Password_br.Visibility = Visibility.Visible;
+				Password_lb.Content = "Password should consists letter,digit,sign";
+			}
+
+		}
+
+		private void password_btn_MouseLeave(object sender, MouseEventArgs e)
+		{
+			Password_br.Visibility = Visibility.Hidden;
+
+		}
+
+		private void confirm_btn_MouseEnter(object sender, MouseEventArgs e)
+		{
+
+			if (Confirm_eror)
+			{
+				Confirm_br.Visibility = Visibility.Visible;
+				Confirm_lb.Content = "Not match with Password";
+			}
+		}
+
+		private void confirm_btn_MouseLeave(object sender, MouseEventArgs e)
+		{
+			Confirm_br.Visibility = Visibility.Hidden;
+
+		}
 	}
 }
 

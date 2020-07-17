@@ -398,7 +398,7 @@ namespace Final_Project
 				sqlConnection.Open();
 				sqlCommand = new SqlCommand("INSERT INTO Food_Menu (Name_Food, Cost_Food, Information_Food,Date_Food,Uri_Food,Kind_Food,Number_Food) VALUES (@Name_Food,@Cost_Food,@Information_Food,@Date_Food,@Uri_Food,@Kind_Food,@Number_Food)", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@Name_Food", Name_Food.Text);
-				sqlCommand.Parameters.AddWithValue("@Cost_Food", Cost_Food.Text);
+				sqlCommand.Parameters.AddWithValue("@Cost_Food", (double.Parse(Cost_Food.Text) * 1.24).ToString());
 				sqlCommand.Parameters.AddWithValue("@Information_Food", Information_Food.Text);
 				string date1 = Date_Food.Text.Substring(0, 2);
 				string date2 = Date_Food.Text.Substring(3, 2);

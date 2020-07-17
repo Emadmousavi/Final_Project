@@ -40,6 +40,22 @@ namespace Final_Project
 
 	public static class User_List
 	{
+		private static void ellipse_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			Ellipse ellipse = e.Source as Ellipse;
+			StackPanel st = ellipse.Parent as StackPanel;
+			SqlConnection sqlConnection = new SqlConnection(" Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30");
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select * from Food_Menu where Name_Food =@Name_Food", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)st.Children[1]).Content.ToString());
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			Edit_Window w = new Edit_Window(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString());
+			w.Show();
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+		}
 		public static void btn_click(object sender, RoutedEventArgs e)
 		{
 			string connection_string = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project\\Final_Project\\database.mdf\"; Integrated Security = True; Connect Timeout = 30";
@@ -64,7 +80,7 @@ namespace Final_Project
 			WrapPanel wp = btn.Parent as WrapPanel;
 			StackPanel st = wp.Parent as StackPanel;
 			Border border = st.Parent as Border;
-			int number = int.Parse((((TextBlock)st.Children[3]).Text));
+			double number = double.Parse((((TextBlock)st.Children[3]).Text));
 			if (number >= 1)
 			{
 				number--;
@@ -122,6 +138,7 @@ namespace Final_Project
 			stackPanel.Height = 210;
 			stackPanel.Width = 163;
 			Ellipse ellipse = new Ellipse();
+			ellipse.MouseUp += ellipse_MouseUp;
 			ellipse.Name = "ellipse";
 			ellipse.Width = 100;
 			ellipse.Height = 100;
@@ -173,7 +190,7 @@ namespace Final_Project
 			wrapPanel.Children.Add(label4);
 			stackPanel.Children.Add(wrapPanel);
 			border.Child = stackPanel;
-			if (int.Parse(Number_Food) == 0)
+			if (double.Parse(Number_Food) == 0)
 			{
 				border.Visibility = Visibility.Hidden;
 			}
@@ -612,7 +629,7 @@ namespace Final_Project
 			//3
 			else if ((ingridient_txt.Text.Equals("") == true || ingridient_txt.Text.Equals("Ingridient") == true) && (price_txt.Text.Equals("") == false || price_txt.Text.Equals("Price") == false) &&  calendar.Text != "")
 			{
-				list = search_Table.Where(x => x.Date_Food == calendar.Text && int.Parse(x.Cost_Food) <= int.Parse(price_txt.Text)).ToList();
+				list = search_Table.Where(x => x.Date_Food == calendar.Text && double.Parse(x.Cost_Food) <= double.Parse(price_txt.Text)).ToList();
 				foreach (var item in list)
 				{
 					if (User_List.counter == 2)
@@ -631,7 +648,7 @@ namespace Final_Project
 			//4
 			else if ((ingridient_txt.Text.Equals("") == true || ingridient_txt.Text.Equals("Ingridient") == true) && (price_txt.Text.Equals("") == false || price_txt.Text.Equals("Price") == false) &&  calendar.Text == "")
 			{
-				list = search_Table.Where(x=> int.Parse(x.Cost_Food) <= int.Parse(price_txt.Text)).ToList();
+				list = search_Table.Where(x=> double.Parse(x.Cost_Food) <= double.Parse(price_txt.Text)).ToList();
 				foreach (var item in list)
 				{
 					if (User_List.counter == 2)
@@ -688,7 +705,7 @@ namespace Final_Project
 			//7
 			else if ((ingridient_txt.Text.Equals("") == false || ingridient_txt.Text.Equals("Ingridient") == false) && (price_txt.Text.Equals("") == false || price_txt.Text.Equals("Price") == false) &&  calendar.Text != "")
 			{
-				list = search_Table.Where(x => x.Date_Food == calendar.Text && int.Parse(x.Cost_Food) <= int.Parse(price_txt.Text) && x.Information_Food.Split(',').Any(y => y == ingridient_txt.Text)).ToList();
+				list = search_Table.Where(x => x.Date_Food == calendar.Text && double.Parse(x.Cost_Food) <= double.Parse(price_txt.Text) && x.Information_Food.Split(',').Any(y => y == ingridient_txt.Text)).ToList();
 				foreach (var item in list)
 				{
 					if (User_List.counter == 2)
@@ -707,7 +724,7 @@ namespace Final_Project
 			//8
 			else if ((ingridient_txt.Text.Equals("") == false || ingridient_txt.Text.Equals("Ingridient") == false) && (price_txt.Text.Equals("") == false || price_txt.Text.Equals("Price") == false) &&  calendar.Text == "")
 			{
-				list = search_Table.Where(x=> x.Information_Food.Split(',').Any(y => y == ingridient_txt.Text) && int.Parse(x.Cost_Food) <= int.Parse(price_txt.Text)).ToList();
+				list = search_Table.Where(x=> x.Information_Food.Split(',').Any(y => y == ingridient_txt.Text) && double.Parse(x.Cost_Food) <= double.Parse(price_txt.Text)).ToList();
 				foreach (var item in list)
 				{
 					if (User_List.counter == 2)

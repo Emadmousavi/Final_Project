@@ -26,6 +26,7 @@ namespace Final_Project
 	/// </summary>
 	public partial class user_cart : Window
 	{
+		public static double current_order_cost = 0;
 		 Window creatingForm;
 		public  Window setCreatingForm
 		{
@@ -51,7 +52,7 @@ namespace Final_Project
 			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7));
 			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 			sqlDataReader.Read();
-			int current_Food_number = int.Parse(sqlDataReader.GetValue(0).ToString());
+			double current_Food_number = double.Parse(sqlDataReader.GetValue(0).ToString());
 			sqlDataReader.Close();
 			sqlCommand.Dispose();
 
@@ -62,7 +63,7 @@ namespace Final_Project
 				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
 				sqlCommand.ExecuteNonQuery();
 				sqlCommand.Dispose();
-				int number = int.Parse(((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content.ToString().Substring(9));
+				double number = double.Parse(((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content.ToString().Substring(9));
 				number++;
 				((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content = "Number : " + number.ToString();
 				sqlCommand = new SqlCommand("update Food_Menu set Number_Food =@Number_Food where Name_Food=@Name_Food", sqlConnection);
@@ -114,14 +115,14 @@ namespace Final_Project
 			sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
 			sqlCommand.ExecuteNonQuery();
 			sqlCommand.Dispose();
-			int number = int.Parse(((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content.ToString().Substring(9));
+			double number = double.Parse(((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content.ToString().Substring(9));
 			number--;
 			((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[3]).Content = "Number : "+number.ToString();
 			sqlCommand = new SqlCommand("select Number_Food from Food_Menu where Name_Food=@Name_Food", sqlConnection);
 			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)((StackPanel)((Border)st2.Children[1]).Child).Children[0]).Content.ToString().Substring(7));
 			sqlDataReader = sqlCommand.ExecuteReader();
 			sqlDataReader.Read();
-			int current_Food_number = int.Parse(sqlDataReader.GetValue(0).ToString());
+			double current_Food_number = double.Parse(sqlDataReader.GetValue(0).ToString());
 			sqlDataReader.Close();
 			sqlCommand.Dispose();
 			sqlCommand = new SqlCommand("update Food_Menu set Number_Food =@Number_Food where Name_Food=@Name_Food", sqlConnection);
@@ -175,6 +176,7 @@ namespace Final_Project
 				}
 				sqlDataReader.Close();
 				sqlCommand.Dispose();
+				//order price
 				StackPanel stackPanel = new StackPanel();
 				Grid grid = new Grid();
 				ColumnDefinition c1 = new ColumnDefinition();
@@ -186,7 +188,7 @@ namespace Final_Project
 				Label lable1 = new Label();
 				var bc = new BrushConverter();
 				lable1.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
-				lable1.Content = "Toal Cost";
+				lable1.Content = "Order Cost";
 				lable1.FontWeight = FontWeights.Bold;
 				lable1.FontStyle = FontStyles.Italic;
 				lable1.FontSize = 16;
@@ -195,18 +197,360 @@ namespace Final_Project
 				Label lable2 = new Label();
 				bc = new BrushConverter();
 				lable2.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
-				int total = Food.Select(a => (int.Parse(a.Cost_Food) * int.Parse(a.Number_Food))).Sum(x => x);
-				lable2.Content = total.ToString() + "$";
+				double total = Food.Select(a => (double.Parse(a.Cost_Food) * double.Parse(a.Number_Food))).Sum(x => x);
+				lable2.Content = $"{ total.ToString():N2}$";
 				lable2.FontSize = 16;
 				lable2.FontWeight = FontWeights.Bold;
 				lable2.FontStyle = FontStyles.Italic;
-				lable2.Margin = new Thickness(10, 0, 10, 0);
+				lable2.Margin = new Thickness(5, 0, 10, 0);
 				Grid.SetColumn(lable2, 1);
 				grid.Children.Add(lable2);
 				grid.Children.Add(lable1);
 				grid.Margin = new Thickness(0, 10, 0, 0);
 				stackPanel.Children.Add(grid);
-				return stackPanel;
+				current_order_cost = total;
+				//order price
+
+				sqlCommand = new SqlCommand("select Order_Number from Users where FullName=@FullName", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				sqlDataReader = sqlCommand.ExecuteReader();
+				sqlDataReader.Read();
+				int order_num = int.Parse(sqlDataReader.GetValue(0).ToString());
+				sqlDataReader.Close();
+				sqlCommand.Dispose();
+				sqlConnection.Close();
+				StackPanel stackPanel2 = new StackPanel();
+				StackPanel stackPanel3 = new StackPanel();
+				if (order_num <= 4)
+				{
+					//tax
+					stackPanel2 = new StackPanel();
+					Grid grid2 = new Grid();
+					ColumnDefinition c21 = new ColumnDefinition();
+					c21.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c22 = new ColumnDefinition();
+					c22.Width = new GridLength(1, GridUnitType.Star);
+					grid2.ColumnDefinitions.Add(c21);
+					grid2.ColumnDefinitions.Add(c22);
+					Label lable21 = new Label();
+					var bc2 = new BrushConverter();
+					lable21.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					lable21.Content = "Tax Cost";
+					lable21.FontWeight = FontWeights.Bold;
+					lable21.FontStyle = FontStyles.Italic;
+					lable21.FontSize = 16;
+					lable21.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable21, 0);
+					Label lable22 = new Label();
+					bc2 = new BrushConverter();
+					lable22.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					double total2 = Food.Select(a => (double.Parse(a.Cost_Food) * double.Parse(a.Number_Food))).Sum(x => x)*(100.0/124.0)*0.09;
+					lable22.Content = $"{ total2:N2}$";
+					lable22.FontSize = 16;
+					lable22.FontWeight = FontWeights.Bold;
+					lable22.FontStyle = FontStyles.Italic;
+					lable22.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable22, 1);
+					grid2.Children.Add(lable22);
+					grid2.Children.Add(lable21);
+					grid2.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel2.Children.Add(grid2);
+					current_order_cost += total2;
+					//tax
+
+					//Amazing Offer
+					stackPanel3 = new StackPanel();
+					Grid grid3 = new Grid();
+					ColumnDefinition c31 = new ColumnDefinition();
+					c31.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c32 = new ColumnDefinition();
+					c32.Width = new GridLength(1, GridUnitType.Star);
+					grid3.ColumnDefinitions.Add(c31);
+					grid3.ColumnDefinitions.Add(c32);
+					Label lable31 = new Label();
+					var bc3 = new BrushConverter();
+					lable31.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					lable31.Content = "Amazing Offer";
+					lable31.FontWeight = FontWeights.Bold;
+					lable31.FontStyle = FontStyles.Italic;
+					lable31.FontSize = 16;
+					lable31.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable31, 0);
+					Label lable32 = new Label();
+					bc3 = new BrushConverter();
+					lable32.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					double total3 = 0;
+					lable32.Content = total3.ToString() + "$";
+					lable32.FontSize = 16;
+					lable32.FontWeight = FontWeights.Bold;
+					lable32.FontStyle = FontStyles.Italic;
+					lable32.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable32, 1);
+					grid3.Children.Add(lable32);
+					grid3.Children.Add(lable31);
+					grid3.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel3.Children.Add(grid3);
+					current_order_cost -= total3;
+					//Amazing Offer
+				}
+
+				else if (order_num >= 5 && order_num <= 8)
+				{
+					//tax
+					stackPanel2 = new StackPanel();
+					Grid grid2 = new Grid();
+					ColumnDefinition c21 = new ColumnDefinition();
+					c21.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c22 = new ColumnDefinition();
+					c22.Width = new GridLength(1, GridUnitType.Star);
+					grid2.ColumnDefinitions.Add(c21);
+					grid2.ColumnDefinitions.Add(c22);
+					Label lable21 = new Label();
+					var bc2 = new BrushConverter();
+					lable21.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					lable21.Content = "Tax Cost";
+					lable21.FontWeight = FontWeights.Bold;
+					lable21.FontStyle = FontStyles.Italic;
+					lable21.FontSize = 16;
+					lable21.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable21, 0);
+					Label lable22 = new Label();
+					bc2 = new BrushConverter();
+					lable22.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					double total2 = Food.Select(a => (double.Parse(a.Cost_Food) * double.Parse(a.Number_Food))).Sum(x => x)*(100.0/124.0)*0.07;
+					lable22.Content = $"{ total2:N2}$";
+					lable22.FontSize = 16;
+					lable22.FontWeight = FontWeights.Bold;
+					lable22.FontStyle = FontStyles.Italic;
+					lable22.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable22, 1);
+					grid2.Children.Add(lable22);
+					grid2.Children.Add(lable21);
+					grid2.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel2.Children.Add(grid2);
+					current_order_cost += total2;
+					//tax
+
+					//Amazing Offer
+					stackPanel3 = new StackPanel();
+					Grid grid3 = new Grid();
+					ColumnDefinition c31 = new ColumnDefinition();
+					c31.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c32 = new ColumnDefinition();
+					c32.Width = new GridLength(1, GridUnitType.Star);
+					grid3.ColumnDefinitions.Add(c31);
+					grid3.ColumnDefinitions.Add(c32);
+					Label lable31 = new Label();
+					var bc3 = new BrushConverter();
+					lable31.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					lable31.Content = "Amazing Offer";
+					lable31.FontWeight = FontWeights.Bold;
+					lable31.FontStyle = FontStyles.Italic;
+					lable31.FontSize = 16;
+					lable31.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable31, 0);
+					Label lable32 = new Label();
+					bc3 = new BrushConverter();
+					lable32.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					double total3 = Food.Select(a => (double.Parse(a.Cost_Food) * double.Parse(a.Number_Food))).Sum(x => x)*0.05;
+					lable32.Content = $"{ total3:N2}$";
+					lable32.FontSize = 16;
+					lable32.FontWeight = FontWeights.Bold;
+					lable32.FontStyle = FontStyles.Italic;
+					lable32.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable32, 1);
+					grid3.Children.Add(lable32);
+					grid3.Children.Add(lable31);
+					grid3.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel3.Children.Add(grid3);
+					current_order_cost -= total3;
+					//Amazing Offer
+				}
+
+				else if (order_num >= 9 && order_num <= 12)
+				{
+					//tax
+					stackPanel2 = new StackPanel();
+					Grid grid2 = new Grid();
+					ColumnDefinition c21 = new ColumnDefinition();
+					c21.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c22 = new ColumnDefinition();
+					c22.Width = new GridLength(1, GridUnitType.Star);
+					grid2.ColumnDefinitions.Add(c21);
+					grid2.ColumnDefinitions.Add(c22);
+					Label lable21 = new Label();
+					var bc2 = new BrushConverter();
+					lable21.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					lable21.Content = "Tax Cost";
+					lable21.FontWeight = FontWeights.Bold;
+					lable21.FontStyle = FontStyles.Italic;
+					lable21.FontSize = 16;
+					lable21.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable21, 0);
+					Label lable22 = new Label();
+					bc2 = new BrushConverter();
+					lable22.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					double total2 = Food.Select(a => (double.Parse(a.Cost_Food) * double.Parse(a.Number_Food))).Sum(x => x)*(100.0/124.0)*0.05;
+					lable22.Content = $"{ total2:N2}$";
+					lable22.FontSize = 16;
+					lable22.FontWeight = FontWeights.Bold;
+					lable22.FontStyle = FontStyles.Italic;
+					lable22.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable22, 1);
+					grid2.Children.Add(lable22);
+					grid2.Children.Add(lable21);
+					grid2.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel2.Children.Add(grid2);
+					current_order_cost += total2;
+					//tax
+
+					//Amazing Offer
+					stackPanel3 = new StackPanel();
+					Grid grid3 = new Grid();
+					ColumnDefinition c31 = new ColumnDefinition();
+					c31.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c32 = new ColumnDefinition();
+					c32.Width = new GridLength(1, GridUnitType.Star);
+					grid3.ColumnDefinitions.Add(c31);
+					grid3.ColumnDefinitions.Add(c32);
+					Label lable31 = new Label();
+					var bc3 = new BrushConverter();
+					lable31.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					lable31.Content = "Amazing Offer";
+					lable31.FontWeight = FontWeights.Bold;
+					lable31.FontStyle = FontStyles.Italic;
+					lable31.FontSize = 16;
+					lable31.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable31, 0);
+					Label lable32 = new Label();
+					bc3 = new BrushConverter();
+					lable32.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					double total3 = Food.Select(a => (double.Parse(a.Cost_Food) * double.Parse(a.Number_Food))).Sum(x => x)*0.08;
+					lable32.Content = $"{ total3:N2}$";
+					lable32.FontSize = 16;
+					lable32.FontWeight = FontWeights.Bold;
+					lable32.FontStyle = FontStyles.Italic;
+					lable32.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable32, 1);
+					grid3.Children.Add(lable32);
+					grid3.Children.Add(lable31);
+					grid3.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel3.Children.Add(grid3);
+					current_order_cost -= total3;
+					//Amazing Offer
+				}
+
+				else if (order_num >= 13)
+				{
+					//tax
+					stackPanel2 = new StackPanel();
+					Grid grid2 = new Grid();
+					ColumnDefinition c21 = new ColumnDefinition();
+					c21.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c22 = new ColumnDefinition();
+					c22.Width = new GridLength(1, GridUnitType.Star);
+					grid2.ColumnDefinitions.Add(c21);
+					grid2.ColumnDefinitions.Add(c22);
+					Label lable21 = new Label();
+					var bc2 = new BrushConverter();
+					lable21.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					lable21.Content = "Tax Cost";
+					lable21.FontWeight = FontWeights.Bold;
+					lable21.FontStyle = FontStyles.Italic;
+					lable21.FontSize = 16;
+					lable21.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable21, 0);
+					Label lable22 = new Label();
+					bc2 = new BrushConverter();
+					lable22.Foreground = (System.Windows.Media.Brush)bc2.ConvertFrom("#FFFFEFDD");
+					double total2 = 0;
+					lable22.Content = $"{ total2:N2}$";
+					lable22.FontSize = 16;
+					lable22.FontWeight = FontWeights.Bold;
+					lable22.FontStyle = FontStyles.Italic;
+					lable22.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable22, 1);
+					grid2.Children.Add(lable22);
+					grid2.Children.Add(lable21);
+					grid2.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel2.Children.Add(grid2);
+					current_order_cost += total2;
+					//tax
+
+					//Amazing Offer
+					stackPanel3 = new StackPanel();
+					Grid grid3 = new Grid();
+					ColumnDefinition c31 = new ColumnDefinition();
+					c31.Width = new GridLength(2.5, GridUnitType.Star);
+					ColumnDefinition c32 = new ColumnDefinition();
+					c32.Width = new GridLength(1, GridUnitType.Star);
+					grid3.ColumnDefinitions.Add(c31);
+					grid3.ColumnDefinitions.Add(c32);
+					Label lable31 = new Label();
+					var bc3 = new BrushConverter();
+					lable31.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					lable31.Content = "Amazing Offer";
+					lable31.FontWeight = FontWeights.Bold;
+					lable31.FontStyle = FontStyles.Italic;
+					lable31.FontSize = 16;
+					lable31.Margin = new Thickness(0, 0, 10, 0);
+					Grid.SetColumn(lable31, 0);
+					Label lable32 = new Label();
+					bc3 = new BrushConverter();
+					lable32.Foreground = (System.Windows.Media.Brush)bc3.ConvertFrom("#FFFFEFDD");
+					double total3 = Food.Select(a => (double.Parse(a.Cost_Food) * double.Parse(a.Number_Food))).Sum(x => x)*0.10;
+					lable32.Content = $"{ total3:N2}$";
+					lable32.FontSize = 16;
+					lable32.FontWeight = FontWeights.Bold;
+					lable32.FontStyle = FontStyles.Italic;
+					lable32.Margin = new Thickness(5, 0, 10, 0);
+					Grid.SetColumn(lable32, 1);
+					grid3.Children.Add(lable32);
+					grid3.Children.Add(lable31);
+					grid3.Margin = new Thickness(0, 10, 0, 0);
+					stackPanel3.Children.Add(grid3);
+					current_order_cost -= total3;
+					//Amazing Offer
+				}
+
+				StackPanel stackPanel4 = new StackPanel();
+				Grid grid4 = new Grid();
+				ColumnDefinition c41 = new ColumnDefinition();
+				c41.Width = new GridLength(2.5, GridUnitType.Star);
+				ColumnDefinition c42 = new ColumnDefinition();
+				c42.Width = new GridLength(1, GridUnitType.Star);
+				grid4.ColumnDefinitions.Add(c41);
+				grid4.ColumnDefinitions.Add(c42);
+				Label lable41 = new Label();
+				var bc4 = new BrushConverter();
+				lable41.Foreground = (System.Windows.Media.Brush)bc4.ConvertFrom("#FFFFEFDD");
+				lable41.Content = "Total Cost";
+				lable41.FontWeight = FontWeights.Bold;
+				lable41.FontStyle = FontStyles.Italic;
+				lable41.FontSize = 16;
+				lable41.Margin = new Thickness(0, 0, 10, 0);
+				Grid.SetColumn(lable41, 0);
+				Label lable42 = new Label();
+				bc4 = new BrushConverter();
+				lable42.Foreground = (System.Windows.Media.Brush)bc4.ConvertFrom("#FFFFEFDD");
+				double total4 = current_order_cost;
+				lable42.Content = $"{current_order_cost:N2}$";
+				lable42.FontSize = 16;
+				lable42.FontWeight = FontWeights.Bold;
+				lable42.FontStyle = FontStyles.Italic;
+				lable42.Margin = new Thickness(5, 0, 10, 0);
+				Grid.SetColumn(lable42, 1);
+				grid4.Children.Add(lable42);
+				grid4.Children.Add(lable41);
+				grid4.Margin = new Thickness(0, 10, 0, 0);
+				stackPanel4.Children.Add(grid4);
+
+				StackPanel main = new StackPanel();
+				main.Children.Add(stackPanel);
+				main.Children.Add(stackPanel2);
+				main.Children.Add(stackPanel3);
+				main.Children.Add(stackPanel4);
+				return main;
 
 			}
 			public static StackPanel receipt(string Name_Food,string Cost_Food, List<string> cart)
@@ -229,9 +573,9 @@ namespace Final_Project
 				Label lable2 = new Label();
 				bc = new BrushConverter();
 				lable2.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFEFDD");
-				lable2.Content = (int.Parse(Cost_Food)* (int)cart.Where(x => x == Name_Food).Count()).ToString() + "$";
+				lable2.Content = (double.Parse(Cost_Food)* (int)cart.Where(x => x == Name_Food).Count()).ToString() + "$";
 				lable2.FontSize = 15;
-				lable2.Margin = new Thickness(10, 0, 10, 0);
+				lable2.Margin = new Thickness(5, 0, 10, 0);
 				Grid.SetColumn(lable2, 1);
 				Label lable3 = new Label();
 				bc = new BrushConverter();
@@ -438,22 +782,19 @@ namespace Final_Project
 					PrintDialog printDialog = new PrintDialog();
 					if (printDialog.ShowDialog() == true)
 					{
-						StackPanel st = new StackPanel();
-						foreach (UIElement item in receipt.Children)
-						{
-							st.Children.Add(item);
-						}
-						st.Children.Add(discount);
-						st.Children.Add(signiture);
-						printDialog.PrintVisual(st, "Stack panel description");
+						
 					
+						printDialog.PrintVisual(receipt, "Stack panel description");
+						
+
+
 					}
 
 				}
 				if (online_pay.IsChecked == true)
 				{
-					string total_price = ((Label)((Grid)(Cart.Total_Price().Children[0])).Children[0]).Content.ToString();
-					MessageBox.Show($"{total_price}  was deducted from your account");
+					string total_price =current_order_cost.ToString();
+					MessageBox.Show($"{total_price:N2}  was deducted from your account");
 					MessageBox.Show("Thank you for your Buy your order will be delivered soon");
 					PrintDialog printDialog = new PrintDialog();
 					if (printDialog.ShowDialog() == true)
@@ -479,7 +820,7 @@ namespace Final_Project
 				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
 				SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 				sqlDataReader.Read();
-				int order_num=int.Parse(sqlDataReader.GetValue(0).ToString());
+				double order_num=double.Parse(sqlDataReader.GetValue(0).ToString());
 				sqlDataReader.Close();
 				sqlCommand.Dispose();
 				sqlCommand = new SqlCommand("select * from Receipt", sqlConnection);
