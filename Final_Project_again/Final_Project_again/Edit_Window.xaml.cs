@@ -88,5 +88,17 @@ namespace Final_Project_again
 				}
 			}
 		}
+
+		private void delete_btn_Click(object sender, RoutedEventArgs e)
+		{
+			SqlConnection sqlConnection = new SqlConnection(" Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30");
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("delete Food_Menu where Name_Food =@Name_Food1", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Name_Food1", Name_Food);
+			sqlCommand.ExecuteNonQuery();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+			this.Close();
+		}
 	}
 }

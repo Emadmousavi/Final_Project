@@ -20,6 +20,49 @@ using System.Text.RegularExpressions;
 
 namespace Final_Project_again
 {
+	public static class Autocomplete
+	{
+		static string connection_string = " Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30";
+
+		public static List<string> GetData_Food_Name()
+		{
+			List<string> data = new List<string>();
+			SqlConnection sqlConnection = new SqlConnection(connection_string);
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select Name_Food from Food_Menu", sqlConnection);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			while (sqlDataReader.Read())
+			{
+				data.Add(sqlDataReader.GetValue(0).ToString());
+			}
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+			return data;
+		}
+
+		public static List<string> GetData_Ingridient()
+		{
+			List<string> data = new List<string>();
+			SqlConnection sqlConnection = new SqlConnection(connection_string);
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select Information_Food from Food_Menu", sqlConnection);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			while (sqlDataReader.Read())
+			{
+				foreach (var item in sqlDataReader.GetValue(0).ToString().Split(','))
+				{
+					data.Add(item);
+				}
+				
+			}
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+			return data;
+		}
+
+	}
 	public static class menu
 	{
 		private static void ellipse_MouseUp(object sender, MouseButtonEventArgs e)
@@ -121,7 +164,256 @@ namespace Final_Project_again
 			counter++;
 			return main_wrap;
 		}
+
 	}
+	public static class Orders
+	{
+		public static int counter = 2;
+		public static WrapPanel main_wrap;
+		public class Properties
+		{
+			public string order_Number;
+			public string Order_Food;
+			public string Order_Cost;
+			public string Order_Food_Number;
+		}
+
+		public class Order
+		{
+			public List<Properties> properties { get; set; }
+			public string Order_Number;
+			public string Payment;
+		}
+
+		public static void cash_cancel(object sender, RoutedEventArgs e)
+		{
+			Button btn = e.Source as Button;
+			StackPanel st = btn.Parent as StackPanel;
+			string s_total = ((Label)((Grid)st.Children[st.Children.Count - 2]).Children[0]).Content.ToString();
+			s_total = s_total.Substring(0, s_total.Length - 2);
+			double total = double.Parse(s_total);
+			MessageBox.Show($"your order canceled\n please pay {total * 0.1}$ as tax");
+
+		}
+
+		public static void online_cancel(object sender, RoutedEventArgs e)
+		{
+			Button btn = e.Source as Button;
+			StackPanel st = btn.Parent as StackPanel;
+			string s_total = ((Label)((Grid)st.Children[st.Children.Count - 2]).Children[0]).Content.ToString();
+			s_total = s_total.Substring(0, s_total.Length - 2);
+			double total = double.Parse(s_total);
+			MessageBox.Show($"your order canceled\n {total * 0.9}$ will be refunded to your account\n{total * 0.1}$ will be deducated for tax");
+		}
+		public static Border construct(Order obj)
+		{
+			
+			StackPanel stackpanel = new StackPanel();
+			foreach (var item in obj.properties)
+			{
+				StackPanel st = new StackPanel();
+				Label lable1 = new Label();
+				var br = new BrushConverter();
+				lable1.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FFFFDBCB");
+				lable1.Content = item.Order_Food;
+				lable1.FontSize = 20;
+				lable1.FontWeight = FontWeights.Bold;
+				lable1.FontStyle = FontStyles.Italic;
+				Grid grid = new Grid();
+				ColumnDefinition c1 = new ColumnDefinition();
+				c1.Width = new GridLength(2.5, GridUnitType.Star);
+				ColumnDefinition c2 = new ColumnDefinition();
+				c2.Width = new GridLength(1, GridUnitType.Star);
+				grid.ColumnDefinitions.Add(c1);
+				grid.ColumnDefinitions.Add(c2);
+				Label lable2 = new Label();
+				br = new BrushConverter();
+				lable2.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FFFFDBCB");
+				lable2.Content = (double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number.ToString())) + "$";
+				lable2.FontSize = 15;
+				lable2.Margin = new Thickness(10, 0, 10, 0);
+				Grid.SetColumn(lable2, 1);
+				Label lable3 = new Label();
+				br = new BrushConverter();
+				lable3.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FFFFDBCB");
+				lable3.Content = double.Parse(item.Order_Food_Number.ToString());
+				lable3.FontSize = 15;
+				lable3.Margin = new Thickness(10, 0, 10, 0);
+				Grid.SetColumn(lable3, 0);
+				grid.Children.Add(lable3);
+				grid.Children.Add(lable2);
+				Label lable4 = new Label();
+				br = new BrushConverter();
+				lable4.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FFFFDBCB");
+				lable4.Content = "_______________________________________________________________________________";
+				lable4.Margin = new Thickness(0, -7, 0, 0);
+				lable4.FontSize = 15;
+				lable4.Margin = new Thickness(10, 0, 10, 0);
+				st.Children.Add(lable1);
+				st.Children.Add(grid);
+				st.Children.Add(lable4);
+				stackpanel.Children.Add(st);
+
+			}
+			Grid grid1 = new Grid();
+			ColumnDefinition cc1 = new ColumnDefinition();
+			cc1.Width = new GridLength(2.5, GridUnitType.Star);
+			ColumnDefinition cc2 = new ColumnDefinition();
+			cc2.Width = new GridLength(1, GridUnitType.Star);
+			grid1.ColumnDefinitions.Add(cc1);
+			grid1.ColumnDefinitions.Add(cc2);
+			Label lable5 = new Label();
+			var bc = new BrushConverter();
+			lable5.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFDBCB");
+			lable5.Content = "Total Cost";
+			lable5.FontSize = 15;
+			lable5.Margin = new Thickness(10, 0, 10, 0);
+			Grid.SetColumn(lable5, 0);
+			Label lable6 = new Label();
+			bc = new BrushConverter();
+			lable6.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFDBCB");
+			double total_cost = 0;
+			if (int.Parse(obj.Order_Number) <= 4)
+			{
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number);
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * (100.0 / 124.0) * 0.09;
+				}
+			}
+			else if (int.Parse(obj.Order_Number) >= 5 && int.Parse(obj.Order_Number) <= 8)
+			{
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * 0.95;
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * (100.0 / 124.0) * 0.07;
+				}
+			}
+			else if (int.Parse(obj.Order_Number) >= 9 && int.Parse(obj.Order_Number) <= 12)
+			{
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * 0.92;
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * (100.0 / 124.0) * 0.05;
+				}
+			}
+			else if (int.Parse(obj.Order_Number) >= 13)
+			{
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * 0.90;
+
+				}
+			}
+
+			lable6.Content = $"{ total_cost:N2}$";
+			lable6.FontSize = 15;
+			lable6.Margin = new Thickness(10, 0, 10, 0);
+			Grid.SetColumn(lable6, 1);
+			grid1.Children.Add(lable6);
+			grid1.Children.Add(lable5);
+
+
+			stackpanel.Children.Add(grid1);
+			Button btn = new Button();
+			if (obj.Payment == "cash")
+			{
+				btn.Click += new RoutedEventHandler(cash_cancel);
+			}
+			else if (obj.Payment == "online")
+			{
+				btn.Click += new RoutedEventHandler(online_cancel);
+			}
+
+			btn.Content = "Cancel";
+			bc = new BrushConverter();
+			btn.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFDBCB");
+			btn.Margin = new Thickness(80, 20, 80, 10);
+			stackpanel.Children.Add(btn);
+			user_shopping_list.counter++;
+			Border border = new Border();
+			bc = new BrushConverter();
+			border.BorderBrush = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFDBCB");
+			border.BorderThickness = new Thickness(2, 2, 2, 2);
+			border.CornerRadius = new CornerRadius(10, 10, 10, 10);
+			border.Margin = new Thickness(30, 0, 0, 10);
+			border.Child = stackpanel;
+			border.Padding = new Thickness(5, 5, 5, 5);
+			return border;
+		}
+		public static WrapPanel GetData(string obj,string Name)
+		{
+			if (counter == 2)
+			{
+				counter = 0;
+				main_wrap = new WrapPanel();
+				main_wrap.HorizontalAlignment = HorizontalAlignment.Center;
+				main_wrap.Margin = new Thickness(0, 40, 0, 0);
+
+			}
+			ScrollViewer scr = new ScrollViewer();
+			StackPanel stack = new StackPanel();
+			List<Order> orders = new List<Order>();
+			List<string> order = new List<string>();
+			Label name = new Label();
+			name.Content = Name;
+			name.FontSize = 20;
+			var br = new BrushConverter();
+			name.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FFFFDBCB");
+			name.Margin = new Thickness(25,0,0,5);
+			stack.Children.Add(name);
+			order = obj.Split('/').ToList();
+			foreach (var item in order)
+			{
+				if (item != "")
+				{
+					List<string> Order_Food = new List<string>();
+					List<string> Order_Cost = new List<string>();
+					List<string> Order_Food_Number = new List<string>();
+					string order_number = item.Split(':')[0];
+					Order_Food = item.Split(':')[1].Split(',').ToList();
+					Order_Cost = item.Split(':')[2].Split(',').ToList();
+					Order_Food_Number = item.Split(':')[3].Split(',').ToList();
+					string payment = item.Split(':')[4];
+					Order a = new Order();
+					a.Order_Number = order_number;
+					a.Payment = payment;
+					a.properties = new List<Properties>();
+					using (var e1 = Order_Food.GetEnumerator())
+					using (var e2 = Order_Cost.GetEnumerator())
+					using (var e3 = Order_Food_Number.GetEnumerator())
+					{
+						while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
+						{
+							Properties p = new Properties();
+							p.Order_Food = e1.Current;
+							p.Order_Cost = e2.Current;
+							p.Order_Food_Number = e3.Current;
+							a.properties.Add(p);
+						}
+					}
+					orders.Add(a);
+				}
+			}
+
+			foreach (var item in orders)
+			{
+
+				stack.Children.Add(construct(item));
+
+			}
+			stack.Margin = new Thickness(0, 0, 0, 10);
+			scr.Content = stack;
+			scr.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+			scr.Height = 350;
+			main_wrap.Children.Add(scr);
+			Orders.counter++;
+			return main_wrap;
+		}
+		
+	}
+		
+
 	public static class List
 	{
 		private static void ellipse_MouseUp(object sender, MouseButtonEventArgs e)
@@ -253,7 +545,7 @@ namespace Final_Project_again
 	}
 	public partial class admin_desktop : Window
 	{
-
+		
 		string connection_string = " Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30";
 		public bool check_add_menu_condition()
 		{
@@ -287,11 +579,29 @@ namespace Final_Project_again
 		public admin_desktop()
 		{
 			InitializeComponent();
-
+			Orders.counter = 2;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("select * from admin ", sqlConnection);
+			SqlCommand sqlCommand = new SqlCommand("select Orders,FullName from Users", sqlConnection);
 			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			while (sqlDataReader.Read())
+			{
+				if (Orders.counter == 2)
+				{
+					All_Orders.Children.Add(Orders.GetData(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString()));
+				}
+
+				else
+				{
+					Orders.GetData(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString());
+				}
+			}
+
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+
+			sqlCommand = new SqlCommand("select * from admin ", sqlConnection);
+			sqlDataReader = sqlCommand.ExecuteReader();
 			sqlDataReader.Read();
 			sqlCommand.Dispose();
 			admin_Name.Text = sqlDataReader.GetValue(0).ToString();
@@ -367,6 +677,12 @@ namespace Final_Project_again
 			if (!Regex.IsMatch(Date_Food.Text, @"\d\d/\d\d/\d\d\d\d"))
 			{
 				MessageBox.Show(@"Date format must be like DD/MM/YYYY");
+				return;
+			}
+
+			if (DateTime.Compare(DateTime.Parse(Date_Food.Text), DateTime.Today) < 0)
+			{
+				MessageBox.Show(@"You can't set Date earlier than today");
 				return;
 			}
 			bool Is_added = false;

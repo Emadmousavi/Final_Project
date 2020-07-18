@@ -479,7 +479,7 @@ namespace Final_Project_again
 
 			while (sqlDataReader.Read())
 			{
-				MessageBox.Show("You Signed In Successfully As User");
+				
 				Current_user.FullName = sqlDataReader.GetValue(0).ToString();
 				Current_user.E_mail = sqlDataReader.GetValue(1).ToString();
 				Current_user.NationalCode = sqlDataReader.GetValue(2).ToString();
@@ -491,11 +491,29 @@ namespace Final_Project_again
 
 				sqlDataReader.Close();
 				sqlCommand.Dispose();
-				sqlConnection.Close();
-				user_desktop w = new user_desktop();
-				w.Show();
-				this.Close();
-				return;
+				
+				sqlCommand = new SqlCommand("IF EXISTS(SELECT * from Food_Menu) SELECT 1 ELSE SELECT 0", sqlConnection);
+				sqlDataReader = sqlCommand.ExecuteReader();
+				sqlDataReader.Read();
+				if ((int)sqlDataReader.GetValue(0) == 1)
+				{
+					MessageBox.Show("You Signed In Successfully As User");
+					user_desktop w = new user_desktop();
+					w.Show();
+					this.Close();
+					sqlDataReader.Close();
+					sqlCommand.Dispose();
+					sqlConnection.Close();
+					return;
+				}
+				else
+				{
+					MessageBox.Show("There is No Food,Please wait till admin put Food in Menu");
+					sqlDataReader.Close();
+					sqlCommand.Dispose();
+					sqlConnection.Close();
+					return;
+				}
 			}
 			MessageBox.Show("Wrong Email or Password!");
 			sqlDataReader.Close();

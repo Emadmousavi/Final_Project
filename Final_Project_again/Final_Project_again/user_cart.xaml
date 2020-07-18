@@ -41,7 +41,7 @@
 				<RadioButton x:Name="online_pay" Content="online" Margin="158,552,0,47" Grid.RowSpan="2" HorizontalAlignment="Left" Width="60" Checked="online_pay_Checked" Foreground="#FFD8AA77" FontWeight="Bold"/>
 				<RadioButton x:Name="cash_pay" Content="cash" Margin="158,573,0,42" Checked="cash_pay_Checked" Foreground="#FFD8AA77" FontWeight="Bold"/>
 				<Button Name="Submit" Content="Submit" FontSize="20" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="158,0,10,2" Click="Submit_Click" Height="40" Grid.Row="1" Background="#FFDAC3AA" FontFamily="IRFarnaz"/>
-				<Button Name="Apply" Content="Apply" FontSize="20" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="200,0,10,139"  Height="35" Background="#FFDAC3AA" FontFamily="IRFarnaz" Click="Apply_Click"/>
+				<Button Name="Apply_discount" Content="Apply" FontSize="20" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="200,0,10,139"  Height="35" Background="#FFDAC3AA" FontFamily="IRFarnaz" Click="Apply_discount_Click"/>
 			</Grid>
 		</Border>
 		<Button x:Name="exit_btn" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,5" Width="82" Grid.Column="1" Height="78" Background="#FFFFA67E" BorderBrush="Transparent" Click="exit_btn_Click" >

@@ -164,10 +164,12 @@
 					<Grid.Background>
 						<ImageBrush ImageSource="images\test4.jpg"/>
 					</Grid.Background>
-					<Border Padding="20">
-						<StackPanel x:Name="Orders">
+					<Border Padding="30">
+						<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" >
+							<StackPanel x:Name="All_Orders">
 
-						</StackPanel>
+							</StackPanel>
+						</ScrollViewer>
 					</Border>
 				</Grid>
 			</TabItem>
@@ -214,10 +216,10 @@
 										<ImageBrush ImageSource="images\-res1.jpg"/>
 									</Ellipse.Fill>
 								</Ellipse>
-								<TextBox x:Name="Name_Food"  Text="Name Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Name_Food_PreviewTextInput" MaxLength="20" TextWrapping="WrapWithOverflow"/>
-								<TextBox x:Name="Cost_Food" Text="Made Cost Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Cost_Food_PreviewTextInput" MaxLength="4" TextWrapping="WrapWithOverflow"/>
-								<TextBox x:Name="Information_Food"  Text="information" HorizontalAlignment="Center"  Height="110" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Information_Food_PreviewTextInput" TextWrapping="WrapWithOverflow"/>
-								<TextBox x:Name="Date_Food" Text="Date of Food" HorizontalAlignment="Center"  Height="30" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Date_Food_PreviewTextInput" MaxLength="10" TextWrapping="WrapWithOverflow"/>
+								<TextBox x:Name="Name_Food"  Text="Name Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Name_Food_PreviewTextInput" MaxLength="20" TextWrapping="NoWrap"/>
+								<TextBox x:Name="Cost_Food" Text="Made Cost Of Food" HorizontalAlignment="Center"  Height="35" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Cost_Food_PreviewTextInput" MaxLength="4" TextWrapping="NoWrap"/>
+								<TextBox x:Name="Information_Food"  Text="information" HorizontalAlignment="Center"  Height="110" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Information_Food_PreviewTextInput" TextWrapping="NoWrap"/>
+								<TextBox x:Name="Date_Food" Text="Date of Food" HorizontalAlignment="Center"  Height="30" Width="150" Padding="5" Margin="0,5" PreviewTextInput="Date_Food_PreviewTextInput" MaxLength="10" TextWrapping="NoWrap"/>
 								<StackPanel Margin="0,15,0,0">
 									<TextBlock Text="Kind Of Food" HorizontalAlignment="Center" FontSize="20" Margin="0,5,0,10" FontFamily="Segoe Marker" Foreground="#FFFFE8B0"/>
 									<StackPanel Orientation="Horizontal">

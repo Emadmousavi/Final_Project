@@ -47,7 +47,7 @@ namespace Final_Project_again
 			sqlCommand.Parameters.AddWithValue("@Name_Food", ((Label)st.Children[1]).Content.ToString());
 			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 			sqlDataReader.Read();
-			Edit_Window w = new Edit_Window(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString());
+			Food_information w = new Food_information(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString(), sqlDataReader.GetValue(2).ToString(), sqlDataReader.GetValue(3).ToString(), sqlDataReader.GetValue(4).ToString());
 			w.Show();
 			sqlDataReader.Close();
 			sqlCommand.Dispose();
@@ -198,6 +198,7 @@ namespace Final_Project_again
 	}
 	public partial class user_desktop : Window
 	{
+		
 		Window creatingForm;
 		public Window setCreatingForm
 		{
@@ -212,6 +213,8 @@ namespace Final_Project_again
 		public user_desktop()
 		{
 			InitializeComponent();
+			autocom_br.Visibility = System.Windows.Visibility.Collapsed;
+			autocom_ingridient_br.Visibility = System.Windows.Visibility.Collapsed;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
 			SqlCommand sqlCommand = new SqlCommand("select * from Food_Menu", sqlConnection);
@@ -919,5 +922,152 @@ namespace Final_Project_again
 				creatingForm.Close();
 			this.Close();
 		}
+
+		private void Food_search_txt_KeyUp(object sender, KeyEventArgs e)
+		{
+			bool found = false;
+			var border = (resultStack.Parent as ScrollViewer).Parent as Border;
+			var data =Autocomplete.GetData_Food_Name();
+
+			string query = (sender as TextBox).Text;
+
+			if (query.Length == 0)
+			{
+				// Clear   
+				resultStack.Children.Clear();
+				border.Visibility = System.Windows.Visibility.Collapsed;
+			}
+			else
+			{
+				border.Visibility = System.Windows.Visibility.Visible;
+			}
+
+			// Clear the list   
+			resultStack.Children.Clear();
+
+			// Add the result   
+			foreach (var obj in data)
+			{
+				if (obj.ToLower().StartsWith(query.ToLower()))
+				{
+					// The word starts with this... Autocomplete must work   
+					addItem(obj);
+					found = true;
+				}
+			}
+
+			if (!found)
+			{
+				resultStack.Children.Add(new TextBlock() { Text = "No results found." });
+			}
+		}
+
+		private void addItem(string text)
+		{
+			TextBlock block = new TextBlock();
+
+			// Add the text   
+			block.Text = text;
+
+			// A little style...   
+			block.Margin = new Thickness(2, 3, 2, 3);
+			block.Cursor = Cursors.Hand;
+
+			// Mouse events   
+			block.MouseLeftButtonUp += (sender, e) =>
+			{
+				Food_search_txt.Text = (sender as TextBlock).Text;
+				autocom_br.Visibility = System.Windows.Visibility.Collapsed;
+			};
+
+			block.MouseEnter += (sender, e) =>
+			{
+				TextBlock b = sender as TextBlock;
+				b.Background = Brushes.PeachPuff;
+			};
+
+			block.MouseLeave += (sender, e) =>
+			{
+				TextBlock b = sender as TextBlock;
+				b.Background = Brushes.Transparent;
+			};
+
+			// Add to the panel   
+			resultStack.Children.Add(block);
+		}
+
+		private void ingridient_txt_KeyUp(object sender, KeyEventArgs e)
+		{
+			bool found = false;
+			var border = (resultStack1.Parent as ScrollViewer).Parent as Border;
+			var data = Autocomplete.GetData_Ingridient();
+
+			string query = (sender as TextBox).Text;
+
+			if (query.Length == 0)
+			{
+				// Clear   
+				resultStack1.Children.Clear();
+				border.Visibility = System.Windows.Visibility.Collapsed;
+			}
+			else
+			{
+				border.Visibility = System.Windows.Visibility.Visible;
+			}
+
+			// Clear the list   
+			resultStack1.Children.Clear();
+
+			// Add the result   
+			foreach (var obj in data)
+			{
+				if (obj.ToLower().StartsWith(query.ToLower()))
+				{
+					// The word starts with this... Autocomplete must work   
+					addItem1(obj);
+					found = true;
+				}
+			}
+
+			if (!found)
+			{
+				resultStack1.Children.Add(new TextBlock() { Text = "No results found." });
+			}
+		}
+
+		private void addItem1(string text)
+		{
+			TextBlock block = new TextBlock();
+
+			// Add the text   
+			block.Text = text;
+
+			// A little style...   
+			block.Margin = new Thickness(2, 3, 2, 3);
+			block.Cursor = Cursors.Hand;
+
+			// Mouse events   
+			block.MouseLeftButtonUp += (sender, e) =>
+			{
+				ingridient_txt.Text = (sender as TextBlock).Text;
+				autocom_ingridient_br.Visibility = System.Windows.Visibility.Collapsed;
+			};
+
+			block.MouseEnter += (sender, e) =>
+			{
+				TextBlock b = sender as TextBlock;
+				b.Background = Brushes.PeachPuff;
+			};
+
+			block.MouseLeave += (sender, e) =>
+			{
+				TextBlock b = sender as TextBlock;
+				b.Background = Brushes.Transparent;
+			};
+
+			// Add to the panel   
+			resultStack1.Children.Add(block);
+		}
+
 	}
 }

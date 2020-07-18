@@ -1,4 +1,4 @@
-﻿<Window x:Class="Final_Project_again.Edit_Window"
+﻿<Window x:Class="Final_Project_again.Food_information"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,13 +18,16 @@
 			<RowDefinition />
 			<RowDefinition Height="1.9*"/>
 		</Grid.RowDefinitions>
-		<StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2"  Margin="25,95,357,0">
-			<Ellipse x:Name="uploaded_image" Height="214">
+		<Border Background="#FF25201C"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.ColumnSpan="2"  Margin="100,0,100,10" Height="43"   Width="97"  CornerRadius="8">
+			<Button x:Name="Exit_btn" Content="Exit" Background="Transparent" Height="43" BorderBrush="Transparent" Click=" Exit_btn_Click" Foreground="White" FontSize="15" Grid.ColumnSpan="2" Margin="0,0,3,0"/>
+
+		</Border>
+		<StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2">
+			<Ellipse x:Name="uploaded_image" Height="224" Margin="25,85,357,0">
 				<Ellipse.Fill>
 					<ImageBrush ImageSource="images\-res1.jpg"/>
 				</Ellipse.Fill>
 			</Ellipse>
-			<Button x:Name="upload_image" Content="Upload Image" Height="32" Background="#FFE5DACD"  Margin="57,20,58,10"  Click="upload_image_Click" FontFamily="IRFarnaz" FontSize="13"/>
 		</StackPanel>
 		<Border BorderBrush="Transparent" BorderThickness="2" Margin="268,24,21,292" Padding="10" CornerRadius="10" Grid.RowSpan="2" Grid.ColumnSpan="2" >
 			<Grid Margin="0,0,0,6">
@@ -34,7 +37,7 @@
 				</Grid.RowDefinitions>
 				<StackPanel Margin="0,0,0,19" >
 					<TextBlock	Text="Name" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-					<TextBox x:Name="Name_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
+					<TextBox x:Name="Name_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -47,7 +50,7 @@
 				</StackPanel>
 				<StackPanel Margin="0,81,0,10" Grid.RowSpan="2">
 					<TextBlock	Text="Date" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-					<TextBox x:Name="Date_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
+					<TextBox x:Name="Date_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -70,7 +73,7 @@
 				</Grid.RowDefinitions>
 				<StackPanel Height="72" VerticalAlignment="Top" >
 					<TextBlock	Text="Cost" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
-					<TextBox x:Name="Cost_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
+					<TextBox x:Name="Cost_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -83,7 +86,7 @@
 				</StackPanel>
 				<StackPanel Margin="0,77,0,0" Grid.RowSpan="2">
 					<TextBlock	Text="Information" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,10,0,7" Background="#00000000" />
-					<TextBox x:Name="Information_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" TextWrapping="NoWrap">
+					<TextBox x:Name="Information_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" TextWrapping="NoWrap" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
 						</TextBox.Background>
@@ -96,14 +99,6 @@
 				</StackPanel>
 			</Grid>
 		</Border>
-		<Border Background="#FF25201C"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1"  Margin="252,0,248,10" Height="43"   Width="92" Grid.ColumnSpan="2" CornerRadius="8">
-			<Button x:Name="save_btn" Content="Save" Background="Transparent" Height="43"   Width="92" BorderBrush="Transparent" Click="save_btn_Click" Foreground="White" FontSize="15" Grid.ColumnSpan="2"/>
-		</Border>
-		<Border Background="#FF25201C"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1"  Margin="90,0,100,10" Height="43"   Width="97"  CornerRadius="8">
-			<Button x:Name="cancel_btn" Content="Cancel" Background="Transparent" Height="43"   Width="92" BorderBrush="Transparent" Click="cancel_btn_Click" Foreground="White" FontSize="15" Grid.ColumnSpan="2"/>
-		</Border>
-		<Border Background="#FF25201C"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1"  Margin="105,0,86,11" Height="43"   Width="92" Grid.Column="1" CornerRadius="8">
-			<Button x:Name="delete_btn" Content="Delete" Background="Transparent" Height="43" BorderBrush="Transparent" Click="delete_btn_Click" Foreground="White" FontSize="15" Grid.ColumnSpan="2" Margin="0,1,0,-1"/>
-		</Border>
+
 	</Grid>
 </Window>

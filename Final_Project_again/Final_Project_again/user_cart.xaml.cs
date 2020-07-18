@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -26,7 +27,10 @@ namespace Final_Project_again
 	/// </summary>
 	public partial class user_cart : Window
 	{
+		public static int discount_percent = 0;
 		public static double current_order_cost = 0;
+		bool discout_5_waste = false;
+		bool discout_10_waste = false;
 		Window creatingForm;
 		public Window setCreatingForm
 		{
@@ -718,6 +722,8 @@ namespace Final_Project_again
 		public user_cart()
 		{
 			InitializeComponent();
+			discout_5_waste = false;
+			discout_10_waste = false;
 			Cart.signed = false;
 			bool receipt_empty = true;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
@@ -758,6 +764,24 @@ namespace Final_Project_again
 				Customer_Name_cart.Content = "Customer : " + Current_user.FullName;
 				receipt.Children.Add(Cart.Total_Price());
 			}
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+
+			sqlCommand = new SqlCommand("select Order_Number from Users where FullName=@FullName", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+			sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			int Number = int.Parse(sqlDataReader.GetValue(0).ToString());
+
+			if (Number == 1)
+			{
+				discount.Text = "Emi_Food5xyz1";
+			}
+			else if (Number == 2)
+			{
+				discount.Text = "Emi_Food10xyz2";
+			}
+
 			sqlDataReader.Close();
 			sqlCommand.Dispose();
 			sqlConnection.Close();
@@ -851,7 +875,14 @@ namespace Final_Project_again
 				sqlCommand.Dispose();
 				sqlCommand = new SqlCommand("update Users set Orders+=@Orders where FullName=@FullName ", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
-				sqlCommand.Parameters.AddWithValue("@Orders", order_num.ToString() + ":" + Name_Food + ":" + Cost_Food + ":" + Number_Food + "/");
+				if (online_pay.IsChecked == true)
+				{
+					sqlCommand.Parameters.AddWithValue("@Orders", order_num.ToString() + ":" + Name_Food + ":" + Cost_Food + ":" + Number_Food + ":" + "online" + "/");
+				}
+				else if (cash_pay.IsChecked == true)
+				{
+					sqlCommand.Parameters.AddWithValue("@Orders", order_num.ToString() + ":" + Name_Food + ":" + Cost_Food + ":" + Number_Food + ":" + "cash" + "/");
+				}
 				sqlCommand.ExecuteNonQuery();
 				sqlCommand.Dispose();
 				sqlCommand = new SqlCommand("update Users set Cart=@Cart where FullName=@FullName ", sqlConnection);
@@ -892,9 +923,37 @@ namespace Final_Project_again
 
 		}
 
-		private void Apply_Click(object sender, RoutedEventArgs e)
+		private void Apply_discount_Click(object sender, RoutedEventArgs e)
 		{
 
+			if (discount.Text == "Emi_Food5xyz1" && receipt.Children.Count != 0)
+			{
+				if (!discout_5_waste)
+				{
+					current_order_cost *= 0.95;
+
+					StackPanel st = receipt.Children[receipt.Children.Count - 1] as StackPanel;
+					StackPanel st1 = st.Children[st.Children.Count - 1] as StackPanel;
+					Grid grid = st1.Children[0] as Grid;
+					Label lable = grid.Children[0] as Label;
+					lable.Content = current_order_cost.ToString();
+					discout_5_waste = true;
+				}
+			}
+
+			else if (discount.Text == "Emi_Food10xyz2" && receipt.Children.Count != 0)
+			{
+				if (!discout_10_waste)
+				{
+					current_order_cost *= 0.90;
+					StackPanel st = receipt.Children[receipt.Children.Count - 1] as StackPanel;
+					StackPanel st1 = st.Children[st.Children.Count - 1] as StackPanel;
+					Grid grid = st1.Children[0] as Grid;
+					Label lable = grid.Children[0] as Label;
+					lable.Content = current_order_cost.ToString();
+					discout_10_waste = true;
+				}
+			}
 		}
 	}
 }

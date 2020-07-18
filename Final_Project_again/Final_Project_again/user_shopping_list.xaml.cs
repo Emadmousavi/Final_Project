@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Renci.SshNet.Messages;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -22,6 +23,27 @@ namespace Final_Project_again
 	/// </summary>
 	public partial class user_shopping_list : Window
 	{
+		
+		public static void cash_cancel(object sender,RoutedEventArgs e)
+		{
+			Button btn = e.Source as Button;
+			StackPanel st = btn.Parent as StackPanel;
+			string s_total =((Label)((Grid)st.Children[st.Children.Count - 2]).Children[0]).Content.ToString();
+			s_total = s_total.Substring(0, s_total.Length - 2);
+			double total = double.Parse(s_total);
+			MessageBox.Show($"your order canceled\n please pay {total * 0.1}$ as tax");
+
+		}
+
+		public static void online_cancel(object sender, RoutedEventArgs e)
+		{
+			Button btn = e.Source as Button;
+			StackPanel st = btn.Parent as StackPanel;
+			string s_total = ((Label)((Grid)st.Children[st.Children.Count - 2]).Children[0]).Content.ToString();
+			s_total = s_total.Substring(0, s_total.Length - 2);
+			double total = double.Parse(s_total);
+			MessageBox.Show($"your order canceled\n {total * 0.9}$ will be refunded to your account\n{total * 0.1}$ will be deducated for tax");
+		}
 		public static int counter = 2;
 		public static WrapPanel main_wrap;
 		public class Properties
@@ -36,6 +58,7 @@ namespace Final_Project_again
 		{
 			public List<Properties> properties { get; set; }
 			public string Order_Number;
+			public string Payment;
 		}
 		public static WrapPanel Shopping_List(Order obj)
 		{
@@ -112,11 +135,40 @@ namespace Final_Project_again
 			bc = new BrushConverter();
 			lable6.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FF3A250D");
 			double total_cost = 0;
-			foreach (var item in obj.properties)
+			if (int.Parse(obj.Order_Number) <= 4)
 			{
-				total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number);
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number);
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number)*(100.0/124.0)*0.09;
+				}
 			}
-			lable6.Content = total_cost.ToString();
+			else if (int.Parse(obj.Order_Number) >= 5 && int.Parse(obj.Order_Number)<=8)
+			{
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * 0.95;
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * (100.0 / 124.0) * 0.07;
+				}
+			}
+			else if (int.Parse(obj.Order_Number) >= 9 && int.Parse(obj.Order_Number)<=12)
+			{
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * 0.92;
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number) * (100.0 / 124.0) * 0.05;
+				}
+			}
+			else if (int.Parse(obj.Order_Number) >= 13)
+			{
+				foreach (var item in obj.properties)
+				{
+					total_cost += double.Parse(item.Order_Cost) * double.Parse(item.Order_Food_Number)*0.90;
+					
+				}
+			}
+
+			lable6.Content =$"{ total_cost:N2}$";
 			lable6.FontSize = 15;
 			lable6.Margin = new Thickness(10, 0, 10, 0);
 			Grid.SetColumn(lable6, 1);
@@ -126,6 +178,15 @@ namespace Final_Project_again
 
 			stackpanel.Children.Add(grid1);
 			Button btn = new Button();
+			if (obj.Payment == "cash")
+			{
+				btn.Click += new RoutedEventHandler(cash_cancel);
+			}
+			else if (obj.Payment == "online")
+			{
+				btn.Click += new RoutedEventHandler(online_cancel);
+			}
+
 			btn.Content = "Cancel";
 			bc = new BrushConverter();
 			btn.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFD9AD");
@@ -146,6 +207,7 @@ namespace Final_Project_again
 		public user_shopping_list()
 		{
 			InitializeComponent();
+			user_shopping_list.counter = 2;
 			SqlConnection sqlConnection = new SqlConnection(" Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30");
 			sqlConnection.Open();
 			SqlCommand sqlCommand = new SqlCommand("select Orders from Users where FullName=@FullName", sqlConnection);
@@ -162,12 +224,14 @@ namespace Final_Project_again
 					List<string> Order_Food = new List<string>();
 					List<string> Order_Cost = new List<string>();
 					List<string> Order_Food_Number = new List<string>();
+					string order_number = item.Split(':')[0];
 					Order_Food = item.Split(':')[1].Split(',').ToList();
 					Order_Cost = item.Split(':')[2].Split(',').ToList();
 					Order_Food_Number = item.Split(':')[3].Split(',').ToList();
-					string order_number = item.Split(':')[0];
+					string payment = item.Split(':')[4];
 					Order a = new Order();
 					a.Order_Number = order_number;
+					a.Payment = payment;
 					a.properties = new List<Properties>();
 					using (var e1 = Order_Food.GetEnumerator())
 					using (var e2 = Order_Cost.GetEnumerator())
