@@ -549,6 +549,7 @@ namespace Final_Project_again
 				grid4.Margin = new Thickness(0, 10, 0, 0);
 				stackPanel4.Children.Add(grid4);
 
+				
 				StackPanel main = new StackPanel();
 				main.Children.Add(stackPanel);
 				main.Children.Add(stackPanel2);
@@ -722,6 +723,7 @@ namespace Final_Project_again
 		public user_cart()
 		{
 			InitializeComponent();
+			order_date.Text = DateTime.Today.ToString("d");
 			discout_5_waste = false;
 			discout_10_waste = false;
 			Cart.signed = false;
@@ -836,16 +838,16 @@ namespace Final_Project_again
 				}
 				SqlConnection sqlConnection = new SqlConnection(" Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30");
 				sqlConnection.Open();
-				SqlCommand sqlCommand = new SqlCommand("update Users set Order_Number=Order_Number+1 where FullName=@FullName", sqlConnection);
-				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
-				sqlCommand.ExecuteNonQuery();
-				sqlCommand.Dispose();
-				sqlCommand = new SqlCommand("select Order_Number from Users where FullName=@FullName", sqlConnection);
+				SqlCommand sqlCommand = new SqlCommand("select Order_Number from Users where FullName=@FullName", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
 				SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 				sqlDataReader.Read();
 				double order_num = double.Parse(sqlDataReader.GetValue(0).ToString());
 				sqlDataReader.Close();
+				sqlCommand.Dispose();
+				 sqlCommand = new SqlCommand("update Users set Order_Number=Order_Number+1 where FullName=@FullName", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				sqlCommand.ExecuteNonQuery();
 				sqlCommand.Dispose();
 				sqlCommand = new SqlCommand("select * from Receipt", sqlConnection);
 				sqlDataReader = sqlCommand.ExecuteReader();
@@ -873,16 +875,33 @@ namespace Final_Project_again
 				Number_Food = Number_Food.Substring(0, Number_Food.Length - 1);
 				sqlDataReader.Close();
 				sqlCommand.Dispose();
-				sqlCommand = new SqlCommand("update Users set Orders+=@Orders where FullName=@FullName ", sqlConnection);
-				sqlCommand.Parameters.AddWithValue("@FullName", Current_user.FullName);
+				sqlCommand = new SqlCommand("insert into Orders ( ID ,Name_Food ,Cost_Food ,Number_Food ,Payment ,Order_Number,Total_Cost,Order_Tracking,Order_Date) values (@ID,@Name_Food,@Cost_Food,@Number_Food,@Payment,@Order_Number,@Total_Cost,@Order_Tracking,@Order_Date)", sqlConnection);
+				sqlCommand.Parameters.AddWithValue("@ID", Current_user.FullName);
+				sqlCommand.Parameters.AddWithValue("@Name_Food", Name_Food);
+				sqlCommand.Parameters.AddWithValue("@Cost_Food", Cost_Food);
+				sqlCommand.Parameters.AddWithValue("@Number_Food", Number_Food);
+				sqlCommand.Parameters.AddWithValue("@Order_Number", order_num);
+				sqlCommand.Parameters.AddWithValue("@Total_Cost", current_order_cost);
+				sqlCommand.Parameters.AddWithValue("@Order_Tracking", Current_user.FullName+(order_num).ToString());
+				string date1 = order_date.Text.Substring(0, 2);
+				string date2 = order_date.Text.Substring(3, 2);
+				string date3 = order_date.Text.Substring(6, 4);
+				date1 = date1.StartsWith("0") ? date1.Substring(1, 1) : date1;
+				date2 = date2.StartsWith("0") ? date2.Substring(1, 1) : date2;
+				order_date.Text = date1 + "/" + date2 + "/" + date3;
+				sqlCommand.Parameters.AddWithValue("@Order_Date",order_date.Text);
+
+
 				if (online_pay.IsChecked == true)
 				{
-					sqlCommand.Parameters.AddWithValue("@Orders", order_num.ToString() + ":" + Name_Food + ":" + Cost_Food + ":" + Number_Food + ":" + "online" + "/");
+					sqlCommand.Parameters.AddWithValue("@Payment", "online");
 				}
+
 				else if (cash_pay.IsChecked == true)
 				{
-					sqlCommand.Parameters.AddWithValue("@Orders", order_num.ToString() + ":" + Name_Food + ":" + Cost_Food + ":" + Number_Food + ":" + "cash" + "/");
+					sqlCommand.Parameters.AddWithValue("@Payment", "cash");
 				}
+
 				sqlCommand.ExecuteNonQuery();
 				sqlCommand.Dispose();
 				sqlCommand = new SqlCommand("update Users set Cart=@Cart where FullName=@FullName ", sqlConnection);
@@ -938,6 +957,7 @@ namespace Final_Project_again
 					Label lable = grid.Children[0] as Label;
 					lable.Content = current_order_cost.ToString();
 					discout_5_waste = true;
+
 				}
 			}
 

@@ -404,15 +404,14 @@ namespace Final_Project_again
 				MessageBox.Show("You Signed Up Successfully");
 				SqlConnection sqlConnection = new SqlConnection(connection_string);
 				sqlConnection.Open();
-				SqlCommand sqlCommand = new SqlCommand("INSERT INTO Users (FullName, E_mail, NationalCode,PhoneNumber,_Password,Cart,Order_Number,Orders) VALUES (@FullName,@E_mail,@NationalCode,@PhoneNumber,@_Password,@Cart,@Order_Number,@Orders)", sqlConnection);
+				SqlCommand sqlCommand = new SqlCommand("INSERT INTO Users (FullName, E_mail, NationalCode,PhoneNumber,_Password,Cart,Order_Number) VALUES (@FullName,@E_mail,@NationalCode,@PhoneNumber,@_Password,@Cart,@Order_Number)", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@FullName", fullName.Text);
 				sqlCommand.Parameters.AddWithValue("@E_mail", email.Text);
 				sqlCommand.Parameters.AddWithValue("@NationalCode", nationalCode.Text);
 				sqlCommand.Parameters.AddWithValue("@PhoneNumber", phoneNumber.Text);
 				sqlCommand.Parameters.AddWithValue("@_Password", password.Password);
 				sqlCommand.Parameters.AddWithValue("@Cart", "");
-				sqlCommand.Parameters.AddWithValue("@Order_Number", "0");
-				sqlCommand.Parameters.AddWithValue("@Orders", "");
+				sqlCommand.Parameters.AddWithValue("@Order_Number", "1");
 				sqlCommand.ExecuteNonQuery();
 			}
 

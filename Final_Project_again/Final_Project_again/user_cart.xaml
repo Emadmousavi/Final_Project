@@ -3,10 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Final_Project_again"
 		mc:Ignorable="d"
         Title="user_cart" Height="700" Width="1000"
 		ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" >
+	<Window.Resources>
+		<Style TargetType="{x:Type DatePickerTextBox}">
+			<Setter Property="Control.Template">
+				<Setter.Value>
+					<ControlTemplate>
+						<TextBox x:Name="PART_TextBox"
+     Text="{Binding Path=SelectedDate, StringFormat='MM/dd/yyyy',
+     RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
 	<Window.Background>
 		<ImageBrush ImageSource="images\test12.jpg" Opacity="0.6"/>
 	</Window.Background>
@@ -29,19 +43,23 @@
 						<RowDefinition Height="2.1*"/>
 						<RowDefinition Height="1*"/>
 					</Grid.RowDefinitions>
-					<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" >
+					<ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,51" >
 						<StackPanel x:Name="receipt">
 							<Label Name="Customer_Name_cart" FontSize="15" Foreground="#FFFFEFDD" Margin="0,0,0,5"/>
 						</StackPanel>
 					</ScrollViewer>
 					<InkCanvas x:Name="signiture" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,0,129,0" Height="120" Width="130" Grid.RowSpan="2" LostMouseCapture="signiture_LostMouseCapture" Background="#FFDAC3AA"/>
-					<TextBox Grid.Row="1" x:Name="discount"  Background="#FFDAC3AA" Text="Discount Code" VerticalContentAlignment="Center" Padding="5" Margin="10,30,76,138"/>
+					<TextBox Grid.Row="1" x:Name="discount"  Background="#FFDAC3AA" Text="Discount Code" VerticalContentAlignment="Center" Padding="5" Margin="10,30,76,138" IsReadOnly="True"/>
 				</Grid>
-				<Label Content="Payment" Margin="158,516,10,10" FontWeight="Bold" FontSize="13" Foreground="#FFD8AA77" />
+				<Label Content="Payment" Margin="158,516,10,89" FontWeight="Bold" FontSize="13" Foreground="#FFD8AA77" />
 				<RadioButton x:Name="online_pay" Content="online" Margin="158,552,0,47" Grid.RowSpan="2" HorizontalAlignment="Left" Width="60" Checked="online_pay_Checked" Foreground="#FFD8AA77" FontWeight="Bold"/>
 				<RadioButton x:Name="cash_pay" Content="cash" Margin="158,573,0,42" Checked="cash_pay_Checked" Foreground="#FFD8AA77" FontWeight="Bold"/>
 				<Button Name="Submit" Content="Submit" FontSize="20" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="158,0,10,2" Click="Submit_Click" Height="40" Grid.Row="1" Background="#FFDAC3AA" FontFamily="IRFarnaz"/>
 				<Button Name="Apply_discount" Content="Apply" FontSize="20" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="200,0,10,139"  Height="35" Background="#FFDAC3AA" FontFamily="IRFarnaz" Click="Apply_discount_Click"/>
+				<Label Foreground="#FFFFCA90" Content="Delivery Date" Margin="10,390,0,222"/>
+				<Label Foreground="#FFFFCA90" Content="Order Date" Margin="158,390,0,222"/>
+				<TextBox x:Name="order_date" Margin="158,423,10,194" IsReadOnly="True"/>
+				<DatePicker   x:Name="calendar" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateFormat="Short" Margin="10,419,161,185"/>
 			</Grid>
 		</Border>
 		<Button x:Name="exit_btn" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,5" Width="82" Grid.Column="1" Height="78" Background="#FFFFA67E" BorderBrush="Transparent" Click="exit_btn_Click" >

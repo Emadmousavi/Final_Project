@@ -31,9 +31,18 @@ namespace Final_Project_again
 			InitializeComponent();
 			if (Current_user.image_uri != "")
 			{
+				SqlConnection sqlConnection = new SqlConnection(connection_string);
+				sqlConnection.Open();
+				SqlCommand sqlCommand = new SqlCommand("select Image_Uri from Users", sqlConnection);
+				SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+				sqlDataReader.Read();
+				
 				var brush = new ImageBrush();
-				brush.ImageSource = new BitmapImage(new Uri(Current_user.image_uri));
+				brush.ImageSource = new BitmapImage(new Uri(sqlDataReader.GetValue(0).ToString()));
 				profile_image.Fill = brush;
+				sqlConnection.Close();
+				sqlDataReader.Close();
+				sqlCommand.Dispose();
 			}
 
 			else

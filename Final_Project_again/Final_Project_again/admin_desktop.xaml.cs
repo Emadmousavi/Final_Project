@@ -170,6 +170,7 @@ namespace Final_Project_again
 	{
 		public static int counter = 2;
 		public static WrapPanel main_wrap;
+		public static Border border;
 		public class Properties
 		{
 			public string order_Number;
@@ -183,27 +184,56 @@ namespace Final_Project_again
 			public List<Properties> properties { get; set; }
 			public string Order_Number;
 			public string Payment;
+			public string Order_Tracking;
 		}
 
 		public static void cash_cancel(object sender, RoutedEventArgs e)
 		{
 			Button btn = e.Source as Button;
 			StackPanel st = btn.Parent as StackPanel;
-			string s_total = ((Label)((Grid)st.Children[st.Children.Count - 2]).Children[0]).Content.ToString();
-			s_total = s_total.Substring(0, s_total.Length - 2);
-			double total = double.Parse(s_total);
-			MessageBox.Show($"your order canceled\n please pay {total * 0.1}$ as tax");
-
+			Grid grid = (Grid)((StackPanel)st.Children[st.Children.Count - 2]).Children[0];
+			string Order_Tracking = ((Label)grid.Children[0]).Content.ToString();
+			SqlConnection sqlConnection = new SqlConnection(" Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30");
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select Total_Cost from Orders where Order_Tracking=@Order_Tracking", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Order_Tracking", Order_Tracking);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			MessageBox.Show($"Order Canceled");
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlCommand = new SqlCommand("delete from Orders where Order_Tracking=@Order_Tracking", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Order_Tracking", Order_Tracking);
+			sqlCommand.ExecuteNonQuery();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+			Border border = st.Parent as Border;
+			border.Height = 0;
 		}
 
 		public static void online_cancel(object sender, RoutedEventArgs e)
 		{
 			Button btn = e.Source as Button;
 			StackPanel st = btn.Parent as StackPanel;
-			string s_total = ((Label)((Grid)st.Children[st.Children.Count - 2]).Children[0]).Content.ToString();
-			s_total = s_total.Substring(0, s_total.Length - 2);
-			double total = double.Parse(s_total);
-			MessageBox.Show($"your order canceled\n {total * 0.9}$ will be refunded to your account\n{total * 0.1}$ will be deducated for tax");
+			Grid grid = (Grid)((StackPanel)st.Children[st.Children.Count - 2]).Children[0];
+			string Order_Tracking = ((Label)grid.Children[0]).Content.ToString();
+			SqlConnection sqlConnection = new SqlConnection(" Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30");
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select Total_Cost from Orders where Order_Tracking=@Order_Tracking", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Order_Tracking", Order_Tracking);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			sqlDataReader.Read();
+			MessageBox.Show($"Order Canceled");
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+			sqlCommand = new SqlCommand("delete from Orders where Order_Tracking=@Order_Tracking", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@Order_Tracking", Order_Tracking);
+			sqlCommand.ExecuteNonQuery();
+			sqlCommand.Dispose();
+			sqlConnection.Close();
+			Border border = st.Parent as Border;
+			border.Height = 0;
+
 		}
 		public static Border construct(Order obj)
 		{
@@ -325,6 +355,39 @@ namespace Final_Project_again
 				btn.Click += new RoutedEventHandler(online_cancel);
 			}
 
+			StackPanel stackPanel5 = new StackPanel();
+			Grid grid5 = new Grid();
+			ColumnDefinition c51 = new ColumnDefinition();
+			c51.Width = new GridLength(2.5, GridUnitType.Star);
+			ColumnDefinition c52 = new ColumnDefinition();
+			c52.Width = new GridLength(1, GridUnitType.Star);
+			grid5.ColumnDefinitions.Add(c51);
+			grid5.ColumnDefinitions.Add(c52);
+			Label lable51 = new Label();
+			var bc5 = new BrushConverter();
+			lable51.Foreground = (System.Windows.Media.Brush)bc5.ConvertFrom("#FFFFDBCB");
+			lable51.Content = "Order_Tracking";
+			lable51.FontWeight = FontWeights.Bold;
+			lable51.FontStyle = FontStyles.Italic;
+			lable51.FontSize = 16;
+			lable51.Margin = new Thickness(10, 0, 10, 0);
+			Grid.SetColumn(lable51, 0);
+			Label lable52 = new Label();
+			bc5 = new BrushConverter();
+			lable52.Foreground = (System.Windows.Media.Brush)bc5.ConvertFrom("#FFFFDBCB");
+			lable52.Content = $"{obj.Order_Tracking}";
+			lable52.FontSize = 16;
+			lable52.FontWeight = FontWeights.Bold;
+			lable52.FontStyle = FontStyles.Italic;
+			lable52.Margin = new Thickness(5, 0, 10, 0);
+			Grid.SetColumn(lable52, 1);
+			grid5.Children.Add(lable52);
+			grid5.Children.Add(lable51);
+			grid5.Margin = new Thickness(0, 10, 0, 0);
+			stackPanel5.Children.Add(grid5);
+
+
+			stackpanel.Children.Add(stackPanel5);
 			btn.Content = "Cancel";
 			bc = new BrushConverter();
 			btn.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFFFDBCB");
@@ -341,20 +404,29 @@ namespace Final_Project_again
 			border.Padding = new Thickness(5, 5, 5, 5);
 			return border;
 		}
-		public static WrapPanel GetData(string obj,string Name)
+		public static Border GetData(string Name)
 		{
 			if (counter == 2)
 			{
 				counter = 0;
+				border = new Border();
+				border.CornerRadius = new CornerRadius(15, 15, 15, 15);
+				border.Width = 750;
+				border.BorderThickness = new Thickness(2, 2, 2, 2);
+				border.Margin= new Thickness(0, 40, 0, 0);
+				border.Padding = new Thickness(10, 10, 10, 10);
+				var brush = new BrushConverter();
+				border.BorderBrush = (System.Windows.Media.Brush)brush.ConvertFrom("#FFFFB56D");
+				border.HorizontalAlignment= HorizontalAlignment.Center;
 				main_wrap = new WrapPanel();
-				main_wrap.HorizontalAlignment = HorizontalAlignment.Center;
-				main_wrap.Margin = new Thickness(0, 40, 0, 0);
+				//main_wrap.HorizontalAlignment = HorizontalAlignment.Center;
+				//main_wrap.Margin = new Thickness(0, 40, 0, 0);
+				border.Child = main_wrap;
 
 			}
 			ScrollViewer scr = new ScrollViewer();
 			StackPanel stack = new StackPanel();
 			List<Order> orders = new List<Order>();
-			List<string> order = new List<string>();
 			Label name = new Label();
 			name.Content = Name;
 			name.FontSize = 20;
@@ -362,38 +434,41 @@ namespace Final_Project_again
 			name.Foreground = (System.Windows.Media.Brush)br.ConvertFrom("#FFFFDBCB");
 			name.Margin = new Thickness(25,0,0,5);
 			stack.Children.Add(name);
-			order = obj.Split('/').ToList();
-			foreach (var item in order)
+			SqlConnection sqlConnection = new SqlConnection(" Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\emad&javad\\Desktop\\visual studio\\Final_Project_again\\Final_Project_again\\database.mdf\";Integrated Security=True;Connect Timeout=30");
+			sqlConnection.Open();
+			SqlCommand sqlCommand = new SqlCommand("select Name_Food,Cost_Food,Number_Food,Payment,Order_Number from Orders where ID=@ID", sqlConnection);
+			sqlCommand.Parameters.AddWithValue("@ID", Name);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			List<string> order = new List<string>();
+			while (sqlDataReader.Read())
 			{
-				if (item != "")
+				List<string> Order_Food = new List<string>();
+				List<string> Order_Cost = new List<string>();
+				List<string> Order_Food_Number = new List<string>();
+				string order_number = sqlDataReader.GetValue(4).ToString();
+				Order_Food = sqlDataReader.GetValue(0).ToString().Split(',').ToList();
+				Order_Cost = sqlDataReader.GetValue(1).ToString().Split(',').ToList();
+				Order_Food_Number = sqlDataReader.GetValue(2).ToString().Split(',').ToList();
+				string payment = sqlDataReader.GetValue(3).ToString();
+				Order a = new Order();
+				a.Order_Tracking = Name + order_number.ToString();
+				a.Order_Number = order_number;
+				a.Payment = payment;
+				a.properties = new List<Properties>();
+				using (var e1 = Order_Food.GetEnumerator())
+				using (var e2 = Order_Cost.GetEnumerator())
+				using (var e3 = Order_Food_Number.GetEnumerator())
 				{
-					List<string> Order_Food = new List<string>();
-					List<string> Order_Cost = new List<string>();
-					List<string> Order_Food_Number = new List<string>();
-					string order_number = item.Split(':')[0];
-					Order_Food = item.Split(':')[1].Split(',').ToList();
-					Order_Cost = item.Split(':')[2].Split(',').ToList();
-					Order_Food_Number = item.Split(':')[3].Split(',').ToList();
-					string payment = item.Split(':')[4];
-					Order a = new Order();
-					a.Order_Number = order_number;
-					a.Payment = payment;
-					a.properties = new List<Properties>();
-					using (var e1 = Order_Food.GetEnumerator())
-					using (var e2 = Order_Cost.GetEnumerator())
-					using (var e3 = Order_Food_Number.GetEnumerator())
+					while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
 					{
-						while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
-						{
-							Properties p = new Properties();
-							p.Order_Food = e1.Current;
-							p.Order_Cost = e2.Current;
-							p.Order_Food_Number = e3.Current;
-							a.properties.Add(p);
-						}
+						Properties p = new Properties();
+						p.Order_Food = e1.Current;
+						p.Order_Cost = e2.Current;
+						p.Order_Food_Number = e3.Current;
+						a.properties.Add(p);
 					}
-					orders.Add(a);
 				}
+				orders.Add(a);
 			}
 
 			foreach (var item in orders)
@@ -408,11 +483,15 @@ namespace Final_Project_again
 			scr.Height = 350;
 			main_wrap.Children.Add(scr);
 			Orders.counter++;
-			return main_wrap;
+			return border;
 		}
 		
 	}
-		
+	public  class Date_Price
+	{
+		public string Date;
+		public string Total_Cost;
+	}
 
 	public static class List
 	{
@@ -582,23 +661,29 @@ namespace Final_Project_again
 			Orders.counter = 2;
 			SqlConnection sqlConnection = new SqlConnection(connection_string);
 			sqlConnection.Open();
-			SqlCommand sqlCommand = new SqlCommand("select Orders,FullName from Users", sqlConnection);
+			SqlCommand sqlCommand = new SqlCommand("select distinct ID from Orders", sqlConnection);
 			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			List<string> IDs = new List<string>();
 			while (sqlDataReader.Read())
 			{
-				if (Orders.counter == 2)
-				{
-					All_Orders.Children.Add(Orders.GetData(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString()));
-				}
-
-				else
-				{
-					Orders.GetData(sqlDataReader.GetValue(0).ToString(), sqlDataReader.GetValue(1).ToString());
-				}
+				IDs.Add(sqlDataReader.GetValue(0).ToString());
 			}
 
 			sqlDataReader.Close();
 			sqlCommand.Dispose();
+
+			foreach (var item in IDs)
+			{
+				if (Orders.counter == 2)
+				{
+					All_Orders.Children.Add(Orders.GetData(item));
+				}
+
+				else
+				{
+					Orders.GetData(item);
+				}
+			}
 
 			sqlCommand = new SqlCommand("select * from admin ", sqlConnection);
 			sqlDataReader = sqlCommand.ExecuteReader();
@@ -636,9 +721,41 @@ namespace Final_Project_again
 					List.uploaded_image_uri = @"C:\Users\emad&javad\Desktop\visual studio\Final_Project\Final_Project\images\-res1.jpg";
 				}
 			}
+
+			sqlDataReader.Close();
+			sqlCommand.Dispose();
+
+			List<Date_Price> date_Prices = new List<Date_Price>();
+			sqlCommand = new SqlCommand("select Total_Cost,Order_Date from Orders", sqlConnection);
+			sqlDataReader = sqlCommand.ExecuteReader();
+			while (sqlDataReader.Read())
+			{
+				Date_Price a = new Date_Price();
+				a.Total_Cost = sqlDataReader.GetValue(0).ToString();
+				a.Date = sqlDataReader.GetValue(1).ToString();
+				date_Prices.Add(a);
+			}
+
 			sqlDataReader.Close();
 			sqlCommand.Dispose();
 			sqlConnection.Close();
+
+			double Daily_Sales_Cost = 0;
+			double Daily_Profit_Cost = 0;
+			double Total_Profit = 0;
+			foreach (var item in date_Prices)
+			{
+				if (item.Date == DateTime.Today.ToString("d"))
+				{
+					Daily_Sales_Cost += double.Parse(item.Total_Cost);
+					Daily_Profit_Cost += Daily_Sales_Cost- Daily_Sales_Cost*(100/124);
+				}
+				Total_Profit+= double.Parse(item.Total_Cost)- double.Parse(item.Total_Cost) * (100 / 124);
+			}
+
+			Daily_Sales_Price.Content = $"{Daily_Sales_Cost:N2}";
+			Daily_Profit_Price.Content = $"{Daily_Profit_Cost:N2}";
+			Total_Profit_Price.Content = $"{Total_Profit:N2}";
 		}
 
 		private void upload_Click(object sender, RoutedEventArgs e)

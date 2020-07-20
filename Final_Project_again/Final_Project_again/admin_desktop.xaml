@@ -158,7 +158,7 @@
 
 			<TabItem ToolTip="Orders Condition" >
 				<TabItem.Header>
-					<Image Source="images\order.png" />
+					<Image Source="images\order.png" OpacityMask="#FFFFB56D" />
 				</TabItem.Header>
 				<Grid>
 					<Grid.Background>
@@ -258,17 +258,17 @@
 						<Label Content="Accounting" HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center"  Foreground="Wheat" Margin="20"/>
 						<StackPanel Orientation="Horizontal" Margin="20">
 							<Label Content="Daily Sales" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
-							<Label Content="Price"  Foreground="Wheat" FontSize="30" Margin="560,0,0,0"/>
+							<Label x:Name="Daily_Sales_Price"  Content="Price"  Foreground="Wheat" FontSize="30" Margin="530,0,0,0"/>
 						</StackPanel>
 						<Label Content="________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"  Foreground="White" Margin="48,0,80,0"/>
 						<StackPanel Orientation="Horizontal" Margin="20">
-							<Label Content="Daily Profit" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
-							<Label Content="Price"  Foreground="Wheat" FontSize="30" Margin="560,0,0,0"/>
+							<Label   Content="Daily Profit" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
+							<Label  x:Name="Daily_Profit_Price" Content="Price"  Foreground="Wheat" FontSize="30" Margin="530,0,0,0"/>
 						</StackPanel>
 						<Label Content="________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"  Foreground="White" Margin="48,0,80,0"/>
 						<StackPanel Orientation="Horizontal" Margin="20">
-							<Label Content="Total Profit" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
-							<Label Content="Price"  Foreground="Wheat" FontSize="30" Margin="560,0,0,0"/>
+							<Label  Content="Total Profit" Foreground="Wheat" FontSize="30" Margin="20,0,0,0"/>
+							<Label x:Name="Total_Profit_Price" Content="Price"  Foreground="Wheat" FontSize="30" Margin="530,0,0,0"/>
 						</StackPanel>
 						<Label Content="________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"  Foreground="White" Margin="48,0,80,0"/>
 					</StackPanel>
