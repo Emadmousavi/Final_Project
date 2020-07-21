@@ -275,19 +275,7 @@
 				</Grid>
 			</TabItem>
 
-			<TabItem ToolTip="Chat">
-				<TabItem.Header>
-					<Image Source="images\chat1.png" Width="70" Margin="-7,0,0,0"/>
-				</TabItem.Header>
-				<Grid>
-					<Grid.Background>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFFFDCBA" Offset="0"/>
-							<GradientStop Color="#FF919191" Offset="1"/>
-						</LinearGradientBrush>
-					</Grid.Background>
-				</Grid>
-			</TabItem>
+			
 			<TabItem Name="exit" Selector.Selected="exit_Selected" ToolTip="Exit">
 				<TabItem.Header>
 					<Image Source="images\exit.png" Width="80" Height="80" Margin="-10,-20,0,0"/>

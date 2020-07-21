@@ -18,13 +18,13 @@
 			<RowDefinition />
 			<RowDefinition Height="1.9*"/>
 		</Grid.RowDefinitions>
-		<StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2"  Margin="25,95,357,0">
+		<StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2"  Margin="25,35,357,0">
 			<Ellipse x:Name="uploaded_image" Height="214">
 				<Ellipse.Fill>
 					<ImageBrush ImageSource="images\-res1.jpg"/>
 				</Ellipse.Fill>
 			</Ellipse>
-			<Button x:Name="upload_image" Content="Upload Image" Height="32" Background="#FFE5DACD"  Margin="57,20,58,10"  Click="upload_image_Click" FontFamily="IRFarnaz" FontSize="13"/>
+			<Button x:Name="upload_image" Content="Upload Image" Height="32" Background="#FFE5DACD"  Margin="57,5,58,10"  Click="upload_image_Click" FontFamily="IRFarnaz" FontSize="13"/>
 		</StackPanel>
 		<Border BorderBrush="Transparent" BorderThickness="2" Margin="268,24,21,292" Padding="10" CornerRadius="10" Grid.RowSpan="2" Grid.ColumnSpan="2" >
 			<Grid Margin="0,0,0,6">
@@ -33,7 +33,7 @@
 					<RowDefinition/>
 				</Grid.RowDefinitions>
 				<StackPanel Margin="0,0,0,19" >
-					<TextBlock	Text="Name" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+					<TextBlock	Text="Name" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-15,0,7" Background="#00000000" />
 					<TextBox x:Name="Name_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -46,7 +46,7 @@
 					</TextBox>
 				</StackPanel>
 				<StackPanel Margin="0,81,0,10" Grid.RowSpan="2">
-					<TextBlock	Text="Date" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+					<TextBlock	Text="Date" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-25,0,7" Background="#00000000" />
 					<TextBox x:Name="Date_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -69,7 +69,7 @@
 					<RowDefinition/>
 				</Grid.RowDefinitions>
 				<StackPanel Height="72" VerticalAlignment="Top" >
-					<TextBlock	Text="Cost" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+					<TextBlock	Text="Cost" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-25,0,7" Background="#00000000" />
 					<TextBox x:Name="Cost_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -82,7 +82,7 @@
 					</TextBox>
 				</StackPanel>
 				<StackPanel Margin="0,77,0,0" Grid.RowSpan="2">
-					<TextBlock	Text="Information" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,10,0,7" Background="#00000000" />
+					<TextBlock	Text="Information" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-15,0,7" Background="#00000000" />
 					<TextBox x:Name="Information_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" TextWrapping="NoWrap">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -104,6 +104,20 @@
 		</Border>
 		<Border Background="#FF25201C"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1"  Margin="105,0,86,11" Height="43"   Width="92" Grid.Column="1" CornerRadius="8">
 			<Button x:Name="delete_btn" Content="Delete" Background="Transparent" Height="43" BorderBrush="Transparent" Click="delete_btn_Click" Foreground="White" FontSize="15" Grid.ColumnSpan="2" Margin="0,1,0,-1"/>
+		</Border>
+		<Label Content="FeedBack" Background="Wheat" HorizontalAlignment="Left" Width="77" HorizontalContentAlignment="Center" Margin="25,131,0,165" Grid.Row="1"/>
+		<ScrollViewer  Grid.Row="1" Grid.ColumnSpan="2" Margin="25,160,38,95">
+			<StackPanel Background="#FFD3C9BF"  x:Name="Feedback">
+
+			</StackPanel>
+
+		</ScrollViewer>
+		<Border CornerRadius="10" VerticalAlignment="Bottom" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="37" Margin="25,0,38,53" Grid.Row="1" Width="529">
+			<StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+				<Label Content="Type" Width="41" Margin="0,0,5,0" Background="Gray" VerticalContentAlignment="Center" />
+				<TextBox x:Name="message" Width="442" Padding="5"/>
+				<Button x:Name="Go" Content="Go" Width="37" Margin="5,0,0,0" Click="Go_Click"/>
+			</StackPanel>
 		</Border>
 	</Grid>
 </Window>

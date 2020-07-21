@@ -18,12 +18,12 @@
 			<RowDefinition />
 			<RowDefinition Height="1.9*"/>
 		</Grid.RowDefinitions>
-		<Border Background="#FF25201C"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.ColumnSpan="2"  Margin="100,0,100,10" Height="43"   Width="97"  CornerRadius="8">
-			<Button x:Name="Exit_btn" Content="Exit" Background="Transparent" Height="43" BorderBrush="Transparent" Click=" Exit_btn_Click" Foreground="White" FontSize="15" Grid.ColumnSpan="2" Margin="0,0,3,0"/>
+		<Border Background="#FF25201C"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.ColumnSpan="2"  Margin="100,0,100,5" Height="43"   Width="97"  CornerRadius="8">
+			<Button x:Name="Exit_btn" Content="Exit" Background="Transparent" Height="43" BorderBrush="Transparent" Click=" Exit_btn_Click" Foreground="White" FontSize="15" Grid.ColumnSpan="2" Margin="0,-1,3,1"/>
 
 		</Border>
 		<StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2">
-			<Ellipse x:Name="uploaded_image" Height="224" Margin="25,85,357,0">
+			<Ellipse x:Name="uploaded_image" Height="224" Margin="25,45,357,0">
 				<Ellipse.Fill>
 					<ImageBrush ImageSource="images\-res1.jpg"/>
 				</Ellipse.Fill>
@@ -36,7 +36,7 @@
 					<RowDefinition/>
 				</Grid.RowDefinitions>
 				<StackPanel Margin="0,0,0,19" >
-					<TextBlock	Text="Name" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+					<TextBlock	Text="Name" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-20,0,7" Background="#00000000" />
 					<TextBox x:Name="Name_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -49,7 +49,7 @@
 					</TextBox>
 				</StackPanel>
 				<StackPanel Margin="0,81,0,10" Grid.RowSpan="2">
-					<TextBlock	Text="Date" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+					<TextBlock	Text="Date" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-25,0,7" Background="#00000000" />
 					<TextBox x:Name="Date_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -72,7 +72,7 @@
 					<RowDefinition/>
 				</Grid.RowDefinitions>
 				<StackPanel Height="72" VerticalAlignment="Top" >
-					<TextBlock	Text="Cost" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,0,0,7" Background="#00000000" />
+					<TextBlock	Text="Cost" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-25,0,7" Background="#00000000" />
 					<TextBox x:Name="Cost_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -85,7 +85,7 @@
 					</TextBox>
 				</StackPanel>
 				<StackPanel Margin="0,77,0,0" Grid.RowSpan="2">
-					<TextBlock	Text="Information" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,10,0,7" Background="#00000000" />
+					<TextBlock	Text="Information" FontSize="15" Foreground="White" FontWeight="Normal" FontFamily="Stegeo UI" Margin="7,-25,0,7" Background="#00000000" />
 					<TextBox x:Name="Information_txt" Padding="8"  BorderBrush="DarkGray" Foreground="Black"  FontFamily="Stegeo UI" FontSize="10" TextWrapping="NoWrap" IsReadOnly="True">
 						<TextBox.Background>
 							<SolidColorBrush Color="White" Opacity="0.5"/>
@@ -97,6 +97,19 @@
 						</TextBox.Resources>
 					</TextBox>
 				</StackPanel>
+				<Label Content="FeedBack" Background="Wheat" HorizontalAlignment="Left" Width="67" HorizontalContentAlignment="Center" Margin="-245,26,0,22" Grid.Row="1"/>
+				<ScrollViewer Margin="-245,55,0,-52" Grid.Row="1">
+					<StackPanel Background="#FFD3C9BF" x:Name="Feedback">
+
+					</StackPanel>
+				</ScrollViewer>
+				<Border CornerRadius="10" Margin="-245,119,0,-85" Grid.Row="1">
+					<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+						<Label Content="Type" Width="41" Margin="0,0,5,0" Background="Gray"/>
+						<TextBox x:Name="message" Width="432" Padding="5"/>
+						<Button x:Name="Go" Content="Go" Width="42" Margin="5,0,0,0" Click="Go_Click"/>
+					</StackPanel>
+				</Border>
 			</Grid>
 		</Border>
 

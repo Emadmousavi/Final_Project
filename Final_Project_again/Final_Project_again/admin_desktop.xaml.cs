@@ -860,10 +860,13 @@ namespace Final_Project_again
 
 				}
 				sqlCommand.ExecuteNonQuery();
-				sqlConnection.Close();
 				sqlCommand.Dispose();
-				sqlConnection = new SqlConnection(connection_string);
-				sqlConnection.Open();
+				string table_Name = $"\'{Name_Food.Text}\'";
+				string command = $"If not exists(select name from sysobjects where name = {table_Name}) CREATE TABLE {Name_Food.Text} (Customer_Name char(50), Message char(50))";
+				sqlCommand = new SqlCommand(command, sqlConnection);
+				sqlCommand.ExecuteNonQuery();
+				sqlCommand.Dispose();
+
 				sqlCommand = new SqlCommand("select * from Food_Menu where Name_Food=@Name_Food", sqlConnection);
 				sqlCommand.Parameters.AddWithValue("@Name_Food", Name_Food.Text);
 				sqlDataReader = sqlCommand.ExecuteReader();
@@ -898,9 +901,10 @@ namespace Final_Project_again
 					Date_Food.Text = "Date Of Food";
 				}
 			}
-			sqlConnection.Close();
 			sqlCommand.Dispose();
 			sqlDataReader.Close();
+			sqlConnection.Close();
+			
 
 		}
 
